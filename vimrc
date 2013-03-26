@@ -89,7 +89,6 @@ set number      " Number lines
 set autochdir   " Always cd to the current file's directory
 nnoremap \ ,
 let mapleader = ","
-" set textwidth=80 " Limit lines to 80 characters
 
 " Swap : and ; in normal and visual modes
 nnoremap ; :
@@ -119,16 +118,3 @@ execute 'let g:NERDSpaceDelims = 1'
 " When switching buffers, switch to an existing tab if the buffer is open or
 " create a new one if it is not
 set switchbuf=usetab,newtab
-
-" Additional plugins:
-"   Pathogen
-"   Solarized
-"   NERD Commenter
-"   cScope
-"   Ctags
-"   Tag List Plugin
-"   Code completion
-
-" Put the following lines in .Xmodmap to map Caps Lock to <Esc>
-" clear lock
-" keycode 0x42 = Escape
