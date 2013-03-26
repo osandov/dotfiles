@@ -8,6 +8,12 @@ xmodmap -e 'keycode 0x42 = Escape'      # Map Caps Lock to Esc
 xmodmap -e 'keycode 0x09 = Caps_Lock'   # Map Esc to Caps Lock
 xset r rate 175 25                      # Faster key repeat
 
+# Start up some daemons
+dropbox start
+gnome-keyring-daemon --start
+export GNOME_KEYRING_SOCKET
+export GNOME_KEYRING_PID
+
 xscreensaver -no-splash &               # Start the screensaver
 xcompmgr &                              # Start the compositing manager
 xmonad                                  # Start the window manager
