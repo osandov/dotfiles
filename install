@@ -1,0 +1,9 @@
+#!/bin/sh
+
+mkdir -p ~/.vim/tmp
+mkdir -p ~/.vim/backup
+
+ln -ins "$PWD/xmonad" ~/.xmonad
+ln -ins "$PWD/vim/plugin" ~/.vim/plugin
+ln -is "$PWD/vimrc" ~/.vimrc
+ln -is "$PWD/gvimrc" ~/.gvimrc
