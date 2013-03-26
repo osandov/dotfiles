@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Run visudo and add the following line
+# %power ALL=NOPASSWD: /usr/sbin/pm-suspend
+
+xscreensaver-command --lock
+sudo pm-suspend

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if PID=`pgrep xcompmgr`
+then
+    kill "$PID"
+else
+    xcompmgr &
+fi

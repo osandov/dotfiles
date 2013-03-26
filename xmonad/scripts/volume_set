@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ "$#" -lt 1 ];
+then
+    exit 1
+fi
+
+if [ "$1" = "toggle" ];
+then
+    MUTED=`amixer get 'Master' | awk '{if (NR == 5) print $6}'`
+
+    if [ "$MUTED" = "[on]" ];
+    then
+        amixer set Master mute
+        amixer set Headphone mute
+        amixer set Speaker mute
+    else
+        amixer set Master unmute
+        amixer set Headphone unmute
+        amixer set Speaker unmute
+    fi
+else
+    amixer set Master playback "$1"
+fi
