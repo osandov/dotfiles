@@ -44,25 +44,22 @@ function! ToggleHex()
 endfunction
 
 function! <SID>PreWrite()
-    let l:l = line(".")
-    let l:c = col(".")
+    let s:line = line(".")
+    let s:column = col(".")
     if exists("b:hexmode") && b:hexmode
         if !b:oldbin
             setlocal nobinary
         endif
         silent %!xxd -r
     endif
-    call cursor(l:l, l:c)
 endfunction
 
 function! <SID>PostWrite()
-    let l:l = line(".")
-    let l:c = col(".")
     if exists("b:hexmode") && b:hexmode
         setlocal binary
         silent %!xxd
     endif
-    call cursor(l:l, l:c)
+    call cursor(s:line, s:column)
 endfunction
 
 " Write the binary, not the hexdump
