@@ -14,13 +14,8 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import Graphics.X11.ExtraTypes.XF86
 
-dzenFont   = " -fn -misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
-dzenHeight = " -h 14"
-dzenFg     = " -fg '#93a1a1'"
-dzenBg     = " -bg '#073642'"
-
-dzenCommand  = "dzen2" ++ dzenFont ++ dzenHeight ++ dzenFg ++ dzenBg
-conkyCommand = "conky -c ~/.xmonad/conky/status | " ++ dzenCommand
+dzenCommand  = "~/.xmonad/dzen"
+conkyCommand = "conky -c ~/.xmonad/status/conky_dzen | " ++ dzenCommand
 
 xmonadStatus = dzenCommand ++ " -w 683 -ta l"
 systemStatus = conkyCommand ++ " -x 683 -w 683 -ta r"

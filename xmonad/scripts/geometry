@@ -1,0 +1,9 @@
+#!/bin/sh
+
+XRANDR=`xrandr -q | head -n 1`
+
+W=`echo "$XRANDR" | awk '{print $8}'`
+H=`echo "$XRANDR" | awk '{print $10}' | awk -F, '{print $1}'`
+
+echo "WIDTH=$W"
+echo "HEIGHT=$H"

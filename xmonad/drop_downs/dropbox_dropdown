@@ -1,0 +1,24 @@
+#!/bin/sh
+
+watch_dropbox ()
+{
+    while true
+    do
+        dropbox status
+        sleep 1
+    done
+}
+
+PGREP=`pgrep -fc "/bin/sh $0"`
+
+eval `xdotool getmouselocation --shell`
+
+if [ $PGREP -gt 1 ]
+then
+    X=`expr $X + 100`
+    Y=21
+    xdotool mousemove $X $Y click 1 mousemove restore
+else
+    watch_dropbox | ~/.xmonad/dzen -x $X -y 14 -w 200 -ta l \
+        -e "button1=exit:0;onexit=exec:killall dropbox_dropdown"
+fi
