@@ -6,7 +6,7 @@ inoremap <C-H> <Esc>:Hexmode<CR>
 vnoremap <C-H> :<C-U>Hexmode<CR>
 
 " helper function to toggle hex mode
-function ToggleHex()
+function! ToggleHex()
     " hex mode should be considered a read-only operation
     " save values for modified and read-only for restoration later,
     " and clear the read-only flag for now
@@ -43,22 +43,28 @@ function ToggleHex()
     let &modifiable=l:oldmodifiable
 endfunction
 
-function s:PreWrite()
+function! <SID>PreWrite()
+    let l:l = line(".")
+    let l:c = col(".")
     if exists("b:hexmode") && b:hexmode
         if !b:oldbin
             setlocal nobinary
         endif
-        %!xxd -r
+        silent %!xxd -r
     endif
+    call cursor(l:l, l:c)
 endfunction
 
-function s:PostWrite()
+function! <SID>PostWrite()
+    let l:l = line(".")
+    let l:c = col(".")
     if exists("b:hexmode") && b:hexmode
         setlocal binary
-        %!xxd
+        silent %!xxd
     endif
+    call cursor(l:l, l:c)
 endfunction
 
 " Write the binary, not the hexdump
-au BufWritePre * exec s:PreWrite()
-au BufWritePost * exec s:PostWrite()
+au! BufWritePre * :call <SID>PreWrite()
+au! BufWritePost * :call <SID>PostWrite()
