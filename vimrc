@@ -110,11 +110,11 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <F2> I#include <Esc>j
 map <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
 
-execute pathogen#infect()
-
-" Delimit comments with spaces
-execute 'let g:NERDSpaceDelims = 1'
-
 " When switching buffers, switch to an existing tab if the buffer is open or
 " create a new one if it is not
 set switchbuf=usetab,newtab
+
+execute pathogen#infect()
+
+" Delimit comments with spaces
+let g:NERDSpaceDelims = 1
