@@ -1,0 +1,8 @@
+#!/bin/sh
+
+FONT='-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*' 
+HEIGHT=14
+FG='#93a1a1' 
+BG='#073642' 
+
+echo "-fn $FONT -h $HEIGHT -fg $FG -bg $BG"
