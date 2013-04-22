@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ -e /tmp/update_status ]
+then
+    SECURITY=`cut -f 1 /tmp/update_status`
+    REGULAR=`cut -f 2 /tmp/update_status`
+    TOTAL=`expr $SECURITY + $REGULAR`
+
+    if [ $TOTAL -gt 0 ]
+    then
+        echo "^i(.xmonad/icons/update.xbm) | "
+    fi
+
+    CREATE_TIME=`cut -f 3 /tmp/update_status`
+    CURRENT_TIME=`date +%s`
+    DELTA_TIME=`expr $CURRENT_TIME - $CREATE_TIME`
+
+    if [ $DELTA_TIME -gt 1800 ]
+    then
+        rm /tmp/update_status
+    fi
+else
+    UPDATES=`/usr/lib/update-notifier/apt-check 2>&1`
+    SECURITY=`echo $UPDATES | cut -d ';' -f 1`
+    REGULAR=`echo $UPDATES | cut -d ';' -f 2`
+    TOTAL=`expr $SECURITY + $REGULAR`
+
+    echo "$SECURITY\t$REGULAR\t"`date +%s` > /tmp/update_status
+fi
