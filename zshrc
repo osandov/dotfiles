@@ -55,6 +55,7 @@ alias sml='rlwrap sml'
 alias racket='rlwrap racket'
 alias attu='ssh attu.cs.washington.edu'
 
+export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.cabal/bin:$PATH
 export PATH=$HOME/Programming/Android/android-sdk-linux/tools:$PATH
 export PATH=$HOME/Programming/Android/android-sdk-linux/platform-tools:$PATH

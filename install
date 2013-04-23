@@ -7,4 +7,5 @@ ln -ins "$PWD/xmonad" ~/.xmonad
 ln -ins "$PWD/vim/plugin" ~/.vim/plugin
 ln -is "$PWD/vimrc" ~/.vimrc
 ln -is "$PWD/gvimrc" ~/.gvimrc
+ln -is "$PWD/zshrc" ~/.zshrc
 sudo ln -is "$PWD/xmonad/startxmonad" /usr/bin/startxmonad
