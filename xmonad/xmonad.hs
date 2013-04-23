@@ -2,7 +2,8 @@ import XMonad
 import XMonad.Actions.FindEmptyWorkspace
 import XMonad.Actions.GridSelect
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.FadeWindows
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Named
@@ -12,19 +13,25 @@ import XMonad.Layout.Simplest
 import XMonad.Layout.Tabbed
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
+import Data.Monoid
 import Graphics.X11.ExtraTypes.XF86
 
-dzenCommand  = "~/.xmonad/dzen"
+dzenCommand  = "dzen2 `~/.xmonad/dzen_flags`"
 conkyCommand = "conky -c ~/.xmonad/status/conky_dzen | " ++ dzenCommand
 
-xmonadStatus = dzenCommand ++ " -w 683 -ta l"
-systemStatus = conkyCommand ++ " -x 683 -w 683 -ta r"
+xmonadStatus = dzenCommand ++ " -xs 1 -w 50% -ta l"
+systemStatus = conkyCommand ++ " -xs 1 -x 50% -w 50% -ta r"
+
+(/->)   :: Monoid m => Query Bool -> Query m -> Query m
+p /-> f =  p >>= \b -> if b then idHook else f
+infix 0 /->
 
 main = do
     dzenXmonad <- spawnPipe xmonadStatus
     dzenSystem <- spawnPipe systemStatus
-    xmonad $ defaultConfig
-             { manageHook = manageDocks <+> myManageHook
+    xmonad $ ewmh $ defaultConfig
+             { startupHook = ewmhDesktopsStartup
+             , manageHook = manageDocks <+> myManageHook
              , layoutHook = avoidStruts $ smartBorders $ myLayout
              , logHook    = dynamicLogWithPP defaultPP
                             { ppCurrent = dzenColor "#b58900" "" . wrap "[" "]"
@@ -32,10 +39,12 @@ main = do
                             , ppTitle   = dzenColor "#268bd2" "" . shorten 70
                             , ppOrder   = reverse
                             , ppOutput  = hPutStrLn dzenXmonad
-                            } >> fadeInactiveLogHook 0xe0000000
+                            } >> fadeWindowsLogHook myFadeHook
+             , handleEventHook = ewmhDesktopsEventHook <+> fadeWindowsEventHook
              , normalBorderColor  = "#586e75"
              , focusedBorderColor = "#d33682"
              , modMask            = myModMask
+             , terminal           = "xfce4-terminal"
              , workspaces         = myWorkspaces
              }
              `additionalKeys`
@@ -45,10 +54,14 @@ main = do
              , ((myModMask .|. shiftMask, xK_m), tagToEmptyWorkspace)
              , ((myModMask              , xK_i),
                      goToSelected $ gsConfig gsColorizer)
+             , ((myModMask, xK_q), spawn
+                     "xmonad --recompile && (killall conky; xmonad --restart)")
              , ((myModMask, xK_grave),
                      spawn "~/.xmonad/scripts/toggle_composite")
              , ((0       , xK_Print), spawn "xfce4-screenshooter -f")
              , ((mod1Mask, xK_Print), spawn "xfce4-screenshooter -r")
+             , ((myModMask .|. shiftMask, xK_l),
+                     spawn "xscreensaver-command -lock")
              , ((0, xF86XK_Sleep),
                      spawn "~/.xmonad/scripts/suspend")
              , ((0, xF86XK_AudioMute),
@@ -74,11 +87,17 @@ myWorkspaces = ["web", "vim"] ++ map show [3..8] ++ ["vm"]
 
 myManageHook = composeOne
                [ isFullscreen                       -?> doFullFloat
+               , isDialog                           -?> doCenterFloat
                , className =? "Gnuplot"             -?> doCenterFloat
-               , resource  =? "xfrun4"              -?> doCenterFloat
-               , title     =? "Downloads"           -?> doCenterFloat
-               , title     =? "Firefox Preferences" -?> doCenterFloat
+               , className =? "Xfce4-notifyd"       -?> doIgnore
+               , className =? "Xfrun4"              -?> doCenterFloat
                ]
+
+myFadeHook = composeAll
+             [ isUnfocused  --> transparency 0.125
+             , isFullscreen --> opaque
+             , isUnfocused  /-> opaque
+             ]
 
 tall = Tall nmaster delta ratio
   where

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if PID=`pgrep xcompmgr`
+if pgrep xcompmgr
 then
-    kill "$PID"
+    killall xcompmgr
 else
     xcompmgr &
 fi

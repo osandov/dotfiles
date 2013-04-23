@@ -13,5 +13,5 @@ then
         ICON="^i(.xmonad/icons/dropbox_busy.xbm)"
     fi
 
-    echo "^ca(1, ~/.xmonad/drop_downs/dropbox_dropdown)$ICON^ca() |"
+    echo "^ca(1, ~/.xmonad/dropdowns/dropbox_dropdown)$ICON^ca() | "
 fi

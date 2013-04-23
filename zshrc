@@ -2,7 +2,7 @@
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-bindkey -v
+bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 
@@ -55,6 +55,6 @@ alias sml='rlwrap sml'
 alias racket='rlwrap racket'
 alias attu='ssh attu.cs.washington.edu'
 
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/.cabal/bin:$PATH
 export PATH=$HOME/Programming/Android/android-sdk-linux/tools:$PATH
 export PATH=$HOME/Programming/Android/android-sdk-linux/platform-tools:$PATH
