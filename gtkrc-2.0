@@ -1,0 +1,7 @@
+gtk-icon-theme-name = "elementary-xfce-dark"
+gtk-theme-name = "Greybird"
+
+style "vimfix" {
+  bg[NORMAL] = "#002b36"
+}
+widget "vim-main-window.*GtkForm" style "vimfix"
