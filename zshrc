@@ -17,7 +17,6 @@ compinit
 setopt hist_ignore_space
 setopt hist_ignore_all_dups
 
-setopt autocd
 setopt extendedglob
 
 autoload -U promptinit
@@ -54,8 +53,17 @@ alias l='ls -CF'
 alias sml='rlwrap sml'
 alias racket='rlwrap racket'
 alias attu='ssh attu.cs.washington.edu'
+alias karl='curl'
+alias pimp='gimp'
+alias meminfo='watch -n 1 cat /proc/meminfo'
+alias plymouth='sudo plymouthd; sudo plymouth --show-splash; sleep 2; sudo plymouth quit'
+
+function index() {
+    whatis -s "$1" -r . | less
+}
 
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.cabal/bin:$PATH
-export PATH=$HOME/Programming/Android/android-sdk-linux/tools:$PATH
-export PATH=$HOME/Programming/Android/android-sdk-linux/platform-tools:$PATH
+export PATH=$HOME/Programming/adt/sdk/tools:$PATH
+export PATH=$HOME/Programming/adt/eclipse/:$PATH
+export PATH=$HOME/Programming/john/john-1.7.9-jumbo-7/run:$PATH

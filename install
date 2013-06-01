@@ -5,7 +5,10 @@ mkdir -p ~/.vim/backup
 
 ln -ins "$PWD/xmonad" ~/.xmonad
 ln -ins "$PWD/vim/plugin" ~/.vim/plugin
+ln -ins "$PWD/vim/ftplugin" ~/.vim/ftplugin
 ln -is "$PWD/vimrc" ~/.vimrc
 ln -is "$PWD/gvimrc" ~/.gvimrc
 ln -is "$PWD/zshrc" ~/.zshrc
+ln -is "$PWD/gtkrc-2.0" ~/.gtkrc-2.0
+ln -is "$PWD/gtkrc-3.0" ~/.config/gtk-3.0/settings.ini
 sudo ln -is "$PWD/xmonad/startxmonad" /usr/bin/startxmonad

@@ -28,7 +28,7 @@ do
         local icon = ""
         local color = ""
 
-        if charge >= 75 then
+        if charge >= 55 then
             icon = "^i(.xmonad/icons/bat_full.xbm)"
             color = green
         elseif charge > 20 then

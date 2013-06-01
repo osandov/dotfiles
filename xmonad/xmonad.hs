@@ -16,11 +16,13 @@ import XMonad.Util.Run
 import Data.Monoid
 import Graphics.X11.ExtraTypes.XF86
 
-dzenCommand  = "dzen2 `~/.xmonad/dzen_flags`"
-conkyCommand = "conky -c ~/.xmonad/status/conky_dzen | " ++ dzenCommand
+dzenCommand   = "dzen2 `~/.xmonad/dzen_flags`"
+conkyCommand  = "conky -c ~/.xmonad/status/conky_dzen | " ++ dzenCommand
+trayerCommand = "trayer --edge bottom --height 24 --SetPartialStrut true"
 
 xmonadStatus = dzenCommand ++ " -xs 1 -w 50% -ta l"
 systemStatus = conkyCommand ++ " -xs 1 -x 50% -w 50% -ta r"
+trayerStatus = trayerCommand ++ " --transparent true --alpha 32 --tint 0x002b36"
 
 (/->)   :: Monoid m => Query Bool -> Query m -> Query m
 p /-> f =  p >>= \b -> if b then idHook else f
@@ -29,10 +31,11 @@ infix 0 /->
 main = do
     dzenXmonad <- spawnPipe xmonadStatus
     dzenSystem <- spawnPipe systemStatus
+    trayer     <- spawnPipe trayerStatus
     xmonad $ ewmh $ defaultConfig
              { startupHook = ewmhDesktopsStartup
              , manageHook = manageDocks <+> myManageHook
-             , layoutHook = avoidStruts $ smartBorders $ myLayout
+             , layoutHook = avoidStrutsOn [U] $ smartBorders $ myLayout
              , logHook    = dynamicLogWithPP defaultPP
                             { ppCurrent = dzenColor "#b58900" "" . wrap "[" "]"
                             , ppUrgent  = dzenColor "#dc32ff" ""
@@ -50,12 +53,13 @@ main = do
              `additionalKeys`
              [ ((myModMask .|. shiftMask, xK_semicolon), spawn "gvim -f")
              , ((myModMask .|. shiftMask, xK_p), spawn "xfrun4")
-             , ((myModMask              , xK_m), viewEmptyWorkspace)
              , ((myModMask .|. shiftMask, xK_m), tagToEmptyWorkspace)
+             , ((myModMask              , xK_m), viewEmptyWorkspace)
+             , ((myModMask .|. shiftMask, xK_t), sendMessage $ ToggleStrut D)
              , ((myModMask              , xK_i),
                      goToSelected $ gsConfig gsColorizer)
              , ((myModMask, xK_q), spawn
-                     "xmonad --recompile && (killall conky; xmonad --restart)")
+                     "xmonad --recompile && (killall conky; killall trayer; xmonad --restart)")
              , ((myModMask, xK_grave),
                      spawn "~/.xmonad/scripts/toggle_composite")
              , ((0       , xK_Print), spawn "xfce4-screenshooter -f")
@@ -64,12 +68,6 @@ main = do
                      spawn "xscreensaver-command -lock")
              , ((0, xF86XK_Sleep),
                      spawn "~/.xmonad/scripts/suspend")
-             , ((0, xF86XK_AudioMute),
-                     spawn "~/.xmonad/scripts/volume_set toggle")
-             , ((0, xF86XK_AudioRaiseVolume),
-                     spawn "~/.xmonad/scripts/volume_set 5%+")
-             , ((0, xF86XK_AudioLowerVolume),
-                     spawn "~/.xmonad/scripts/volume_set 5%-")
              ]
 
 myModMask = mod4Mask
@@ -88,6 +86,7 @@ myWorkspaces = ["web", "vim"] ++ map show [3..8] ++ ["vm"]
 myManageHook = composeOne
                [ isFullscreen                       -?> doFullFloat
                , isDialog                           -?> doCenterFloat
+               , className =? "hl2_linux"           -?> doFullFloat
                , className =? "Gnuplot"             -?> doCenterFloat
                , className =? "Xfce4-notifyd"       -?> doIgnore
                , className =? "Xfrun4"              -?> doCenterFloat

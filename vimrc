@@ -96,6 +96,9 @@ nnoremap : ;
 vnoremap ; :
 vnoremap : ;
 
+noremap <leader>ev :split $MYVIMRC<CR>
+noremap <leader>sv :source $MYVIMRC<CR>
+
 " Use jk to exit from insert mode
 imap jk <Esc>
 
@@ -107,7 +110,7 @@ map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Function macros
-map <F2> I#include <Esc>j
+imap <C-y> <Esc>I#include <<Esc>A>
 map <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
 
 " When switching buffers, switch to an existing tab if the buffer is open or
@@ -117,4 +120,5 @@ set switchbuf=usetab,newtab
 execute pathogen#infect()
 
 " Delimit comments with spaces
+filetype plugin on
 let g:NERDSpaceDelims = 1
