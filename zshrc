@@ -61,9 +61,3 @@ alias plymouth='sudo plymouthd; sudo plymouth --show-splash; sleep 2; sudo plymo
 function index() {
     whatis -s "$1" -r . | less
 }
-
-export PATH=$HOME/bin:$PATH
-export PATH=$HOME/.cabal/bin:$PATH
-export PATH=$HOME/Programming/adt/sdk/tools:$PATH
-export PATH=$HOME/Programming/adt/eclipse/:$PATH
-export PATH=$HOME/Programming/john/john-1.7.9-jumbo-7/run:$PATH

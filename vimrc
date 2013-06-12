@@ -87,12 +87,9 @@ set directory=~/.vim/tmp
 " A few conveniences
 set number      " Number lines
 set autochdir   " Always cd to the current file's directory
-<<<<<<< HEAD
 set spell       " Spellcheck
-=======
 
 " Leader
->>>>>>> b09a82b2083759e82e6756e011f8d8ad130ef47e
 nnoremap \ ,
 let mapleader = ","
 noremap <Space> :nohl<CR>
