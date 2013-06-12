@@ -7,7 +7,7 @@ set nocompatible
 set backspace=indent,eol,start
 
 set backup		" keep a backup file
-set history=50		" keep 50 lines of command line history
+set history=200		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
@@ -87,6 +87,8 @@ set directory=~/.vim/tmp
 " A few conveniences
 set number      " Number lines
 set autochdir   " Always cd to the current file's directory
+
+" Leader
 nnoremap \ ,
 let mapleader = ","
 
@@ -96,26 +98,32 @@ nnoremap : ;
 vnoremap ; :
 vnoremap : ;
 
-noremap <leader>ev :split $MYVIMRC<CR>
-noremap <leader>sv :source $MYVIMRC<CR>
-
 " Use jk to exit from insert mode
 imap jk <Esc>
 
-" Enable C++11 syntax highlighting
-" autocmd BufNewFile,BufRead *.cpp set syntax=cpp11
+" Edit .vimrc on the fly
+noremap <leader>ev :split $MYVIMRC<CR>
+noremap <leader>sv :source $MYVIMRC<CR>
 
-" Ctags commands
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+" Map Command-Line mode navigation to arrows keys so we can have filtering
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+" Make Command-Line mode tab completion behave more like zsh
+set wildmenu
+set wildmode=full
+
+" When switching buffers, switch to an existing tab if the buffer is open or
+" create a new one if it is not
+set switchbuf=usetab,newtab
 
 " Function macros
 imap <C-y> <Esc>I#include <<Esc>A>
 map <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
 
-" When switching buffers, switch to an existing tab if the buffer is open or
-" create a new one if it is not
-set switchbuf=usetab,newtab
+" Ctags commands
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 execute pathogen#infect()
 
