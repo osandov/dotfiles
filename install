@@ -1,14 +1,26 @@
 #!/bin/sh
 
+DIR="`dirname \"$0\"`"
+DIR="`cd "$DIR" && pwd`"
+
+if [ -z "$DIR" ]
+then
+    echo "Could not determine path of install script"
+    exit 1
+fi
+
 mkdir -p ~/.vim/tmp
 mkdir -p ~/.vim/backup
+mkdir -p ~/.config/gtk-3.0
 
-ln -ins "$PWD/xmonad" ~/.xmonad
-ln -ins "$PWD/vim/plugin" ~/.vim/plugin
-ln -ins "$PWD/vim/ftplugin" ~/.vim/ftplugin
-ln -is "$PWD/vimrc" ~/.vimrc
-ln -is "$PWD/gvimrc" ~/.gvimrc
-ln -is "$PWD/zshrc" ~/.zshrc
-ln -is "$PWD/gtkrc-2.0" ~/.gtkrc-2.0
-ln -is "$PWD/gtkrc-3.0" ~/.config/gtk-3.0/settings.ini
-sudo ln -is "$PWD/xmonad/startxmonad" /usr/bin/startxmonad
+ln -ins "$DIR/xmonad" ~/.xmonad
+ln -ins "$DIR/vim/plugin" ~/.vim/plugin
+ln -ins "$DIR/vim/ftplugin" ~/.vim/ftplugin
+ln -is "$DIR/vimrc" ~/.vimrc
+ln -is "$DIR/gvimrc" ~/.gvimrc
+ln -is "$DIR/profile" ~/.profile
+ln -is "$DIR/zshrc" ~/.zshrc
+ln -is "$DIR/gtkrc-2.0" ~/.gtkrc-2.0
+ln -is "$DIR/gtkrc-3.0" ~/.config/gtk-3.0/settings.ini
+sudo ln -is "$DIR/xmonad/startxmonad" /usr/bin/startxmonad
+sudo cp -i "$DIR/xmonad.desktop" /usr/share/xsessions/
