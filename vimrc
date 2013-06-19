@@ -32,38 +32,26 @@ if &t_Co > 2 || has("gui_running")
 endif
 
 " Only do this part when compiled with support for autocommands.
-if has("autocmd")
+filetype plugin indent on
 
-    " Enable file type detection.
-    " Use the default filetype settings, so that mail gets 'tw' set to 72,
-    " 'cindent' is on in C files, etc.
-    " Also load indent files, to automatically do language-dependent indenting.
-    filetype plugin indent on
+" Put these in an autocmd group, so that we can delete them easily.
+augroup vimrcEx
+    au!
 
-    " Put these in an autocmd group, so that we can delete them easily.
-    augroup vimrcEx
-        au!
+    " For all text files set 'textwidth' to 78 characters.
+    autocmd FileType text setlocal textwidth=78
 
-        " For all text files set 'textwidth' to 78 characters.
-        autocmd FileType text setlocal textwidth=78
+    " When editing a file, always jump to the last known cursor position.
+    " Don't do it when the position is invalid or when inside an event handler
+    " (happens when dropping a file on gvim).
+    " Also don't do it when the mark is in the first line, that is the default
+    " position when opening a file.
+    autocmd BufReadPost *
+                \ if line("'\"") > 1 && line("'\"") <= line("$") |
+                \   exe "normal! g`\"" |
+                \ endif
 
-        " When editing a file, always jump to the last known cursor position.
-        " Don't do it when the position is invalid or when inside an event handler
-        " (happens when dropping a file on gvim).
-        " Also don't do it when the mark is in the first line, that is the default
-        " position when opening a file.
-        autocmd BufReadPost *
-                    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-                    \   exe "normal! g`\"" |
-                    \ endif
-
-    augroup END
-
-else
-
-    set autoindent		" always set autoindenting on
-
-endif " has("autocmd")
+augroup END
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -75,6 +63,8 @@ endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+filetype plugin on
+
 " Use 4 spaces instead of the tab character for indentation
 set expandtab
 set shiftwidth=4
@@ -85,21 +75,26 @@ set backupdir=~/.vim/backup
 set directory=~/.vim/tmp
 
 " A few conveniences
+set splitright splitbelow
 set number      " Number lines
-set autochdir   " Always cd to the current file's directory
 set spell       " Spellcheck
+set autochdir   " Always cd to the current file's directory
 
 " Leader
 nnoremap \ ,
 let mapleader = ","
-noremap <Space> :nohl<CR>
-inoremap <C-s> <Esc>viw~ea
 
 " Swap : and ; in normal and visual modes
 nnoremap ; :
 nnoremap : ;
 vnoremap ; :
 vnoremap : ;
+
+" Toggle search highlighting and spellcheck
+nnoremap <Space> :set hls!<CR>
+vnoremap <Space> :set hls!<CR>
+nnoremap <S-Space> :set spell!<CR>
+vnoremap <S-Space> :set spell!<CR>
 
 " Use jk to exit from insert mode
 imap jk <Esc>
@@ -120,7 +115,7 @@ set wildmode=full
 " create a new one if it is not
 set switchbuf=usetab,newtab
 
-" Function macros
+inoremap <C-s> <Esc>gUiwea
 imap <C-y> <Esc>I#include <<Esc>A>
 map <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
 
@@ -131,5 +126,4 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 execute pathogen#infect()
 
 " Delimit comments with spaces
-filetype plugin on
 let g:NERDSpaceDelims = 1
