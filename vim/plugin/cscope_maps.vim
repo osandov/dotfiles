@@ -1,4 +1,4 @@
-" CSCOPE settings for vim           
+" Cscope settings for vim           
 
 if has("cscope")
 
@@ -41,21 +41,21 @@ if has("cscope")
     nnoremap <C-Space>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
     nnoremap <C-Space>d :scs find d <C-R>=expand("<cword>")<CR><CR>
 
-    nnoremap <C-S-Space>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <C-S-Space>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <C-S-Space>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <C-S-Space>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <C-S-Space>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <C-S-Space>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
-    nnoremap <C-S-Space>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nnoremap <C-S-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-Space><C-Space>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-Space><C-Space>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-Space><C-Space>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-Space><C-Space>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-Space><C-Space>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-Space><C-Space>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
+    nnoremap <C-Space><C-Space>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nnoremap <C-Space><C-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
 
-    nnoremap <C-Space><C-Space>s :scs find s <C-R>=expand("<cword>")<CR><CR><C-W>T
-    nnoremap <C-Space><C-Space>g :scs find g <C-R>=expand("<cword>")<CR><CR><C-W>T
-    nnoremap <C-Space><C-Space>c :scs find c <C-R>=expand("<cword>")<CR><CR><C-W>T
-    nnoremap <C-Space><C-Space>t :scs find t <C-R>=expand("<cword>")<CR><CR><C-W>T
-    nnoremap <C-Space><C-Space>e :scs find e <C-R>=expand("<cword>")<CR><CR><C-W>T
-    nnoremap <C-Space><C-Space>f :scs find f <C-R>=expand("<cfile>")<CR><CR><C-W>T
-    nnoremap <C-Space><C-Space>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR><C-W>T
-    nnoremap <C-Space><C-Space>d :scs find d <C-R>=expand("<cword>")<CR><CR><C-W>T
+    nnoremap <C-\><C-\>s :tab scs find s <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-\><C-\>g :tab scs find g <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-\><C-\>c :tab scs find c <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-\><C-\>t :tab scs find t <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-\><C-\>e :tab scs find e <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-\><C-\>f :tab scs find f <C-R>=expand("<cfile>")<CR><CR>
+    nnoremap <C-\><C-\>i :tab scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nnoremap <C-\><C-\>d :tab scs find d <C-R>=expand("<cword>")<CR><CR>
 endif

@@ -61,28 +61,14 @@ if !exists(":DiffOrig")
                 \ | wincmd p | diffthis
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-filetype plugin on
+"""""""""" Essentials
 
 " Use 4 spaces instead of the tab character for indentation
 set expandtab
 set shiftwidth=4
 set softtabstop=4
-
-" Backup files in another directory to avoid clutter
-set backupdir=~/.vim/backup
-set directory=~/.vim/tmp
-
-" A few conveniences
-set splitright splitbelow
-set number      " Number lines
-set spell       " Spellcheck
-set autochdir   " Always cd to the current file's directory
-
-" Leader
-nnoremap \ ,
-let mapleader = ","
 
 " Swap : and ; in normal and visual modes
 nnoremap ; :
@@ -90,22 +76,27 @@ nnoremap : ;
 vnoremap ; :
 vnoremap : ;
 
-" Toggle search highlighting and spellcheck
-nnoremap <Space> :set hls!<CR>
-vnoremap <Space> :set hls!<CR>
-nnoremap <S-Space> :set spell!<CR>
-vnoremap <S-Space> :set spell!<CR>
-
 " Use jk to exit from insert mode
 imap jk <Esc>
-
-" Edit .vimrc on the fly
-noremap <leader>ev :split $MYVIMRC<CR>
-noremap <leader>sv :source $MYVIMRC<CR>
 
 " Map Command-Line mode navigation to arrows keys so we can have filtering
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+
+filetype plugin on
+
+
+"""""""""" Convenient options
+
+" Backup files in another directory to avoid clutter
+set backupdir=~/.vim/backup
+set directory=~/.vim/tmp
+
+" A few conveniences
+set splitright splitbelow " Personal preference
+set number                " Number lines
+" set spell                 " Spellcheck
+" set autochdir             " Always cd to the current file's directory
 
 " Make Command-Line mode tab completion behave more like zsh
 set wildmenu
@@ -115,13 +106,46 @@ set wildmode=full
 " create a new one if it is not
 set switchbuf=usetab,newtab
 
-inoremap <C-s> <Esc>gUiwea
-imap <C-y> <Esc>I#include <<Esc>A>
-map <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
+"""""""""" Useful bindings
 
-" Ctags commands
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+" Toggle search highlighting
+nnoremap <Space> :nohl<CR>
+vnoremap <Space> :nohl<CR>
+
+" Leader
+nnoremap \ ,
+let mapleader = ","
+
+" Edit .vimrc on the fly
+noremap <leader>ev :split $MYVIMRC<CR>
+noremap <leader>sv :source $MYVIMRC<CR>
+
+" Manual autochdir
+noremap <leader>cd :cd %:p:h<CR>
+
+" Toggle spell check
+noremap <leader>sp :set spell!<CR>
+
+" Quick and dirty sessions
+noremap <leader>mk :mksession! ~/.vim/tmp/session<CR>
+noremap <leader>sk :source ~/.vim/tmp/session<CR>
+
+function! g:ToggleNuMode()
+	if (&rnu == 1)
+		set nu
+	else
+		set rnu
+	endif
+endfunc
+
+noremap <C-l> :call g:ToggleNuMode()<CR>
+inoremap <C-l> <Esc>:call g:ToggleNuMode()<CR>a
+
+inoremap <C-s> <Esc>gUiwea
+inoremap <C-y> <Esc>I#include <<Esc>A>
+nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
+
+"""""""""" Plugins 
 
 execute pathogen#infect()
 
