@@ -7,7 +7,7 @@ set nocompatible
 set backspace=indent,eol,start
 
 set backup		" keep a backup file
-set history=200		" keep 200 lines of command line history
+set history=500		" keep 200 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
@@ -30,9 +30,6 @@ if &t_Co > 2 || has("gui_running")
     syntax on
     set hlsearch
 endif
-
-" Only do this part when compiled with support for autocommands.
-filetype plugin indent on
 
 " Put these in an autocmd group, so that we can delete them easily.
 augroup vimrcEx
@@ -80,11 +77,10 @@ vnoremap : ;
 imap jk <Esc>
 
 " Map Command-Line mode navigation to arrows keys so we can have filtering
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
+cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
 
-filetype plugin on
-
+filetype plugin indent on
 
 """""""""" Convenient options
 
@@ -117,32 +113,36 @@ nnoremap \ ,
 let mapleader = ","
 
 " Edit .vimrc on the fly
-noremap <leader>ev :split $MYVIMRC<CR>
-noremap <leader>sv :source $MYVIMRC<CR>
+noremap <Leader>ev :split $MYVIMRC<CR>
+noremap <Leader>sv :source $MYVIMRC<CR>
 
 " Manual autochdir
-noremap <leader>cd :cd %:p:h<CR>
+noremap <Leader>cd :cd %:p:h<CR>
 
 " Toggle spell check
-noremap <leader>sp :set spell!<CR>
+noremap <Leader>sp :set spell!<CR>
 
 " Quick and dirty sessions
-noremap <leader>mk :mksession! ~/.vim/tmp/session<CR>
-noremap <leader>sk :source ~/.vim/tmp/session<CR>
+noremap <Leader>mk :mksession! ~/.vim/tmp/session<CR>
+noremap <Leader>sk :source ~/.vim/tmp/session<CR>
 
+" Open a terminal
+noremap <Leader>tm :silent !xfce4-terminal &\!<CR>
+
+" Toggle relative and absolute numbering
 function! g:ToggleNuMode()
-	if (&rnu == 1)
-		set nu
-	else
-		set rnu
-	endif
+    if &rnu
+        set nu
+    else
+        set rnu
+    endif
 endfunc
 
-noremap <C-l> :call g:ToggleNuMode()<CR>
-inoremap <C-l> <Esc>:call g:ToggleNuMode()<CR>a
+noremap <C-L> :call g:ToggleNuMode()<CR>
+inoremap <C-L> <Esc>:call g:ToggleNuMode()<CR>a
 
-inoremap <C-s> <Esc>gUiwea
-inoremap <C-y> <Esc>I#include <<Esc>A>
+inoremap <C-S> <Esc>gUiwea
+inoremap <C-Y> <Esc>I#include <<Esc>A>
 nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
 
 """""""""" Plugins 

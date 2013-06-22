@@ -61,3 +61,5 @@ alias plymouth='sudo plymouthd; sudo plymouth --show-splash; sleep 2; sudo plymo
 function index() {
     whatis -s "$1" -r . | less
 }
+
+export PYTHONSTARTUP=~/.pythonrc

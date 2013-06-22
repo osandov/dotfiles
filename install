@@ -20,6 +20,7 @@ ln -is "$DIR/vimrc" ~/.vimrc
 ln -is "$DIR/gvimrc" ~/.gvimrc
 ln -is "$DIR/profile" ~/.profile
 ln -is "$DIR/zshrc" ~/.zshrc
+ln -is "$DIR/pythonrc" ~/.pythonrc
 ln -is "$DIR/gtkrc-2.0" ~/.gtkrc-2.0
 ln -is "$DIR/gtkrc-3.0" ~/.config/gtk-3.0/settings.ini
 sudo ln -is "$DIR/xmonad/startxmonad" /usr/bin/startxmonad
