@@ -141,11 +141,15 @@ endfunc
 noremap <C-L> :call g:ToggleNuMode()<CR>
 inoremap <C-L> <Esc>:call g:ToggleNuMode()<CR>a
 
+nnoremap <C-S> gUiw
+vnoremap <C-S> gU
 inoremap <C-S> <Esc>gUiwea
 inoremap <C-Y> <Esc>I#include <<Esc>A>
 nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
 
 """""""""" Plugins 
+
+set omnifunc=syntaxcomplete#Complete
 
 execute pathogen#infect()
 

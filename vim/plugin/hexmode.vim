@@ -47,16 +47,11 @@ function! ToggleHex()
 endfunction
 
 function! HexRefresh()
-    if exists('b:hexmode') && b:hexmode
-        let s:line = line(".")
-        let s:column = col(".")
-        silent %!xxd -r
-        silent %!xxd
-        call cursor(s:line, s:column)
-    endif
+    call <SID>PreWrite()
+    call <SID>PostWrite()
 endfunction
 
-" Workaround to prevent leaving hexmode on when reloading
+" Workaround to prevent repeating hexmode when reloading
 au! BufRead * :let b:hexmode=0
 
 " Write the binary, not the hexdump
@@ -67,6 +62,9 @@ function! <SID>PreWrite()
     if exists('b:hexmode') && b:hexmode
         let s:line = line(".")
         let s:column = col(".")
+        if !b:oldbin
+            setlocal nobinary
+        endif
         silent %!xxd -r
     endif
 endfunction
@@ -74,6 +72,7 @@ endfunction
 function! <SID>PostWrite()
     if exists('b:hexmode') && b:hexmode
         silent %!xxd
+        setlocal binary
         call cursor(s:line, s:column)
     endif
 endfunction
