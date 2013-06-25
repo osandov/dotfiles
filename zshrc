@@ -52,13 +52,9 @@ alias l='ls -CF'
 
 alias sml='rlwrap sml'
 alias racket='rlwrap racket'
-alias attu='ssh attu.cs.washington.edu'
-alias karl='curl'
-alias pimp='gimp'
 alias meminfo='watch -n 1 cat /proc/meminfo'
-alias plymouth='sudo plymouthd; sudo plymouth --show-splash; sleep 2; sudo plymouth quit'
 
-function index() {
+index () {
     whatis -s "$1" -r . | less
 }
 
