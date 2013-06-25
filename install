@@ -11,7 +11,7 @@ fi
 
 mkdir -p ~/.vim/tmp
 mkdir -p ~/.vim/backup
-mkdir -p ~/.config/xfce4/terminal
+mkdir -p ~/.config/Terminal
 
 ln -ins "$DIR/xmonad" ~/.xmonad
 ln -ins "$DIR/vim/plugin" ~/.vim/plugin
@@ -22,7 +22,7 @@ ln -is "$DIR/zshenv" ~/.zshenv
 ln -is "$DIR/zshrc" ~/.zshrc
 ln -is "$DIR/pythonrc" ~/.pythonrc
 ln -is "$DIR/dircolors" ~/.dircolors
-cp -i "$DIR/terminalrc" ~/.config/xfce4/terminal/terminalrc
+cp -i "$DIR/terminalrc" ~/.config/Terminal/terminalrc
 ln -is "$DIR/gtkrc-2.0" ~/.gtkrc-2.0
 ln -is "$DIR/gtkrc-3.0" ~/.config/gtk-3.0/settings.ini
 sudo ln -is "$DIR/xmonad/startxmonad" /usr/bin/startxmonad
