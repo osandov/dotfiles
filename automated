@@ -21,9 +21,3 @@ curl -Sso ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen
 cd ~/.vim/bundle
 git clone https://github.com/altercation/vim-colors-solarized.git
 git clone https://github.com/scrooloose/nerdcommenter.git
-
-cd ~
-git clone https://github.com/sgerrand/xfce4-terminal-colors-solarized.git
-mkdir -p ~/.config/Terminal
-cp xfce4-terminal-colors-solarized/dark/terminalrc ~/.config/Terminal/terminalrc
-rm -rf xfce4-terminal-colors-solarized
