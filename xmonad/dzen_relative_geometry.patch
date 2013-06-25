@@ -1,13 +1,40 @@
-From 6ddda9192edce000b8a9d20bbe5225bb2b8dfe4d Mon Sep 17 00:00:00 2001
+From d072777491e8ddaca36ba5426d3dc9a1cccdcabd Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@cs.washington.edu>
-Date: Sat, 13 Apr 2013 23:33:10 -0700
-Subject: [PATCH] Added relative geometry options
+Date: Tue, 25 Jun 2013 00:17:17 -0700
+Subject: [PATCH] Added relative geometry
 
 ---
- dzen.h |   13 +++++++++
- main.c |  100 +++++++++++++++++++++++++++++++++++++++++++++++++++++-----------
- 2 files changed, 96 insertions(+), 17 deletions(-)
+ config.mk |   8 ++---
+ dzen.h    |  13 ++++++++
+ main.c    | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++-----------
+ 3 files changed, 100 insertions(+), 21 deletions(-)
 
+diff --git a/config.mk b/config.mk
+index c72de6f..b37269d 100644
+--- a/config.mk
++++ b/config.mk
+@@ -29,8 +29,8 @@ INCS = -I. -I/usr/include -I${X11INC}
+ 
+ 
+ # Option 3: With Xinerama no XPM
+-#LIBS = -L/usr/lib -lc -L${X11LIB} -lX11 -lXinerama
+-#CFLAGS = -Wall -Os ${INCS} -DVERSION=\"${VERSION}\" -DDZEN_XINERAMA
++LIBS = -L/usr/lib -lc -L${X11LIB} -lX11 -lXinerama
++CFLAGS = -Wall -Os ${INCS} -DVERSION=\"${VERSION}\" -DDZEN_XINERAMA
+ 
+ 
+ ## Option 4: With Xinerama and XPM
+@@ -39,8 +39,8 @@ INCS = -I. -I/usr/include -I${X11INC}
+ 
+ 
+ ## Option 5: With XFT
+-LIBS = -L/usr/lib -lc -L${X11LIB} -lX11 `pkg-config --libs xft`
+-CFLAGS = -Wall -Os ${INCS} -DVERSION=\"${VERSION}\" -DDZEN_XFT `pkg-config --cflags xft`
++# LIBS = -L/usr/lib -lc -L${X11LIB} -lX11 `pkg-config --libs xft`
++# CFLAGS = -Wall -Os ${INCS} -DVERSION=\"${VERSION}\" -DDZEN_XFT `pkg-config --cflags xft`
+ 
+ 
+ ## Option 6: With XPM and XFT
 diff --git a/dzen.h b/dzen.h
 index e4d8707..efa1999 100644
 --- a/dzen.h
@@ -230,5 +257,5 @@ index c72dae0..49afdae 100644
  	if(!dzen.slave_win.ishmenu)
  		x_map_window(dzen.title_win.win);
 -- 
-1.7.10.4
+1.8.1.2
 
