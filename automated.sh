@@ -15,6 +15,8 @@ cd dzen
 git apply ~/.dotfiles/xmonad/dzen_relative_geometry.patch
 make
 sudo make install
+cd ..
+rm -rf dzen
 
 mkdir -p ~/.vim/autoload ~/.vim/bundle
 curl -Sso ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim

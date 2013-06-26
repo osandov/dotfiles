@@ -65,7 +65,7 @@ main = do
              , ((0       , xK_Print), spawn "xfce4-screenshooter -f")
              , ((mod1Mask, xK_Print), spawn "xfce4-screenshooter -r")
              , ((myModMask .|. shiftMask, xK_l),
-                     spawn "xscreensaver-command -lock")
+                     spawn "xscreensaver-command --lock")
              , ((0, xF86XK_Sleep),
                      spawn "~/.xmonad/scripts/suspend")
              ]
@@ -86,7 +86,6 @@ myWorkspaces = ["web", "vim"] ++ map show [3..8] ++ ["vm"]
 myManageHook = composeOne
                [ isFullscreen                       -?> doFullFloat
                , isDialog                           -?> doCenterFloat
-               , className =? "hl2_linux"           -?> doFullFloat
                , className =? "Gnuplot"             -?> doCenterFloat
                , className =? "Xfce4-notifyd"       -?> doIgnore
                , className =? "Xfrun4"              -?> doCenterFloat
