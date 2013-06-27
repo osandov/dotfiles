@@ -15,7 +15,7 @@ mkdir -p ~/.config/Terminal
 
 ln -ins "$DIR/xmonad" ~/.xmonad
 ln -ins "$DIR/vim/plugin" ~/.vim/plugin
-ln -ins "$DIR/vim/ftplugin" ~/.vim/ftplugin
+ln -ins "$DIR/vim/after" ~/.vim/after
 ln -is "$DIR/vimrc" ~/.vimrc
 ln -is "$DIR/gvimrc" ~/.gvimrc
 ln -is "$DIR/zshenv" ~/.zshenv

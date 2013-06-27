@@ -7,7 +7,7 @@ bindkey -e
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
-zstyle ':completion:*' matcher-list '' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]} l:|=* r:|=*' 'l:|=* r:|=*' 'r:|[._-]=** r:|=**'
 zstyle :compinstall filename '/home/osandov/.zshrc'
 
 autoload -Uz compinit
@@ -19,11 +19,7 @@ setopt hist_ignore_all_dups
 
 setopt extendedglob
 
-autoload -U promptinit
-promptinit
-prompt redhat
-
-PROMPT="%F{blue}$PROMPT%f"
+PROMPT="%F{blue}[%n@%m %1~]%(#.#.$) %f"
 
 source /etc/zsh_command_not_found
 

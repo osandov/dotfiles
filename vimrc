@@ -7,7 +7,7 @@ set nocompatible
 set backspace=indent,eol,start
 
 set backup		" keep a backup file
-set history=500		" keep 200 lines of command line history
+set history=500		" keep 500 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
@@ -31,12 +31,8 @@ if &t_Co > 2 || has("gui_running")
     set hlsearch
 endif
 
-" Put these in an autocmd group, so that we can delete them easily.
 augroup vimrcEx
     au!
-
-    " For all text files set 'textwidth' to 78 characters.
-    autocmd FileType text setlocal textwidth=78
 
     " When editing a file, always jump to the last known cursor position.
     " Don't do it when the position is invalid or when inside an event handler
@@ -50,14 +46,6 @@ augroup vimrcEx
 
 augroup END
 
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-                \ | wincmd p | diffthis
-endif
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""" Essentials
@@ -66,6 +54,9 @@ endif
 set expandtab
 set shiftwidth=4
 set softtabstop=4
+
+" Wrap at 79 characters
+set textwidth=79
 
 " Swap : and ; in normal and visual modes
 nnoremap ; :
@@ -91,7 +82,7 @@ set directory=~/.vim/tmp
 " A few conveniences
 set splitright splitbelow " Personal preference
 set number                " Number lines
-" set spell                 " Spellcheck
+" set spell                 " Spellcheck by default
 " set autochdir             " Always cd to the current file's directory
 
 " Make Command-Line mode tab completion behave more like zsh

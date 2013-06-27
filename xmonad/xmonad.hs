@@ -81,7 +81,7 @@ gsColorizer = colorRangeFromClassName
     (0x93, 0xa1, 0xa1) -- inactive fg
     (0x65, 0x7b, 0x83) -- active fg
 
-myWorkspaces = ["web", "vim"] ++ map show [3..8] ++ ["vm"]
+myWorkspaces = ["web", "vim"] ++ map show [3..7] ++ ["irc", "vm"]
 
 myManageHook = composeOne
                [ isFullscreen                       -?> doFullFloat
