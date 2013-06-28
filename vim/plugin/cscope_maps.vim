@@ -23,6 +23,13 @@ if has("cscope")
     set cscopeverbose  
 
     """"""""""""" My cscope/vim key mappings
+    cnoreabbrev csa cs add
+    cnoreabbrev csf cs find
+    cnoreabbrev csk cs kill
+    cnoreabbrev csr cs reset
+    cnoreabbrev css cs show
+    cnoreabbrev csh cs help
+
     nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
     nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
     nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
