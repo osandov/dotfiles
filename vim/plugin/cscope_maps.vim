@@ -23,6 +23,7 @@ if has("cscope")
     set cscopeverbose  
 
     """"""""""""" My cscope/vim key mappings
+    command! CS exec "!cscope -Rbq" | cs reset
     cnoreabbrev csa cs add
     cnoreabbrev csf cs find
     cnoreabbrev csk cs kill

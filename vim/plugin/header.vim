@@ -1,6 +1,6 @@
 " Edits the corresponding header or source file for the current buffer
 
-command! -bar Header call s:HeaderOrSource()
+command! Header call s:HeaderOrSource()
 
 let s:HeaderExtensions = [".h", ".hh", ".hpp", ".hxx", ".h++"]
 let s:SourceExtensions = [".c", ".cc", ".cpp", ".cxx", ".c++"]
@@ -27,7 +27,7 @@ function! s:Header()
     for extension in s:HeaderExtensions
         let l:file = l:basename . extension
         if filereadable(l:file)
-            execute "edit " . l:file
+            execute "split " . l:file
             return
         endif
     endfor
@@ -39,7 +39,7 @@ function! s:Source()
     for extension in s:SourceExtensions
         let l:file = l:basename . extension
         if filereadable(l:file)
-            execute "edit " . l:file
+            execute "split " . l:file
             return
         endif
     endfor

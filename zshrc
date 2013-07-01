@@ -16,8 +16,8 @@ compinit
 
 setopt hist_ignore_space
 setopt hist_ignore_all_dups
-
 setopt extendedglob
+bindkey -e
 
 PROMPT="%F{blue}[%n@%m %1~]%(#.#.$) %f"
 
@@ -49,6 +49,8 @@ alias l='ls -CF'
 alias sml='rlwrap sml'
 alias racket='rlwrap racket'
 alias meminfo='watch -n 1 cat /proc/meminfo'
+alias cxclip='xclip -selection clipboard'
+alias sgrep='grep --exclude="cscope.out" -RIn'
 
 index () {
     whatis -s "$1" -r . | less

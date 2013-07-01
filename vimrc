@@ -103,6 +103,9 @@ vnoremap <Space> :nohl<CR>
 nnoremap \ ,
 let mapleader = ","
 
+" Move between windows
+noremap <Leader>w <C-W>w
+
 " Edit .vimrc on the fly
 noremap <Leader>ev :split $MYVIMRC<CR>
 noremap <Leader>sv :source $MYVIMRC<CR>
