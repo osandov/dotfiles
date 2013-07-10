@@ -1,1 +1,1 @@
-nnoremap <leader>m :w <bar> !pdflatex %<CR>
+nnoremap <Leader>m :w <bar> !pdflatex %<CR>
