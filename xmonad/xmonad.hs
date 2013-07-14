@@ -13,6 +13,7 @@ import XMonad.Layout.Simplest
 import XMonad.Layout.Tabbed
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
+
 import Data.Monoid
 import Graphics.X11.ExtraTypes.XF86
 
@@ -53,8 +54,8 @@ main = do
              `additionalKeys`
              [ ((myModMask .|. shiftMask, xK_semicolon), spawn "gvim -f")
              , ((myModMask .|. shiftMask, xK_p), spawn "xfrun4")
-             , ((myModMask .|. shiftMask, xK_m), tagToEmptyWorkspace)
-             , ((myModMask              , xK_m), viewEmptyWorkspace)
+             , ((myModMask .|. shiftMask, xK_f), tagToEmptyWorkspace)
+             , ((myModMask              , xK_f), viewEmptyWorkspace)
              , ((myModMask .|. shiftMask, xK_t), sendMessage $ ToggleStrut D)
              , ((myModMask              , xK_i),
                      goToSelected $ gsConfig gsColorizer)
@@ -65,7 +66,7 @@ main = do
              , ((0       , xK_Print), spawn "xfce4-screenshooter -f")
              , ((mod1Mask, xK_Print), spawn "xfce4-screenshooter -r")
              , ((myModMask .|. shiftMask, xK_l),
-                     spawn "xscreensaver-command --lock")
+                     spawn "xscreensaver-command -lock")
              , ((0, xF86XK_Sleep),
                      spawn "~/.xmonad/scripts/suspend")
              ]

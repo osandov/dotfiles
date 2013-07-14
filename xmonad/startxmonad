@@ -8,7 +8,7 @@ hsetroot -fill ~/.xmonad/root.png     # Set the wallpaper
 numlockx on                           # Turn on Num Lock
 xmodmap -e 'clear lock'               # Clear Caps Lock
 xmodmap -e 'keycode 0x42 = Escape'    # Map Caps Lock to Esc
-xmodmap -e 'keycode 0x09 = Caps_Lock' # Map Esc to Caps Lock
+# xmodmap -e 'keycode 0x09 = Caps_Lock' # Map Esc to Caps Lock
 xset r rate 175 35                    # Faster key repeat
 
 # Start up some daemons
