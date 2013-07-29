@@ -21,7 +21,12 @@ bindkey -e
 
 PROMPT="%F{blue}[%n@%m %1~]%(#.#.$) %f"
 
-source /etc/zsh_command_not_found
+if [ -e /etc/arch-release ]
+then
+    source /usr/share/doc/pkgfile/command-not-found.zsh
+else
+    source /etc/zsh_command_not_found
+fi
 
 case $TERM in
     xterm*)
