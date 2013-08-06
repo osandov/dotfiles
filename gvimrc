@@ -1,3 +1,5 @@
+" Omar Sandoval's gvimrc
+
 set guioptions-=e " No GUI tabs
 set guioptions-=m " No menu bar
 set guioptions-=T " No toolbar

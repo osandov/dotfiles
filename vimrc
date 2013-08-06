@@ -126,14 +126,13 @@ noremap <Leader>tm :silent !xfce4-terminal &\!<CR>
 " Toggle relative and absolute numbering
 function! g:ToggleNuMode()
     if &rnu
-        set nu
+        set nornu
     else
         set rnu
     endif
 endfunc
 
-noremap <C-L> :call g:ToggleNuMode()<CR>
-inoremap <C-L> <Esc>:call g:ToggleNuMode()<CR>a
+noremap <C-L> <Esc>:call g:ToggleNuMode()<CR>
 
 nnoremap <C-S> gUiw
 vnoremap <C-S> gU

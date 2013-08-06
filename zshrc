@@ -1,3 +1,5 @@
+# Omar Sandoval's zshrc
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
@@ -21,8 +23,7 @@ bindkey -e
 
 PROMPT="%F{blue}[%n@%m %1~]%(#.#.$) %f"
 
-if [ -e /etc/arch-release ]
-then
+if [ -e /etc/arch-release ]; then
     source /usr/share/doc/pkgfile/command-not-found.zsh
 else
     source /etc/zsh_command_not_found
@@ -38,13 +39,18 @@ case $TERM in
         ;;
 esac
 
-if [ -x /usr/bin/dircolors ]
-then
+if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+fi
+
+if [ -z "$TMUX" ]; then
+    exec tmx
+elif [ "$TMUX" = "zlogin" ]; then
+    export TMUX=
 fi
 
 alias ll='ls -alF'
@@ -56,6 +62,10 @@ alias racket='rlwrap racket'
 alias meminfo='watch -n 1 cat /proc/meminfo'
 alias cxclip='xclip -selection clipboard'
 alias sgrep='grep --exclude="cscope.out" -RIn'
+
+alias tl='tmux list-sessions'
+alias tk='tmux kill-session'
+alias ts='tmux switch -t'
 
 index () {
     whatis -s "$1" -r . | less

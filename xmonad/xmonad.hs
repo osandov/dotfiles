@@ -62,13 +62,11 @@ main = do
              , ((myModMask, xK_q), spawn
                      "xmonad --recompile && (killall conky; killall trayer; xmonad --restart)")
              , ((myModMask, xK_grave),
-                     spawn "~/.xmonad/scripts/toggle_composite")
+                     spawn "~/.dotfiles/bin/toggle_composite")
              , ((0       , xK_Print), spawn "xfce4-screenshooter -f")
              , ((mod1Mask, xK_Print), spawn "xfce4-screenshooter -r")
              , ((myModMask .|. shiftMask, xK_l),
                      spawn "xscreensaver-command -lock")
-             , ((0, xF86XK_Sleep),
-                     spawn "~/.xmonad/scripts/suspend")
              ]
 
 myModMask = mod4Mask
