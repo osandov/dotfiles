@@ -1,6 +1,7 @@
 import XMonad
 import XMonad.Actions.FindEmptyWorkspace
 import XMonad.Actions.GridSelect
+import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeWindows
@@ -35,7 +36,7 @@ main = do
     trayer     <- spawnPipe trayerStatus
     xmonad $ ewmh $ defaultConfig
              { startupHook = ewmhDesktopsStartup
-             , manageHook = manageDocks <+> myManageHook
+             , manageHook = manageSpawn <+> manageDocks <+> myManageHook
              , layoutHook = avoidStrutsOn [U] $ smartBorders $ myLayout
              , logHook    = dynamicLogWithPP defaultPP
                             { ppCurrent = dzenColor "#b58900" "" . wrap "[" "]"
@@ -53,6 +54,7 @@ main = do
              }
              `additionalKeys`
              [ ((myModMask .|. shiftMask, xK_semicolon), spawn "gvim -f")
+             , ((myModMask              , xK_p), spawnHere "~/.dotfiles/bin/dmenu_run")
              , ((myModMask .|. shiftMask, xK_p), spawn "xfrun4")
              , ((myModMask .|. shiftMask, xK_f), tagToEmptyWorkspace)
              , ((myModMask              , xK_f), viewEmptyWorkspace)
