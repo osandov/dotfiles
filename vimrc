@@ -149,3 +149,7 @@ execute pathogen#infect()
 
 " Delimit comments with spaces
 let g:NERDSpaceDelims = 1
+
+" Solarized is pretty
+set background=dark
+colorscheme solarized

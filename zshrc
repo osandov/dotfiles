@@ -33,9 +33,10 @@ case $TERM in
     xterm*)
         precmd () {print -Pn "\e]0;%~\a"}
         preexec () {
-            COMMAND=`echo "$1" | awk '{print $1}'`
+            COMMAND=$(echo "$1" | awk '{print $1}')
             print -n "\e]0;$COMMAND\a"
         }
+        export TERM=xterm-256color
         ;;
 esac
 
