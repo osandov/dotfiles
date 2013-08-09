@@ -7,6 +7,7 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeWindows
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.PerWorkspace
@@ -34,13 +35,13 @@ main = do
     dzenXmonad <- spawnPipe xmonadStatus
     dzenSystem <- spawnPipe systemStatus
     trayer     <- spawnPipe trayerStatus
-    xmonad $ ewmh $ defaultConfig
+    xmonad $ withUrgencyHook NoUrgencyHook $ ewmh $ defaultConfig
              { startupHook = ewmhDesktopsStartup
              , manageHook = manageSpawn <+> manageDocks <+> myManageHook
              , layoutHook = avoidStrutsOn [U] $ smartBorders $ myLayout
              , logHook    = dynamicLogWithPP defaultPP
                             { ppCurrent = dzenColor "#b58900" "" . wrap "[" "]"
-                            , ppUrgent  = dzenColor "#dc32ff" ""
+                            , ppUrgent  = dzenColor "#dc322f" "" . wrap "(" ")"
                             , ppTitle   = dzenColor "#268bd2" "" . shorten 70
                             , ppOrder   = reverse
                             , ppOutput  = hPutStrLn dzenXmonad
@@ -49,7 +50,6 @@ main = do
              , normalBorderColor  = "#586e75"
              , focusedBorderColor = "#d33682"
              , modMask            = myModMask
-             , terminal           = "xfce4-terminal"
              , workspaces         = myWorkspaces
              }
              `additionalKeys`

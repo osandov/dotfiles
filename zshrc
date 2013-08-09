@@ -36,7 +36,6 @@ case $TERM in
             COMMAND=$(echo "$1" | awk '{print $1}')
             print -n "\e]0;$COMMAND\a"
         }
-        export TERM=xterm-256color
         ;;
 esac
 
@@ -49,7 +48,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 if [ -z "$TMUX" ]; then
-    exec tmx
+    # exec tmx
 elif [ "$TMUX" = "zlogin" ]; then
     export TMUX=
 fi
