@@ -21,7 +21,11 @@ setopt hist_ignore_all_dups
 setopt extendedglob
 bindkey -e
 
-PROMPT="%F{blue}[%n@%m %1~]%(#.#.$) %f"
+# One line prompt
+# PROMPT="%F{blue}[%n@%m %K{black}%F{cyan}%1~%k%F{blue}]%(#.#.$)%f "
+# Two line prompt
+PROMPT="%F{blue}┌[%n@%m %K{black}%F{cyan}%~%k%F{blue}]
+└%(#.#.$)%f "
 
 if [ -e /etc/arch-release ]; then
     source /usr/share/doc/pkgfile/command-not-found.zsh
@@ -53,6 +57,14 @@ elif [ "$TMUX" = "zlogin" ]; then
     export TMUX=
 fi
 
+export EDITOR=vim
+export VISUAL=vim
+export PYTHONSTARTUP=~/.pythonrc
+
+index () {
+    whatis -s "$1" -r . | less
+}
+
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -66,9 +78,3 @@ alias sgrep='grep --exclude="cscope.out" -RIn'
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
 alias ts='tmux switch -t'
-
-index () {
-    whatis -s "$1" -r . | less
-}
-
-export PYTHONSTARTUP=~/.pythonrc

@@ -2,23 +2,20 @@
 
 watch_dropbox ()
 {
-    echo "Dropbox status: " `dropbox status`
+    echo "Dropbox status: " $(dropbox status)
     while [ $? -eq 0 ]
     do
         sleep 1
-        echo "Dropbox status: " `dropbox status`
+        echo "Dropbox status: " $(dropbox status)
     done
 }
 
 if [ -e /tmp/dropbox_dropdown ]
 then
-    kill `cat /tmp/dropbox_dropdown`
+    kill $(cat /tmp/dropbox_dropdown)
     rm /tmp/dropbox_dropdown
 else
-    eval `xdotool getmouselocation --shell`
-    # watch_dropbox | dzen2 `~/.xmonad/dzen_flags` -x $X -y 14 -w 200 -ta l \
-        # -e "button1=exit" &
-    watch_dropbox | dzen2 `~/.xmonad/dzen_flags` -x 966 -y 14 -w 400 -ta l \
+    watch_dropbox | dzen2 $(~/.xmonad/dzen_flags) -x 70% -y 14 -w 30% -ta l \
         -e "button1=exit" &
     echo $! > /tmp/dropbox_dropdown
 fi

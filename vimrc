@@ -73,6 +73,9 @@ cnoremap <C-N> <Down>
 
 filetype plugin indent on
 
+" Avoid annoying delay in terminal
+set ttimeoutlen=100
+
 """""""""" Convenient options
 
 " Backup files in another directory to avoid clutter
@@ -120,9 +123,6 @@ noremap <Leader>sp :set spell!<CR>
 noremap <Leader>mk :mksession! ~/.vim/tmp/session<CR>
 noremap <Leader>sk :source ~/.vim/tmp/session<CR>
 
-" Open a terminal
-noremap <Leader>tm :silent !xfce4-terminal &\!<CR>
-
 " Toggle relative and absolute numbering
 function! g:ToggleNuMode()
     if &rnu
@@ -150,6 +150,29 @@ execute pathogen#infect()
 " Delimit comments with spaces
 let g:NERDSpaceDelims = 1
 
+"""""""""" Appearance
+
 " Solarized is pretty
 set background=dark
 colorscheme solarized
+
+" Change the cursor when in insert mode (XTerm specific)
+" We check $XTERM_VERSION because $TERM == xterm does not necessarily mean
+" actual XTerm (Konsole, XFCE Terminal, etc.)
+let s:xtermMatch = matchlist($XTERM_VERSION, 'XTerm(\(\d\+\))')
+if len(s:xtermMatch) > 0
+    let s:xtermVersion = s:xtermMatch[1]
+    if s:xtermVersion >= 282
+        let &t_SI .= "\<Esc>[6 q"
+    else
+        let &t_SI .= "\<Esc>[4 q"
+    endif
+    let &t_EI .= "\<Esc>[2 q"
+    " 0 or 1 -> blinking block
+    " 2 -> solid block
+    " 3 -> blinking underscore
+    " 4 -> solid underscore
+    " Recent versions of xterm (282 or above) also support
+    " 5 -> blinking vertical bar
+    " 6 -> solid vertical bar
+endif

@@ -1,12 +1,10 @@
 " Hexmode
 
 command! -bar ToggleHex call ToggleHex()
-nnoremap <C-H> :ToggleHex<CR>
-vnoremap <C-H> :<C-U>ToggleHex<CR>
+nnoremap <Leader>hx :ToggleHex<CR>
 
 command! -bar HexRefresh call HexRefresh()
-nnoremap <C-J> :HexRefresh<CR>
-vnoremap <C-J> :<C-U>HexRefresh<CR>
+nnoremap <Leader>hr :HexRefresh<CR>
 
 " helper function to toggle hex mode
 function! ToggleHex()

@@ -1,3 +1,4 @@
+! Omar Sandoval`s Xresources
 ! Cursor
 Xcursor.theme: Vanilla-DMZ
 
@@ -11,16 +12,20 @@ Xft.lcdfilter: lcddefault
 
 ! XTerm
 XTerm*termName: xterm-256color
+XTerm*cursorBlink: true
+XTerm*cursorOnTime: 400
+XTerm*cursorOffTime: 250
+XTerm*faceName: Deja Vu Sans Mono
+XTerm*faceSize: 10
 XTerm*saveLines: 10000
 XTerm*metaSendsEscape: true
 XTerm*bellIsUrgent: true
-XTerm*faceName: Deja Vu Sans Mono
-XTerm*faceSize: 10
 XTerm*selectToClipboard: false
 XTerm*vt100.translations: #override \
     Ctrl Shift <KeyPress> C:  copy-selection(CLIPBOARD) \n\
     Ctrl Shift <KeyPress> V:  insert-selection(CLIPBOARD) \n\
     Ctrl Shift <KeyPress> N:  spawn-new-terminal()
+XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
 ! Solarized Dark
 #define S_yellow        #b58900

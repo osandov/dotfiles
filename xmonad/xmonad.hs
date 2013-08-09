@@ -19,7 +19,7 @@ import XMonad.Util.Run
 import Data.Monoid
 import Graphics.X11.ExtraTypes.XF86
 
-dzenCommand   = "dzen2 `~/.xmonad/dzen_flags`"
+dzenCommand   = "dzen2 $(~/.xmonad/dzen_flags)"
 conkyCommand  = "conky -c ~/.xmonad/status/conky_dzen | " ++ dzenCommand
 trayerCommand = "trayer --edge bottom --height 24 --SetPartialStrut true"
 
@@ -63,10 +63,10 @@ main = do
                      goToSelected $ gsConfig gsColorizer)
              , ((myModMask, xK_q), spawn
                      "xmonad --recompile && (killall conky; killall trayer; xmonad --restart)")
-             , ((myModMask, xK_grave),
-                     spawn "~/.dotfiles/bin/toggle_composite")
-             , ((0       , xK_Print), spawn "xfce4-screenshooter -f")
-             , ((mod1Mask, xK_Print), spawn "xfce4-screenshooter -r")
+             , ((myModMask, xK_grave), spawn "~/.dotfiles/bin/toggle_composite")
+             , ((0       ,  xK_Print), spawn "xfce4-screenshooter -f")
+             , ((mod1Mask,  xK_Print), spawn "xfce4-screenshooter -w")
+             , ((shiftMask, xK_Print), spawn "xfce4-screenshooter -r")
              , ((myModMask .|. shiftMask, xK_l),
                      spawn "xscreensaver-command -lock")
              ]
