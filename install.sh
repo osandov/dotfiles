@@ -30,9 +30,12 @@ ln -is  ~/.dotfiles/dircolors ~/.dircolors
 ln -is  ~/.dotfiles/gtkrc-2.0 ~/.gtkrc-2.0
 ln -is  ~/.dotfiles/gtkrc-3.0 ~/.config/gtk-3.0/settings.ini
 
-# Arch
-ln -is  ~/.dotfiles/xmonad/startxmonad ~/.xinitrc
-
-# Ubuntu
-# sudo ln -is ~/.dotfiles/xmonad/startxmonad /usr/bin/startxmonad
-# sudo cp -i ~/.dotfiles/xmonad/xmonad.desktop /usr/share/xsessions/
+case $DISTRO in
+    arch)
+        ln -is  ~/.dotfiles/xmonad/startxmonad ~/.xinitrc
+        ;;
+    ubuntu)
+        sudo ln -is ~/.dotfiles/xmonad/startxmonad /usr/bin/startxmonad
+        sudo cp -i ~/.dotfiles/xmonad/xmonad.desktop /usr/share/xsessions/
+        ;;
+esac

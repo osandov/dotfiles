@@ -27,11 +27,14 @@ bindkey -e
 PROMPT="%F{blue}┌[%n@%m %K{black}%F{cyan}%~%k%F{blue}]
 └%(#.#.$)%f "
 
-if [ -e /etc/arch-release ]; then
-    source /usr/share/doc/pkgfile/command-not-found.zsh
-else
-    source /etc/zsh_command_not_found
-fi
+case $DISTRO in
+    arch)
+        source /usr/share/doc/pkgfile/command-not-found.zsh
+        ;;
+    ubuntu)
+        source /etc/zsh_command_not_found
+        ;;
+esac
 
 case $TERM in
     xterm*)
@@ -69,8 +72,6 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias sml='rlwrap sml'
-alias racket='rlwrap racket'
 alias meminfo='watch -n 1 cat /proc/meminfo'
 alias cxclip='xclip -selection clipboard'
 alias sgrep='grep --exclude="cscope.out" -RIn'
@@ -78,3 +79,6 @@ alias sgrep='grep --exclude="cscope.out" -RIn'
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
 alias ts='tmux switch -t'
+
+alias sml='rlwrap sml'
+alias racket='rlwrap racket'
