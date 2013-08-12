@@ -1,16 +1,20 @@
 #!/bin/sh
-cachedir=${XDG_CACHE_HOME:-"$HOME/.cache"}
-if [ -d "$cachedir" ]; then
-	cache=$cachedir/dmenu_run
+if hash stest; then
+    cachedir=${XDG_CACHE_HOME:-"$HOME/.cache"}
+    if [ -d "$cachedir" ]; then
+            cache=$cachedir/dmenu_run
+    else
+            cache=$HOME/.dmenu_cache # if no xdg dir, fall back to dotfile in ~
+    fi
+    cmd=$(
+            IFS=:
+            if stest -dqr -n "$cache" $PATH; then
+                    stest -flx $PATH | sort -u | tee "$cache" | dmenu "$@"
+            else
+                    dmenu "$@" < "$cache"
+            fi
+    )
 else
-	cache=$HOME/.dmenu_cache # if no xdg dir, fall back to dotfile in ~
+    cmd=`dmenu_path | dmenu ${1+"$@"}`
 fi
-cmd=$(
-	IFS=:
-	if stest -dqr -n "$cache" $PATH; then
-		stest -flx $PATH | sort -u | tee "$cache" | dmenu "$@"
-	else
-		dmenu "$@" < "$cache"
-	fi
-)
 exec ${SHELL:-/bin/sh} -c "exec $cmd"
