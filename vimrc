@@ -55,6 +55,11 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 
+" Sane tabs
+set smarttab
+set shiftround
+set nojoinspaces
+
 " Wrap at 79 characters
 set textwidth=79
 
@@ -141,7 +146,7 @@ inoremap <C-Y> <Esc>I#include <<Esc>A>
 nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
 inoremap <F3> <Esc>diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2ki
 
-"""""""""" Plugins 
+"""""""""" Plugins
 
 set omnifunc=syntaxcomplete#Complete
 
@@ -156,9 +161,13 @@ let g:NERDSpaceDelims = 1
 set background=dark
 colorscheme solarized
 
+set cursorline
+" set list
+" set listchars=eol:¬,extends:»,tab:▸\ ,trail:›
+
 " Change the cursor when in insert mode (XTerm specific)
 " We check $XTERM_VERSION because $TERM == xterm does not necessarily mean
-" actual XTerm (Konsole, XFCE Terminal, etc.)
+" actual XTerm (Konsole, XFCE Terminal, etc.) and to handle screen/tmux
 let s:xtermMatch = matchlist($XTERM_VERSION, 'XTerm(\(\d\+\))')
 if len(s:xtermMatch) > 0
     let s:xtermVersion = s:xtermMatch[1]
