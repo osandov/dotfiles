@@ -68,6 +68,8 @@ index () {
     whatis -s "$1" -r . | less
 }
 
+source ~/.dotfiles/mark.sh
+
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
