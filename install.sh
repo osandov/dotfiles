@@ -1,12 +1,14 @@
 #!/bin/sh
 
-DIR="$(cd $(dirname "$0") && pwd)"
+cd "$(dirname "$0")"
 
-if [ "$DIR" != "$HOME/.dotfiles" ]
+if [ "$(pwd)" != "$HOME/.dotfiles" ]
 then
-    echo 'This repo should be installed in ~/.dotfiles'
+    echo 'This repo should be installed in ~/.dotfiles' >&2
     exit 1
 fi
+
+exit 0
 
 mkdir -p ~/.vim/tmp
 mkdir -p ~/.vim/backup
