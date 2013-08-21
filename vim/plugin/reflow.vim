@@ -1,3 +1,5 @@
+" Reflow text to the text wrap width
+
 command! -range Reflow <line1>,<line2>call <SID>Reflow()
 
 function! <SID>Reflow() range

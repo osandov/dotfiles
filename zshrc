@@ -38,6 +38,7 @@ esac
 
 case $TERM in
     xterm*)
+        stty -ixon
         precmd () {print -Pn "\e]0;%~\a"}
         preexec () {
             COMMAND=$(echo "$1" | awk '{print $1}')
@@ -54,11 +55,11 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-if [ -z "$TMUX" ]; then
+# if [ -z "$TMUX" ]; then
     # exec tmx
-elif [ "$TMUX" = "zlogin" ]; then
-    export TMUX=
-fi
+# elif [ "$TMUX" = "zlogin" ]; then
+    # export TMUX=
+# fi
 
 export EDITOR=vim
 export VISUAL=vim

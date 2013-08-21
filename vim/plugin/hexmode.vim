@@ -1,4 +1,4 @@
-" Hexmode
+" Hex editing in Vim
 
 command! -bar ToggleHex call ToggleHex()
 nnoremap <Leader>hx :ToggleHex<CR>

@@ -13,8 +13,4 @@ make
 sudo make install
 cd ..
 
-mkdir -p ~/.vim/autoload ~/.vim/bundle
-curl -Sso ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
-cd ~/.vim/bundle
-git clone https://github.com/altercation/vim-colors-solarized.git
-git clone https://github.com/scrooloose/nerdcommenter.git
+~/.dotfiles/update.sh

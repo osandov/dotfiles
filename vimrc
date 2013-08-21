@@ -7,7 +7,8 @@ set nocompatible
 set backspace=indent,eol,start
 
 set backup		" keep a backup file
-set history=500		" keep 500 lines of command line history
+set history=1000	" keep 1000 lines of command line history
+set tabpagemax=50       " we can afford more than 10 tabs
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
@@ -79,7 +80,7 @@ cnoremap <C-N> <Down>
 filetype plugin indent on
 
 " Avoid annoying delay in terminal
-set ttimeoutlen=100
+set ttimeoutlen=50
 
 """""""""" Convenient options
 
@@ -137,7 +138,7 @@ function! g:ToggleNuMode()
     endif
 endfunc
 
-noremap <C-L> <Esc>:call g:ToggleNuMode()<CR>
+noremap <C-L> :call g:ToggleNuMode()<CR>
 
 nnoremap <C-S> gUiw
 vnoremap <C-S> gU
@@ -147,8 +148,6 @@ nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<
 inoremap <F3> <Esc>diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2ki
 
 """""""""" Plugins
-
-set omnifunc=syntaxcomplete#Complete
 
 execute pathogen#infect()
 
@@ -165,11 +164,10 @@ set cursorline
 " set list
 " set listchars=eol:¬,extends:»,tab:▸\ ,trail:›
 
-" Change the cursor when in insert mode (XTerm specific)
-" We check $XTERM_VERSION because $TERM == xterm does not necessarily mean
-" actual XTerm (Konsole, XFCE Terminal, etc.) and to handle screen/tmux
+" XTerm-specific stuff
 let s:xtermMatch = matchlist($XTERM_VERSION, 'XTerm(\(\d\+\))')
-if len(s:xtermMatch) > 0
+if !has("gui_running") && len(s:xtermMatch) > 0
+    " Change cursor in insert mode like a GVim weenie
     let s:xtermVersion = s:xtermMatch[1]
     if s:xtermVersion >= 282
         let &t_SI .= "\<Esc>[6 q"
@@ -184,4 +182,8 @@ if len(s:xtermMatch) > 0
     " Recent versions of xterm (282 or above) also support
     " 5 -> blinking vertical bar
     " 6 -> solid vertical bar
+
+    " Ugh, Meta-Alt-Escape crap
+    exec "set <M-b>=\eb"
+    exec "set <M-f>=\ef"
 endif
