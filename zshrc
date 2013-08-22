@@ -61,10 +61,6 @@ fi
     # export TMUX=
 # fi
 
-export EDITOR=vim
-export VISUAL=vim
-export PYTHONSTARTUP=~/.pythonrc
-
 index () {
     whatis -s "$1" -r . | less
 }

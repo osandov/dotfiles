@@ -29,12 +29,11 @@ function! ToggleHex()
         let b:oldft=&ft
         let b:oldbin=&bin
         " set new options
-        setlocal binary " make sure it overrides any textwidth, etc.
+        setlocal binary " make sure to override any textwidth, etc.
         let &ft="xxd"
-
         " set status
         let b:hexmode=1
-        " switch to hex editor
+        " switch to hex editing
         silent %!xxd
     endif
 
