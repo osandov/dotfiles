@@ -5,11 +5,12 @@ xmonad, and Vim config. You can get something up and running right away with
 the following:
 
     git clone https://github.com/osandov/dotfiles.git ~/.dotfiles
-    ~/.dotfiles/automated.sh
+    DISTRO=ubuntu ~/.dotfiles/automated.sh
 
 This will clone this repo into the proper directory and begin an automated
 install process, including installing all dependencies in a distro-aware way
-(or at least that's the plan).
+(or at least that's the plan, currently only setting the DISTRO variable to
+"ubuntu" [case-sensitive] does anything).
 
 Besides `automated.sh`, there are two other scripts of interest included in the
 top-level directory of the repo. `install.sh` will set up all of the necessary

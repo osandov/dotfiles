@@ -8,8 +8,6 @@ then
     exit 1
 fi
 
-exit 0
-
 mkdir -p ~/.vim/tmp
 mkdir -p ~/.vim/backup
 
