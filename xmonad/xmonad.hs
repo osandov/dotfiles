@@ -50,6 +50,7 @@ main = do
              , normalBorderColor  = "#586e75"
              , focusedBorderColor = "#d33682"
              , modMask            = myModMask
+             , terminal           = "xterm"
              , workspaces         = myWorkspaces
              }
              `additionalKeys`
