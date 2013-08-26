@@ -19,7 +19,7 @@ VOLUME=`expr $TOTAL_VOLUME / $NUM_CHANNELS`
 
 if [ "$MUTED" -gt 0 ]
 then
-    echo "^i(.xmonad/icons/spkr_mute.xbm) ^fg($RED)MUTE^fg()"
+    echo "^i($HOME/.xmonad/icons/spkr_mute.xbm) ^fg($RED)MUTE^fg()"
 else
-    printf "^i(.xmonad/icons/spkr_play.xbm) %3d%%" "$VOLUME"
+    printf "^i($HOME/.xmonad/icons/spkr_play.xbm) %3d%%" "$VOLUME"
 fi

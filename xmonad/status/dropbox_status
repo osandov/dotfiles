@@ -1,17 +1,17 @@
 #!/bin/sh
 
-if ! dropbox running
-then
-    STATUS="`dropbox status`"
-    SECONDS=`date +%s`
-    TOGGLE=`expr $SECONDS % 2`
+if hash dropbox 2> /dev/null; then
+    if ! dropbox running; then
+        STATUS="$(dropbox status)"
+        SECONDS=$(date '+%s')
+        TOGGLE=$(expr $SECONDS % 2)
 
-    if [ "$STATUS" = "Idle" -o $TOGGLE -eq 0 ]
-    then
-        ICON="^i(.xmonad/icons/dropbox_idle.xbm)"
-    else
-        ICON="^i(.xmonad/icons/dropbox_busy.xbm)"
+        if [ "$STATUS" = "Idle" -o $TOGGLE -eq 0 ]; then
+            ICON="^i($HOME/.xmonad/icons/dropbox_idle.xbm)"
+        else
+            ICON="^i($HOME/.xmonad/icons/dropbox_busy.xbm)"
+        fi
+
+        echo "^ca(1, $HOME/.xmonad/dropdowns/dropbox_dropdown)$ICON^ca() | "
     fi
-
-    echo "^ca(1, ~/.xmonad/dropdowns/dropbox_dropdown)$ICON^ca() | "
 fi
