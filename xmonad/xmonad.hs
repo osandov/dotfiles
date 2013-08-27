@@ -16,6 +16,7 @@ import XMonad.Layout.Tabbed
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
+import Data.Char (toLower)
 import Data.Monoid
 import Graphics.X11.ExtraTypes.XF86
 
@@ -45,6 +46,7 @@ main = do
                             , ppTitle   = dzenColor "#268bd2" "" . shorten 70
                             , ppOrder   = reverse
                             , ppOutput  = hPutStrLn dzenXmonad
+                            , ppLayout  = wrap "^i(.xmonad/icons/" ".xbm)" . (map toLower)
                             } >> fadeWindowsLogHook myFadeHook
              , handleEventHook = ewmhDesktopsEventHook <+> fadeWindowsEventHook
              , normalBorderColor  = "#586e75"
