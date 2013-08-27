@@ -57,8 +57,8 @@ main = do
              [ ((myModMask .|. shiftMask, xK_semicolon), spawn "gvim -f")
              , ((myModMask              , xK_p), spawnHere "~/.dotfiles/bin/dmenu_run")
              , ((myModMask .|. shiftMask, xK_p), spawn "xfrun4")
-             , ((myModMask .|. shiftMask, xK_f), tagToEmptyWorkspace)
-             , ((myModMask              , xK_f), viewEmptyWorkspace)
+             , ((myModMask              , xK_0), viewEmptyWorkspace)
+             , ((myModMask .|. shiftMask, xK_0), sendToEmptyWorkspace)
              , ((myModMask .|. shiftMask, xK_t), sendMessage $ ToggleStrut D)
              , ((myModMask              , xK_i),
                      goToSelected $ gsConfig gsColorizer)
@@ -69,7 +69,7 @@ main = do
              , ((mod1Mask,  xK_Print), spawn "xfce4-screenshooter -w")
              , ((shiftMask, xK_Print), spawn "xfce4-screenshooter -r")
              , ((myModMask .|. shiftMask, xK_l),
-                     spawn "xscreensaver-command -lock")
+                     spawn "~/.dotfiles/bin/lock_screensaver")
              ]
 
 myModMask = mod4Mask
@@ -86,11 +86,11 @@ gsColorizer = colorRangeFromClassName
 myWorkspaces = ["web", "vim"] ++ map show [3..7] ++ ["irc", "vm"]
 
 myManageHook = composeOne
-               [ isFullscreen                       -?> doFullFloat
-               , isDialog                           -?> doCenterFloat
-               , className =? "Gnuplot"             -?> doCenterFloat
-               , className =? "Xfce4-notifyd"       -?> doIgnore
-               , className =? "Xfrun4"              -?> doCenterFloat
+               [ isFullscreen                 -?> doFullFloat
+               , isDialog                     -?> doCenterFloat
+               , className =? "Gnuplot"       -?> doCenterFloat
+               , className =? "Xfce4-notifyd" -?> doIgnore
+               , className =? "Xfrun4"        -?> doCenterFloat
                ]
 
 myFadeHook = composeAll

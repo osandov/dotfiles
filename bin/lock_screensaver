@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if pgrep gnome-screensav; then
+    gnome-screensaver-command --lock
+elif pgrep xscreensaver; then
+    xscreensaver-command -lock
+fi
