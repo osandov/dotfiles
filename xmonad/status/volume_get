@@ -19,7 +19,9 @@ VOLUME=`expr $TOTAL_VOLUME / $NUM_CHANNELS`
 
 if [ "$MUTED" -gt 0 ]
 then
-    echo "^i($HOME/.xmonad/icons/spkr_mute.xbm) ^fg($RED)MUTE^fg()"
+    ICON="$(echo "^i($HOME/.xmonad/icons/spkr_mute.xbm) ^fg($RED)MUTE^fg()")"
 else
-    printf "^i($HOME/.xmonad/icons/spkr_play.xbm) %3d%%" "$VOLUME"
+    ICON="$(printf "^i($HOME/.xmonad/icons/spkr_play.xbm) %3d%%" "$VOLUME")"
 fi
+
+echo "^ca(1, xterm -e "alsamixer")$ICON^ca()"

@@ -1,6 +1,4 @@
 import XMonad
-import XMonad.Actions.FindEmptyWorkspace
-import XMonad.Actions.GridSelect
 import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
@@ -11,14 +9,12 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.PerWorkspace
-import XMonad.Layout.Simplest
 import XMonad.Layout.Tabbed
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
 import Data.Char (toLower)
 import Data.Monoid
-import Graphics.X11.ExtraTypes.XF86
 
 dzenCommand   = "dzen2 $(~/.xmonad/dzen_flags)"
 conkyCommand  = "conky -c ~/.xmonad/status/conky_dzen | " ++ dzenCommand
@@ -59,11 +55,7 @@ main = do
              [ ((myModMask .|. shiftMask, xK_semicolon), spawn "gvim -f")
              , ((myModMask              , xK_p), spawnHere "~/.dotfiles/bin/dmenu_run")
              , ((myModMask .|. shiftMask, xK_p), spawn "xfrun4")
-             , ((myModMask              , xK_0), viewEmptyWorkspace)
-             , ((myModMask .|. shiftMask, xK_0), sendToEmptyWorkspace)
              , ((myModMask .|. shiftMask, xK_t), sendMessage $ ToggleStrut D)
-             , ((myModMask              , xK_i),
-                     goToSelected $ gsConfig gsColorizer)
              , ((myModMask, xK_q), spawn
                      "xmonad --recompile && (killall conky; killall trayer; xmonad --restart)")
              , ((myModMask, xK_grave), spawn "~/.dotfiles/bin/toggle_composite")
@@ -75,15 +67,6 @@ main = do
              ]
 
 myModMask = mod4Mask
-
-gsConfig colorizer = (buildDefaultGSConfig colorizer)
-
-gsColorizer = colorRangeFromClassName
-    minBound           -- lowest inactive bg
-    (0x77, 0x74, 0x6a) -- highest inactive bg
-    (0xfd, 0xf6, 0xe3) -- active bg
-    (0x93, 0xa1, 0xa1) -- inactive fg
-    (0x65, 0x7b, 0x83) -- active fg
 
 myWorkspaces = ["web", "vim"] ++ map show [3..7] ++ ["irc", "vm"]
 

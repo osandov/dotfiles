@@ -23,13 +23,13 @@ if [ -d "$HOME/.cabal/bin" ]; then
     add_to_path "$HOME/.cabal/bin"
 fi
 
-if [ -r "$HOME/.zshenv.local" ]; then
-    source "$HOME/.zshenv.local" 
-fi
-
 export EDITOR=vim
 export VISUAL=vim
 export PYTHONSTARTUP=~/.pythonrc
 export PAGER=less
 export LESS=R
 export CFLAGS=-pipe
+
+if [ -r "$HOME/.zshenv.local" ]; then
+    source "$HOME/.zshenv.local" 
+fi
