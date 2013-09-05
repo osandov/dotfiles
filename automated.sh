@@ -12,6 +12,8 @@ if [ ! -z "$DISTRO" -a -x "$HOME/.dotfiles/automated/automated.$DISTRO.sh" ]; th
     "$HOME/.dotfiles/automated/automated.$DISTRO.sh"
 fi
 
+chsh -s "$(which zsh)"
+
 ~/.dotfiles/install.sh
 
 git clone https://github.com/osandov/dzen.git /tmp/dzen

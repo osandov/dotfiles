@@ -27,6 +27,7 @@ ln -is  ~/.dotfiles/tmux.conf ~/.tmux.conf
 ln -is  ~/.dotfiles/pythonrc ~/.pythonrc
 ln -is  ~/.dotfiles/dircolors ~/.dircolors
 
+mkdir -p ~/.config/gtk-3.0
 ln -is  ~/.dotfiles/gtkrc-2.0 ~/.gtkrc-2.0
 ln -is  ~/.dotfiles/gtkrc-3.0 ~/.config/gtk-3.0/settings.ini
 
