@@ -12,6 +12,7 @@ sudo pacman --noconfirm -S --needed archlinux-themes-slim alsa-utils \
     xmonad-contrib xorg-xmessage xscreensaver xterm zsh
 
 sudo sed -ri 's/(current_theme\s+)default/\1archlinux-simplyblack/' /etc/slim.conf
+sudo systemctl enable slim
 
 cd /tmp
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
