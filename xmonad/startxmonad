@@ -34,5 +34,5 @@ eval $(ssh-agent)
 xscreensaver -no-splash & # Screensaver
 nm-applet &               # NetworkManager applet
 volumeicon &              # Volume applet
-xcompmgr &                # Start the compositing manager
+compton -b                # Start the compositing manager
 xmonad                    # Start the window manager

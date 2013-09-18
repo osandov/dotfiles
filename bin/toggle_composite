@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if pgrep xcompmgr
+if pgrep compton
 then
-    killall xcompmgr
+    killall compton
 else
-    xcompmgr &
+    compton -b
 fi
