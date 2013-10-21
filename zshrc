@@ -12,6 +12,7 @@ zstyle ':completion:*' completer _expand _complete _ignored _correct _approximat
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]} l:|=* r:|=*' 'l:|=* r:|=*' 'r:|[._-]=** r:|=**'
 zstyle :compinstall filename '/home/osandov/.zshrc'
 
+fpath=(~/.zsh/completion ~/.zsh $fpath)
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
@@ -26,6 +27,9 @@ bindkey -e
 # Two line prompt
 PROMPT="%F{blue}┌[%n@%m %K{black}%F{cyan}%~%k%F{blue}]
 └%(#.#.$)%f "
+
+autoload -Uz mark
+mark
 
 case $DISTRO in
     arch)
@@ -65,8 +69,6 @@ index () {
     whatis -s "$1" -r . | less
 }
 
-source ~/.dotfiles/mark.sh
-
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -74,6 +76,7 @@ alias l='ls -CF'
 alias meminfo='watch -n 1 cat /proc/meminfo'
 alias cxclip='xclip -selection clipboard'
 alias sgrep='grep --exclude="cscope.out" -RIn'
+alias da='du --apparent-size'
 
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session'

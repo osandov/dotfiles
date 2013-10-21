@@ -1,0 +1,24 @@
+#compdef jump unmark
+
+_jump() {
+    MARKS=$(ls "$MARKDIR")
+    _arguments "1: :($MARKS)"
+}
+
+_unmark() {
+    MARKS=$(ls "$MARKDIR")
+    _arguments "1: :($MARKS)"
+}
+
+_mark_comp() {
+    case "$service" in
+        jump)
+            _jump "$@"
+            ;;
+        unmark)
+            _unmark "$@"
+            ;;
+    esac
+}
+
+_mark_comp "$@"

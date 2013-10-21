@@ -112,6 +112,9 @@ vnoremap <Space> :nohl<CR>
 nnoremap \ ,
 let mapleader = ","
 
+" Write
+noremap <Leader>m :w<CR>
+
 " Move between windows
 noremap <Leader>w <C-W>w
 
@@ -126,8 +129,8 @@ noremap <Leader>cd :cd %:p:h<CR>
 noremap <Leader>sp :set spell!<CR>
 
 " Quick and dirty sessions
-noremap <Leader>mk :mksession! ~/.vim/tmp/session<CR>
-noremap <Leader>sk :source ~/.vim/tmp/session<CR>
+noremap <Leader>km :mksession! ~/.vim/tmp/session<CR>
+noremap <Leader>ks :source ~/.vim/tmp/session<CR>
 
 " Toggle relative and absolute numbering
 function! g:ToggleNuMode()

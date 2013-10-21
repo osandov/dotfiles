@@ -20,6 +20,7 @@ ln -is  ~/.dotfiles/vimrc ~/.vimrc
 ln -is  ~/.dotfiles/gvimrc ~/.gvimrc
 ln -is  ~/.dotfiles/vimperatorrc ~/.vimperatorrc
 
+ln -ins ~/.dotfiles/zsh ~/.zsh
 ln -is  ~/.dotfiles/zshenv ~/.zshenv
 ln -is  ~/.dotfiles/zshrc ~/.zshrc
 ln -is  ~/.dotfiles/tmux.conf ~/.tmux.conf
