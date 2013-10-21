@@ -22,9 +22,6 @@ xsetroot -cursor_name left_ptr        # Don't want that ugly X cursor
 
 # Start some daemons
 xfce4-power-manager
-if hash dropbox; then
-    dropbox start
-fi
 eval $(/usr/bin/gnome-keyring-daemon --start components=gpg,pkcs11,secrets)
 export GPG_AGENT_INFO
 export GNOME_KEYRING_CONTROL
