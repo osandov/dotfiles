@@ -64,11 +64,12 @@ set nojoinspaces
 " Wrap at 79 characters
 set textwidth=79
 
-" Swap : and ; in normal and visual modes
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
+" Leader
+nnoremap \ ,
+let mapleader = ","
+
+" Write
+noremap <Leader>m :w<CR>
 
 " Use jk to exit from insert mode
 imap jk <Esc>
@@ -107,13 +108,6 @@ set switchbuf=usetab,newtab
 " Toggle search highlighting
 nnoremap <Space> :nohl<CR>
 vnoremap <Space> :nohl<CR>
-
-" Leader
-nnoremap \ ,
-let mapleader = ","
-
-" Write
-noremap <Leader>m :w<CR>
 
 " Move between windows
 noremap <Leader>w <C-W>w
