@@ -1,1 +1,1 @@
-nnoremap <Leader>lm :w <bar> !pdflatex %<CR>
+set makeprg=pdflatex\ %
