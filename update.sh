@@ -50,4 +50,14 @@ else
         echo "Installing rsi.vim"
         git clone https://github.com/tpope/vim-rsi.git
     fi
+
+    cd ~/.vim/bundle
+    if [ -d vim-repeat ]; then
+        echo "Updating repeat.vim"
+        cd vim-repeat
+        git pull
+    else
+        echo "Installing repeat.vim"
+        git clone https://github.com/tpope/vim-repeat.git
+    fi
 fi
