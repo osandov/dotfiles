@@ -22,10 +22,14 @@ setopt hist_ignore_all_dups
 setopt extendedglob
 bindkey -e
 
+if [ -r ~/.hostcolor ]; then
+    source ~/.hostcolor
+fi
+
 # One line prompt
-# PROMPT="%F{blue}[%n@%m %K{black}%F{cyan}%1~%k%F{blue}]%(#.#.$)%f "
+# PROMPT="%F{blue}[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%1~%k%F{blue}]%(#.#.$)%f "
 # Two line prompt
-PROMPT="%F{blue}┌[%n@%m %K{black}%F{cyan}%~%k%F{blue}]
+PROMPT="%F{blue}┌[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%~%k%F{blue}]
 └%(#.#.$)%f "
 
 autoload -Uz mark
