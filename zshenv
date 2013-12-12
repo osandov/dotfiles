@@ -28,7 +28,7 @@ export VISUAL=vim
 export PYTHONSTARTUP=~/.pythonrc
 export PAGER=less
 export LESS=R
-export CFLAGS=-pipe
+export CFLAGS="-Wall -pipe"
 
 if [ -r "$HOME/.zshenv.local" ]; then
     source "$HOME/.zshenv.local" 
