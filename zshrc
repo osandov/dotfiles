@@ -79,7 +79,7 @@ alias l='ls -CF'
 
 alias meminfo='watch -n 1 cat /proc/meminfo'
 alias cxclip='xclip -selection clipboard'
-alias sgrep='grep --exclude="cscope.out" -RIn'
+alias sgrep='grep --exclude="cscope.out" --exclude-dir=".svn" -RIn'
 alias da='du --apparent-size'
 
 alias tl='tmux list-sessions'

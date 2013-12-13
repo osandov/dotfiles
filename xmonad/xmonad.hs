@@ -84,7 +84,7 @@ myKeys = [ ((myModMask .|. shiftMask, xK_semicolon), spawn "gvim -f")
 
 myModMask = mod4Mask
 
-myWorkspaces = ["web", "vim"] ++ map show [3..7] ++ ["irc", "vm"]
+myWorkspaces = ["web", "vim"] ++ map show [3..6] ++ ["music", "irc", "vm"]
 
 myManageHook = composeOne
                [ isFullscreen                 -?> doFullFloat
