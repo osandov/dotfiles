@@ -7,7 +7,7 @@ sudo pacman  -Sy
 sudo pacman --noconfirm -S --needed archlinux-themes-slim alsa-utils \
     base-devel dmenu evince firefox git gnome-keyring gvim hsetroot \
     network-manager-applet numlockx openssh pkgfile ristretto slim thunar \
-    tmux trayer ttf-dejavu tumbler volumeicon xcursor-vanilla-dmz
+    tmux trayer ttf-dejavu tumbler volumeicon xcursor-vanilla-dmz \
     xfce4-notifyd xfce4-power-manager xfce4-screenshooter xmonad \
     xmonad-contrib xorg-xmessage xscreensaver xterm zsh
 
