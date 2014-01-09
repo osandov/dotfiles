@@ -1,0 +1,120 @@
+MARKDIR=~/.marks
+DROPBOX_DIR=~/Dropbox
+DROPBOX_MARKDIR="$DROPBOX_DIR/.marks"
+
+mkdir -p "$MARKDIR"
+mkdir -p "$DROPBOX_MARKDIR"
+
+# Add a new mark
+mark () {
+    if [ $# -lt 1 -o $# -gt 2 ]; then
+        echo "Usage: mark [TARGET] MARK" >&2
+        return 1
+    fi
+
+    if [ $# -eq 2 ]; then
+        if [ ! -d "$1" ]; then
+            echo "$0: not a directory: $1"
+            return 1
+        fi
+
+        pushd "$1" > /dev/null
+        TARGET="$(pwd)"
+        popd > /dev/null
+        shift
+    else
+        TARGET="$(pwd)"
+    fi
+
+    if findmark "$1" > /dev/null 2>&1; then
+        echo "mark: mark already exists: $1" >&2
+        return 1
+    fi
+
+    if [ "$TARGET" '=~' "^$DROPBOX_DIR/" ]; then
+        echo "$TARGET" > "$DROPBOX_MARKDIR/$1"
+    else
+        echo "$TARGET" > "$MARKDIR/$1"
+    fi
+}
+
+# List all marks
+marks () {
+    if [ $# -gt 0 ]; then
+        echo "Usage: marks" >&2
+        return 1
+    fi
+
+    find "$MARKDIR" "$DROPBOX_MARKDIR" -type f | while read -r MARKFILE; do
+        MARK="$(basename "$MARKFILE")"
+        TARGET="$(cat "$MARKFILE")"
+        printf "%s -> %s\n" "$MARK" "$TARGET"
+    done
+}
+
+# Print the location of the mark file itself
+findmark () {
+    if [ $# -ne 1 ]; then
+        echo "Usage: findmark MARK" >&2
+        return 1
+    fi
+
+    if [ -f "$MARKDIR/$1" ]; then
+        echo "$MARKDIR/$1"
+    elif [ -f "$DROPBOX_MARKDIR/$1" ]; then
+        echo "$DROPBOX_MARKDIR/$1"
+    else
+        echo "$0: no such mark: $1" >&2
+        return 1
+    fi
+}
+
+# Read the target of the mark
+readmark () {
+    if [ $# -ne 1 ]; then
+        echo "Usage: readmark MARK" >&2
+        return 1
+    fi
+
+    MARK="$(findmark "$1")"
+    if [ $? -eq 0 ]; then
+        cat "$MARK"
+    else
+        return 1
+    fi
+}
+
+# Change directories to a mark
+jump () {
+    if [ $# -ne 1 ]; then
+        echo "Usage: jump MARK" >&2
+        return 1
+    fi
+
+    TARGET="$(readmark "$1")"
+    if [ $? -eq 0 ]; then
+        cd "$TARGET"
+    else
+        return 1
+    fi
+}
+
+# Remove a mark
+unmark () {
+    if [ $# -lt 1 ]; then
+        echo "Usage: unmark MARK" >&2
+        return 1
+    fi
+
+    error=0
+    while [ $# -gt 0 ]; do
+        MARK="$(findmark "$1")"
+        if [ $? -eq 0 ]; then
+            rm -i "$MARK"
+        else
+            error=1
+        fi
+        shift
+    done
+    return error
+}

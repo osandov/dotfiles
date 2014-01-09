@@ -1,16 +1,16 @@
 #compdef jump unmark
 
 _jump() {
-    MARKS=$(ls "$MARKDIR")
+    MARKS=$(find "$MARKDIR" "$DROPBOX_MARKDIR" -type f -exec basename {} \;)
     _arguments "1: :($MARKS)"
 }
 
 _unmark() {
-    MARKS=$(ls "$MARKDIR")
-    _arguments "1: :($MARKS)"
+    MARKS=$(find "$MARKDIR" "$DROPBOX_MARKDIR" -type f -exec basename {} \;)
+    _arguments "*: :($MARKS)"
 }
 
-_mark_comp() {
+_zshmarks_comp() {
     case "$service" in
         jump)
             _jump "$@"
@@ -21,4 +21,4 @@ _mark_comp() {
     esac
 }
 
-_mark_comp "$@"
+_zshmarks_comp "$@"

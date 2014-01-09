@@ -32,8 +32,8 @@ fi
 PROMPT="%F{blue}┌[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%~%k%F{blue}]
 └%(#.#.$)%f "
 
-autoload -Uz mark
-mark
+autoload -Uz zshmarks
+zshmarks
 
 case $DISTRO in
     arch)
