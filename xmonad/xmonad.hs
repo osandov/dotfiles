@@ -68,7 +68,7 @@ myKeys = [ ((myModMask .|. shiftMask, xK_semicolon), spawn "gvim -f")
          , ((myModMask .|. shiftMask, xK_p), spawn "xfrun4")
          , ((myModMask .|. shiftMask, xK_t), sendMessage $ ToggleStrut D)
          , ((myModMask, xK_q), spawn
-                 "xmonad --recompile && (killall conky; killall trayer; xmonad --restart)")
+                 "xmonad --recompile && (killall conky trayer; xmonad --restart)")
          , ((myModMask, xK_grave), spawn "~/.dotfiles/bin/toggle_composite")
          , ((0       ,  xK_Print), spawn "xfce4-screenshooter -f")
          , ((mod1Mask,  xK_Print), spawn "xfce4-screenshooter -w")
@@ -92,6 +92,7 @@ myManageHook = composeOne
                , className =? "Gnuplot"       -?> doCenterFloat
                , className =? "Xfce4-notifyd" -?> doIgnore
                , className =? "Xfrun4"        -?> doCenterFloat
+               , return True                  -?> doF W.swapDown
                ]
 
 myFadeHook = composeAll
