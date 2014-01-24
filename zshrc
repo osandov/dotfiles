@@ -20,6 +20,7 @@ compinit
 setopt hist_ignore_space
 setopt hist_ignore_all_dups
 setopt extendedglob
+setopt inc_append_history
 bindkey -e
 
 if [ -r ~/.hostcolor ]; then
