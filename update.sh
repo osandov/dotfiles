@@ -10,7 +10,7 @@ NEW_COMMIT=$(git log -1 --pretty="%H" update.sh)
 if [ $OLD_COMMIT != $NEW_COMMIT ]; then
     echo "update.sh has changed, running the new one instead"
     ./update.sh
-else
+elif [ -d ~/.vim ]; then
     mkdir -p ~/.vim/autoload ~/.vim/bundle
 
     cd ~/.vim/autoload
@@ -59,5 +59,15 @@ else
     else
         echo "Installing repeat.vim"
         git clone https://github.com/tpope/vim-repeat.git
+    fi
+
+    cd ~/.vim/bundle
+    if [ -d clang_complete ]; then
+        echo "Updating clang_complete"
+        cd clang_complete
+        git pull
+    else
+        echo "Install clang_complete"
+        git clone https://github.com/Rip-Rip/clang_complete.git
     fi
 fi
