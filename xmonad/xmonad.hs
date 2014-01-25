@@ -1,7 +1,7 @@
 import XMonad
-import XMonad.Actions.FindEmptyWorkspace
+import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
-import XMonad.Actions.SwapWorkspaces (swapWithCurrent)
+import XMonad.Actions.WorkspaceNames
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeWindows
@@ -12,9 +12,10 @@ import XMonad.Layout.Named
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Tabbed
+import XMonad.Prompt
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
-import XMonad.Util.WorkspaceCompare
+import XMonad.Util.WorkspaceCompare (getSortByIndex)
 
 import qualified XMonad.StackSet as W
 
@@ -25,35 +26,39 @@ import Data.Maybe (fromJust, isJust)
 import Data.Monoid
 import Data.Ord (comparing)
 
-
 dzenCommand   = "dzen2 $(~/.xmonad/dzen_flags)"
 conkyCommand  = "conky -c ~/.xmonad/status/conky_dzen | " ++ dzenCommand
-trayerCommand = "trayer --edge bottom --height 24 --SetPartialStrut true"
+
+promptFont = "-misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-*-*"
+dmenuCommand = "~/.dotfiles/bin/dmenu_run -fn '" ++ promptFont ++ "' -nb '#222222' -nf '#bababa' -sb '#005577' -sf '#ededed'"
 
 xmonadStatus = dzenCommand ++ " -xs 1 -w 50% -ta l"
 systemStatus = conkyCommand ++ " -xs 1 -x 50% -w 50% -ta r"
-trayerStatus = trayerCommand ++ " --transparent true --alpha 32 --tint 0x002b36"
 
 (/->)   :: Monoid m => Query Bool -> Query m -> Query m
 p /-> f =  p >>= \b -> if b then idHook else f
 infix 0 /->
 
+followTo :: Direction1D -> WSType -> X ()
+followTo dir t = doTo dir t getSortByIndex $ \w ->
+    (windows (W.shift w)) >> (windows (W.greedyView w))
+
 main = do
     dzenXmonad <- spawnPipe xmonadStatus
     dzenSystem <- spawnPipe systemStatus
-    trayer     <- spawnPipe trayerStatus
     xmonad $ withUrgencyHook NoUrgencyHook $ ewmh $ defaultConfig
              { startupHook = ewmhDesktopsStartup
              , manageHook = manageSpawn <+> manageDocks <+> myManageHook
              , layoutHook = avoidStrutsOn [U] $ smartBorders $ myLayout
-             , logHook    = dynamicLogWithPP defaultPP
+             , logHook    = workspaceNamesPP defaultPP
                             { ppCurrent = dzenColor "#b58900" "" . wrap "[" "]"
                             , ppUrgent  = dzenColor "#dc322f" "" . wrap "(" ")"
                             , ppTitle   = dzenColor "#268bd2" "" . shorten 70
                             , ppOrder   = reverse
                             , ppOutput  = hPutStrLn dzenXmonad
                             , ppLayout  = wrap "^i(.xmonad/icons/" ".xbm)" . (map toLower)
-                            } >> fadeWindowsLogHook myFadeHook
+                            } >>= dynamicLogWithPP
+                              >> fadeWindowsLogHook myFadeHook
                               >> wallpaperDLogHook
              , handleEventHook = ewmhDesktopsEventHook <+> fadeWindowsEventHook
              , normalBorderColor  = "#586e75"
@@ -63,28 +68,36 @@ main = do
              , workspaces         = myWorkspaces
              } `additionalKeys` myKeys
 
-myKeys = [ ((myModMask .|. shiftMask, xK_semicolon), spawn "gvim -f")
-         , ((myModMask              , xK_p), spawnHere "~/.dotfiles/bin/dmenu_run")
+myKeys = [ ((myModMask, xK_p), spawnHere dmenuCommand)
+         , ((myModMask, xK_q), spawn
+                 "xmonad --recompile && (killall conky; xmonad --restart)")
+         , ((myModMask .|. shiftMask, xK_l),
+                 spawn "~/.dotfiles/bin/lock_screensaver")
+
+         , ((myModMask, xK_0), toggleWS)
+         , ((myModMask, xK_o), renameWorkspace myXPConfig)
+         , ((myModMask .|. shiftMask, xK_o), setCurrentWorkspaceName "")
+
+         , ((myModMask,                 xK_minus), moveTo Next EmptyWS)
+         , ((myModMask .|. shiftMask,   xK_minus), shiftTo Next EmptyWS)
+         , ((myModMask .|. controlMask, xK_minus), followTo Next EmptyWS)
+
+         , ((myModMask, xK_grave), spawn "~/.dotfiles/bin/toggle_composite")
+
+         , ((myModMask .|. shiftMask, xK_semicolon), spawn "gvim -f")
          , ((myModMask .|. shiftMask, xK_p), spawn "xfrun4")
          , ((myModMask .|. shiftMask, xK_t), sendMessage $ ToggleStrut D)
-         , ((myModMask, xK_q), spawn
-                 "xmonad --recompile && (killall conky trayer; xmonad --restart)")
-         , ((myModMask, xK_grave), spawn "~/.dotfiles/bin/toggle_composite")
+
          , ((0       ,  xK_Print), spawn "xfce4-screenshooter -f")
          , ((mod1Mask,  xK_Print), spawn "xfce4-screenshooter -w")
          , ((shiftMask, xK_Print), spawn "xfce4-screenshooter -r")
-         , ((myModMask .|. shiftMask, xK_l),
-                 spawn "~/.dotfiles/bin/lock_screensaver")
-         , ((myModMask,                 xK_0), viewEmptyWorkspace)
-         , ((myModMask .|. shiftMask,   xK_0), sendToEmptyWorkspace)
-         , ((myModMask .|. controlMask, xK_0), tagToEmptyWorkspace)
          ] ++
-         [ ((myModMask .|. controlMask, k), windows $ swapWithCurrent i)
+         [ ((myModMask .|. controlMask, k), swapWithCurrent i)
            | (i, k) <- zip myWorkspaces [xK_1 ..]]
 
 myModMask = mod4Mask
 
-myWorkspaces = ["web", "vim"] ++ map show [3..6] ++ ["music", "irc", "vm"]
+myWorkspaces = ["net"] ++ map show [2..9]
 
 myManageHook = composeOne
                [ isFullscreen                 -?> doFullFloat
@@ -100,6 +113,17 @@ myFadeHook = composeAll
              , isFullscreen --> opaque
              , isUnfocused  /-> opaque
              ]
+
+myXPConfig = defaultXPConfig
+    { font               = promptFont
+    , bgColor            = "#222222"
+    , fgColor            = "#bababa"
+    , fgHLight           = "#005577"
+    , bgHLight           = "#ededed"
+    , height             = 15
+    , promptBorderWidth  = 0
+    , position           = Top
+    }
 
 tall = Tall nmaster delta ratio
   where
@@ -125,9 +149,9 @@ tab  = named "Tabbed" $ tabbedBottom shrinkText defaultTheme
 
 defaultLayout = tall ||| wide ||| tab
 
-webLayout = tab ||| tall ||| wide
+netLayout = tab ||| tall ||| wide
 
-myLayout = onWorkspace "web" webLayout defaultLayout
+myLayout = onWorkspace "net" netLayout defaultLayout
 
 wallpaperDLogHook :: X ()
 wallpaperDLogHook = withWindowSet $ \s -> do
