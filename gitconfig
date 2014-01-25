@@ -1,0 +1,6 @@
+[color]
+	ui = true
+[push]
+	default = simple
+[include]
+	path = ~/.gitconfig.local

@@ -15,9 +15,10 @@ Optional installation:
   -v    Don't install Vim config
   -z    Don't install zsh config
   -t    Don't install tmux config
+  -g    Don't install Git config
   -p    Don't install Python config
   -d    Don't install dircolors config
-  -g    Don't install GTK config
+  -k    Don't install GTK config
   -x    Don't install xmonad config
   -w    Don't install Vimperator config
 
@@ -51,13 +52,16 @@ while getopts ":vztpdgxwynh" OPT; do
         t)
             NO_TMUX=1
             ;;
+        g)
+            NO_GIT=1
+            ;;
         p)
             NO_PYTHON=1
             ;;
         d)
             NO_DIRCOLORS=1
             ;;
-        g)
+        k)
             NO_GTK=1
             ;;
         x)
@@ -117,6 +121,10 @@ fi
 
 if [ -z "$NO_TMUX" ]; then
     install_file ~/.dotfiles/tmux.conf ~/.tmux.conf
+fi
+
+if [ -z "$NO_GIT" ]; then
+    install_file ~/.dotfiles/gitconfig ~/.gitconfig
 fi
 
 if [ -z "$NO_PYTHON" ]; then

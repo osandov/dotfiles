@@ -152,6 +152,13 @@ execute pathogen#infect()
 " Delimit comments with spaces
 let g:NERDSpaceDelims = 1
 
+let g:clang_close_preview = 1
+
+"""""""""" Misc
+
+" Don't save position in temporary Git commit file
+au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
 """""""""" Appearance
 
 " Solarized is pretty
