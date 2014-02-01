@@ -6,7 +6,7 @@ if hash dropbox 2> /dev/null; then
         SECONDS=$(date '+%s')
         TOGGLE=$(expr $SECONDS % 2)
 
-        if [ "$STATUS" = "Up to date" -o $TOGGLE -eq 0 ]; then
+        if [ "$STATUS" = "Idle" -o $TOGGLE -eq 0 ]; then
             ICON="^i($HOME/.xmonad/icons/dropbox_idle.xbm)"
         else
             ICON="^i($HOME/.xmonad/icons/dropbox_busy.xbm)"
