@@ -1,0 +1,22 @@
+#!/bin/sh
+
+CHANNELS=$(amixer get 'Master' | sed -nr 's/\s*Playback channels:\s*(.*)/\1/p' | sed 's/\s*-\s*/;/g')
+IFS=';'
+TOTAL_VOLUME=0
+NUM_CHANNELS=0
+MUTED=0
+for CHANNEL in $CHANNELS
+do
+    VOLUME=$(amixer get 'Master' | sed -nr "s/\s*${CHANNEL}.*\[(.*)%\].*/\1/p")
+    TOTAL_VOLUME=$(expr $TOTAL_VOLUME + $VOLUME)
+    NUM_CHANNELS=$(expr $NUM_CHANNELS + 1)
+    amixer get 'Master' | fgrep '[on]' > /dev/null
+    MUTED=$(expr $MUTED + $?)
+done
+VOLUME=$(expr $TOTAL_VOLUME / $NUM_CHANNELS)
+
+if [ "$MUTED" -gt 0 ]; then
+    echo "MUTE"
+else
+    echo "$VOLUME"
+fi

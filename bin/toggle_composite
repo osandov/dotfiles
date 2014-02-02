@@ -1,7 +1,6 @@
 #!/bin/sh
 
-if pgrep compton
-then
+if pgrep compton; then
     killall compton
 else
     compton -b

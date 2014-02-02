@@ -2,12 +2,12 @@ background no
 out_to_console yes
 out_to_x no
 update_interval 1.0
-lua_load .xmonad/status/status.lua
+lua_load ~/.xmonad/status/status.lua
  
 TEXT
-${execp .xmonad/status/dropbox_status}\
-^i(.xmonad/icons/cpu.xbm) ${lua_parse color_percent $cpu 15 50} | \
-^i(.xmonad/icons/mem.xbm) ${lua_parse color_percent $memperc 75 75} | \
+${lua_parse dropbox_status}\
+${lua_parse cpu_usage}\
+${lua_parse mem_usage}\
 ${lua_parse battery AC BAT0} | \
-${execp .xmonad/status/volume_get} | \
-^i(.xmonad/icons/clock.xbm) ^fg(\#cb4b16)${time %a %b %_d %Y %I:%M:%S %p}
+${lua_parse volume}\
+${lua_parse clock}
