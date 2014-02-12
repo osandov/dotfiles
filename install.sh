@@ -18,9 +18,8 @@ Optional installation:
   -g    Don't install Git config
   -p    Don't install Python config
   -d    Don't install dircolors config
-  -k    Don't install GTK config
+  -k    Don't install graphic application config (Vimperator, zathura)
   -x    Don't install xmonad config
-  -w    Don't install Vimperator config
 
 Prompts:
   -y    Assume yes when prompted about overwriting a file
@@ -41,7 +40,7 @@ Miscellaneous:
     esac
 }
 
-while getopts ":vztpdgxwynh" OPT; do
+while getopts ":vztgpdkxynh" OPT; do
     case "$OPT" in
         v)
             NO_VIM=1
@@ -66,9 +65,6 @@ while getopts ":vztpdgxwynh" OPT; do
             ;;
         x)
             NO_XMONAD=1
-            ;;
-        w)
-            NO_VIMPERATOR=1
             ;;
         y)
             ASSUME_ANSWER=y
@@ -137,8 +133,11 @@ fi
 
 if [ -z "$NO_GTK" ]; then
     mkdir -p ~/.config/gtk-3.0
+    mkdir -p ~/.config/zathura
     install_file ~/.dotfiles/gtkrc-2.0 ~/.gtkrc-2.0
     install_file ~/.dotfiles/gtkrc-3.0 ~/.config/gtk-3.0/settings.ini
+    install_file ~/.dotfiles/vimperatorrc ~/.vimperatorrc
+    install_file ~/.dotfiles/zathurarc ~/.config/zathura/zathurarc
 fi
 
 if [ -z "$NO_XMONAD" ]; then
@@ -158,8 +157,4 @@ if [ -z "$NO_XMONAD" ]; then
 
     install_file ~/.dotfiles/xmonad ~/.xmonad
     install_file ~/.dotfiles/Xresources ~/.Xresources
-fi
-
-if [ -z "$NO_VIMPERATOR" ]; then
-    install_file ~/.dotfiles/vimperatorrc ~/.vimperatorrc
 fi

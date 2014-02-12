@@ -87,5 +87,6 @@ alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
 alias ts='tmux switch -t'
 
+alias zathura='zathura --fork'
 alias sml='rlwrap sml'
 alias racket='rlwrap racket'
