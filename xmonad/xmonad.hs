@@ -109,7 +109,7 @@ myManageHook = composeOne
                ]
 
 myFadeHook = composeAll
-             [ isUnfocused  --> transparency 0.125
+             [ isUnfocused  --> transparency 0.07
              , isFullscreen --> opaque
              , isUnfocused  /-> opaque
              ]
@@ -134,16 +134,16 @@ tall = Tall nmaster delta ratio
 
 wide = named "Wide" $ Mirror tall
 tab  = named "Tabbed" $ tabbedBottom shrinkText defaultTheme
-    { activeColor         = "#586e75"
-    , activeBorderColor   = "#eee8d5"
-    , activeTextColor     = "#eee8d5"
+    { activeColor         = "#93a1a1"
+    , activeBorderColor   = "#073642"
+    , activeTextColor     = "#073642"
 
-    , inactiveColor       = "#073642"
-    , inactiveBorderColor = "#839496"
-    , inactiveTextColor   = "#839496"
+    , inactiveColor       = "#eee8d5"
+    , inactiveBorderColor = "#657b83"
+    , inactiveTextColor   = "#657b83"
 
-    , urgentColor         = "#586e75"
-    , urgentBorderColor   = "#eee8d5"
+    , urgentColor         = "#93a1a1"
+    , urgentBorderColor   = "#073642"
     , urgentTextColor     = "#cb4b16"
     }
 

@@ -2,7 +2,7 @@
 
 FONT='-misc-fixed-medium-r-normal-*-10-*-*-*-*-*-*-*'
 HEIGHT=14
-FG='#93a1a1' 
-BG='#073642' 
+FG='#586e75'
+BG='#eee8d5'
 
 echo "-fn $FONT -h $HEIGHT -fg $FG -bg $BG -e ''"
