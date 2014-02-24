@@ -144,6 +144,8 @@ inoremap <C-S> <Esc>gUiwea
 inoremap <C-Y> <Esc>I#include <<Esc>A>
 nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
 inoremap <F3> <Esc>diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2ki
+nnoremap <C-N> gt
+nnoremap <C-P> gT
 
 """""""""" Plugins
 

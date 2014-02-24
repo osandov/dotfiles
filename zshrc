@@ -82,6 +82,7 @@ alias meminfo='watch -n 1 cat /proc/meminfo'
 alias cxclip='xclip -selection clipboard'
 alias sgrep='grep --exclude="cscope.out" --exclude-dir=".git" --exclude-dir=".svn" -RIn'
 alias da='du --apparent-size'
+alias pingg='ping 8.8.8.8'
 
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
