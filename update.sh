@@ -67,7 +67,17 @@ elif [ -d ~/.vim ]; then
         cd clang_complete
         git pull
     else
-        echo "Install clang_complete"
+        echo "Installing clang_complete"
         git clone https://github.com/Rip-Rip/clang_complete.git
+    fi
+
+    cd ~/.vim/bundle
+    if [ -d supertab ]; then
+        echo "Updating supertab"
+        cd supertab
+        git pull
+    else
+        echo "Installing supertab"
+        git clone https://github.com/ervandew/supertab
     fi
 fi

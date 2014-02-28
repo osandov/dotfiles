@@ -27,3 +27,5 @@ el
 en
 
 noremap <Leader>sc :call g:ToggleCStyle()<CR>
+
+call SuperTabSetDefaultCompletionType("<C-X><C-U>")

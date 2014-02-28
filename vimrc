@@ -141,7 +141,6 @@ noremap <C-L> :call g:ToggleNuMode()<CR>
 nnoremap <C-S> gUiw
 vnoremap <C-S> gU
 inoremap <C-S> <Esc>gUiwea
-inoremap <C-Y> <Esc>I#include <<Esc>A>
 nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
 inoremap <F3> <Esc>diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2ki
 nnoremap <C-N> gt
@@ -154,7 +153,14 @@ execute pathogen#infect()
 " Delimit comments with spaces
 let g:NERDSpaceDelims = 1
 
-let g:clang_close_preview = 1
+" Disable annoying {clang_,omni}complete preview window
+set completeopt-=preview
+
+" Also autocomplete C preprocessor macros
+let g:clang_complete_macros = 1
+
+" SuperTab scroll down
+let g:SuperTabDefaultCompletionType = "<C-N>"
 
 """""""""" Misc
 
