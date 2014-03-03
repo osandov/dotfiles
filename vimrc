@@ -98,7 +98,7 @@ set relativenumber        " Relative line numbering
 
 " Make Command-Line mode tab completion behave more like zsh
 set wildmenu
-set wildmode=full
+set wildmode=list:longest,list:full
 
 " When switching buffers, switch to an existing tab if the buffer is open or
 " create a new one if it is not
