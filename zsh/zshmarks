@@ -71,17 +71,22 @@ findmark () {
 
 # Read the target of the mark
 readmark () {
-    if [ $# -ne 1 ]; then
-        echo "Usage: readmark MARK" >&2
+    if [ $# -lt 1 ]; then
+        echo "Usage: readmark MARK..." >&2
         return 1
     fi
 
-    MARK="$(findmark "$1")"
-    if [ $? -eq 0 ]; then
-        cat "$MARK"
-    else
-        return 1
-    fi
+    error=0
+    while [ $# -gt 0 ]; do
+        MARK="$(findmark "$1")"
+        if [ $? -eq 0 ]; then
+            cat "$MARK"
+        else
+            error=1
+        fi
+        shift
+    done
+    return error
 }
 
 # Change directories to a mark
@@ -102,7 +107,7 @@ jump () {
 # Remove a mark
 unmark () {
     if [ $# -lt 1 ]; then
-        echo "Usage: unmark MARK" >&2
+        echo "Usage: unmark MARK..." >&2
         return 1
     fi
 
