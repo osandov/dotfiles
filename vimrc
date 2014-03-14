@@ -162,11 +162,6 @@ let g:clang_complete_macros = 1
 " SuperTab scroll down
 let g:SuperTabDefaultCompletionType = "<C-N>"
 
-"""""""""" Misc
-
-" Don't save position in temporary Git commit file
-au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
-
 """""""""" Appearance
 
 " Solarized is pretty
