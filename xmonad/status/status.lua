@@ -14,14 +14,16 @@ do
         local hi = tonumber(high)
         local color = ""
 
-        if lo <= hi then
-            if val <= lo then
-                color = ""
-            elseif val <= hi then
-                color = green
-            else
-                color = red
-            end
+        if lo > hi or val == nil then
+            return ""
+        end
+
+        if val <= lo then
+            color = ""
+        elseif val <= hi then
+            color = green
+        else
+            color = red
         end
 
         return string.format("^fg(%s)%3d%%^fg()", color, val)
@@ -49,6 +51,26 @@ do
         end
     end
 
+    function conky_wifi_status(nic)
+        local qual = tonumber(conky_parse(string.format("${wireless_link_qual_perc %s}", nic)))
+        local icon = ""
+
+        if qual == nil then
+            icon = icon_file("wifi0")
+        elseif qual >= 66 then
+            icon = icon_file("wifi3")
+        elseif qual >= 33 then
+            icon = icon_file("wifi2")
+        else
+            icon = icon_file("wifi1")
+        end
+
+        local format = "^ca(1, %s/.xmonad/dropdowns/wifi_dropdown %s)" ..
+                       "^ca(3, xterm -e 'sudo wifi-menu')%s^ca()^ca() | "
+        return string.format(format, home, nic, icon)
+
+    end
+
     function conky_cpu_usage()
         local val = tonumber(conky_parse("$cpu"))
         return icon_file("cpu") .. color_percent(val, 15, 50) .. " | "
@@ -65,6 +87,10 @@ do
         local icon = ""
         local color = ""
 
+        if charge == nil then
+            return ""
+        end
+
         if charge >= 55 then
             icon = icon_file("bat_full")
             color = green
@@ -80,7 +106,7 @@ do
             icon = icon_file("ac")
         end
 
-        return string.format("%s ^fg(%s)%3d%%^fg()", icon, color, charge)
+        return string.format("%s ^fg(%s)%3d%%^fg() | ", icon, color, charge)
     end
 
     function conky_volume()

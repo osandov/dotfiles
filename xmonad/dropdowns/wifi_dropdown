@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if [ -e /tmp/.wifi_dropdown ]
+then
+    kill $(cat /tmp/.wifi_dropdown)
+    rm /tmp/.wifi_dropdown
+    rm /tmp/.wifi_conky
+else
+    echo "\
+background no
+out_to_console yes
+out_to_x no
+update_interval 1.0
+
+TEXT
+\${wireless_essid $1}" > /tmp/.wifi_conky
+    conky -c /tmp/.wifi_conky | dzen2 $(~/.xmonad/dzen_flags) -x 70% -y 14 -w 15% -ta l -e "button1=exit" &
+    echo $! > /tmp/.wifi_dropdown
+fi

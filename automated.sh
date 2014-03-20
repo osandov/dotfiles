@@ -12,7 +12,6 @@ if [ ! -z "$DISTRO" -a -x "$HOME/.dotfiles/automated/automated.$DISTRO.sh" ]; th
 else
     echo "unrecognized distro; exiting" >&2
     exit 1
-    ;;
 fi
 
 chsh -s "$(which zsh)"

@@ -6,8 +6,9 @@ lua_load ~/.xmonad/status/status.lua
  
 TEXT
 ${lua_parse dropbox_status}\
+${lua_parse wifi_status wlp3s0}\
 ${lua_parse cpu_usage}\
 ${lua_parse mem_usage}\
-${lua_parse battery AC BAT0} | \
+${lua_parse battery AC BAT0}\
 ${lua_parse volume}\
 ${lua_parse clock}
