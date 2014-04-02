@@ -8,10 +8,10 @@ set -e
 sudo pacman  -Sy
 sudo pacman --noconfirm -S --needed archlinux-themes-slim alsa-utils \
     base-devel clang dmenu firefox git gnome-keyring gvim hsetroot numlockx \
-    openssh pkgfile ristretto slim thunar tmux trayer ttf-dejavu tumbler \
-    volumeicon xcursor-vanilla-dmz xfce4-notifyd xfce4-power-manager \
-    xfce4-screenshooter xmonad xmonad-contrib xorg-xmessage xscreensaver \
-    xterm zathura zathura-pdf-poppler zsh
+    openssh pkgfile ristretto slim the_silver_searcher thunar tmux trayer \
+    ttf-dejavu tumbler volumeicon xcursor-vanilla-dmz xfce4-notifyd \
+    xfce4-power-manager xfce4-screenshooter xmonad xmonad-contrib \
+    xorg-xmessage xscreensaver xterm zathura zathura-pdf-poppler zsh
 
 sudo sed -ri 's/(current_theme\s+)default/\1archlinux-simplyblack/' /etc/slim.conf
 sudo systemctl enable slim

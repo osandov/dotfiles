@@ -70,6 +70,8 @@ fi
     # export TMUX=
 # fi
 
+export ZLE_REMOVE_SUFFIX_CHARS=""
+
 index () {
     whatis -s "$1" -r . | less
 }
@@ -80,7 +82,7 @@ alias l='ls -CF'
 
 alias meminfo='watch -n 1 cat /proc/meminfo'
 alias cxclip='xclip -selection clipboard'
-alias sgrep='grep --exclude="cscope.out" --exclude-dir=".git" --exclude-dir=".svn" -RIn'
+alias ag="ag --color-line-number=32 --color-path=34 --color-match='35;1'"
 alias da='du --apparent-size'
 alias pingg='ping 8.8.8.8'
 

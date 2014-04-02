@@ -90,7 +90,7 @@ set backupdir=~/.vim/backup
 set directory=~/.vim/tmp
 
 " A few conveniences
-set splitright splitbelow " Personal preference
+" set splitright splitbelow " Personal preference
 set number                " Number lines
 set relativenumber        " Relative line numbering
 " set spell                 " Spellcheck by default
