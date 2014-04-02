@@ -1,27 +1,30 @@
 # vim: set ft=python :miv #
+
 try:
-    import os, readline as rl, rlcompleter, atexit
-    hist_file = os.path.join(os.environ['HOME'], '.python_history')
-    try:
-        rl.read_history_file(hist_file)
-    except IOError:
-        pass
-    rl.parse_and_bind('tab: complete')
-    rl.set_history_length(1000)
-    atexit.register(rl.write_history_file, hist_file)
+    import sys
+    if sys.version_info.major == 2:
+        import os, readline as rl, rlcompleter, atexit
+        hist_file = os.path.join(os.environ['HOME'], '.python2_history')
+        try:
+            rl.read_history_file(hist_file)
+        except IOError:
+            pass
+        rl.parse_and_bind('tab: complete')
+        rl.set_history_length(1000)
+        atexit.register(rl.write_history_file, hist_file)
 
-    old_rl_completer = rl.get_completer()
+        old_rl_completer = rl.get_completer()
 
-    def my_comp(text, state):
-        if len(text):
-            return old_rl_completer(text, state)
-        elif state == 0:
-            return '\t'
-        else:
-            return 0
+        def my_comp(text, state):
+            if len(text):
+                return old_rl_completer(text, state)
+            elif state == 0:
+                return '\t'
+            else:
+                return 0
 
-    rl.set_completer(my_comp)
+        rl.set_completer(my_comp)
 
-    del os, rl, rlcompleter, atexit, hist_file, my_comp, __file__
+        del os, rl, rlcompleter, atexit, hist_file, my_comp, __file__
 except:
     pass
