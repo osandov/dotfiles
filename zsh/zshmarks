@@ -3,7 +3,9 @@ DROPBOX_DIR=~/Dropbox
 DROPBOX_MARKDIR="$DROPBOX_DIR/.marks"
 
 mkdir -p "$MARKDIR"
-mkdir -p "$DROPBOX_MARKDIR"
+if [ -d "$DROPBOX_DIR" ]; then
+    mkdir -p "$DROPBOX_MARKDIR"
+fi
 
 # Add a new mark
 mark () {
