@@ -162,6 +162,12 @@ let g:clang_complete_macros = 1
 " SuperTab scroll down
 let g:SuperTabDefaultCompletionType = "<C-N>"
 
+autocmd FileType *
+            \ if &omnifunc != '' |
+            \   call SuperTabChain(&omnifunc, "<C-N>") |
+            \   call SuperTabSetDefaultCompletionType("<C-X><C-U>") |
+            \ endif
+
 """""""""" Appearance
 
 " Solarized is pretty
