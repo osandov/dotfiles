@@ -72,10 +72,6 @@ fi
 
 export ZLE_REMOVE_SUFFIX_CHARS=""
 
-index () {
-    whatis -s "$1" -r . | less
-}
-
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -93,3 +89,11 @@ alias ts='tmux switch -t'
 alias zathura='zathura --fork'
 alias sml='rlwrap sml'
 alias racket='rlwrap racket'
+
+index () {
+    whatis -s "$1" -r . | less
+}
+
+pag () {
+    ag --color --group "$@" | "$PAGER"
+}
