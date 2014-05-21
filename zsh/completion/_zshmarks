@@ -1,25 +1,17 @@
-#compdef jump unmark readmark
-
-_one_mark() {
-    MARKS=$(find "$MARKDIR" "$DROPBOX_MARKDIR" -type f -exec basename {} \;)
-    _arguments "1: :($MARKS)"
-}
-
-_multi_mark() {
-    MARKS=$(find "$MARKDIR" "$DROPBOX_MARKDIR" -type f -exec basename {} \;)
-    _arguments "*: :($MARKS)"
-}
+#compdef findmark jump readmark unmark
 
 _zshmarks_comp() {
+    MARKS=$(find ${^MARKDIRS}/.marks -type f -exec basename {} \;)
     case "$service" in
+        findmark)
+            ;&
         jump)
-            _one_mark "$@"
-            ;;
-        unmark)
-            _multi_mark "$@"
+            _arguments "1: :($MARKS)"
             ;;
         readmark)
-            _multi_mark "$@"
+            ;&
+        unmark)
+            _arguments "*: :($MARKS)"
             ;;
     esac
 }
