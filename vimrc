@@ -104,6 +104,8 @@ set wildmode=list:longest,list:full
 " create a new one if it is not
 set switchbuf=usetab,newtab
 
+let g:gofmt_command="goimports"
+
 """""""""" Useful bindings
 
 " Toggle search highlighting

@@ -19,7 +19,7 @@ elif [ -d ~/.vim ]; then
     else
         echo "Installing pathogen"
     fi
-    curl -Sso pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+    curl -LSso pathogen.vim https://tpo.pe/pathogen.vim
 
     cd ~/.vim/bundle
     if [ -d vim-colors-solarized ]; then

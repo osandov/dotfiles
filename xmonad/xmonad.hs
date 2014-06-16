@@ -69,6 +69,7 @@ main = do
              } `additionalKeys` myKeys
 
 myKeys = [ ((myModMask, xK_p), spawnHere dmenuCommand)
+         , ((myModMask .|. shiftMask, xK_p), spawnHere "xterm -e python")
          , ((myModMask, xK_q), spawn
                  "xmonad --recompile && (killall conky; xmonad --restart)")
          , ((myModMask .|. shiftMask, xK_l),
@@ -85,7 +86,6 @@ myKeys = [ ((myModMask, xK_p), spawnHere dmenuCommand)
          , ((myModMask, xK_grave), spawn "~/.dotfiles/bin/toggle_composite")
 
          , ((myModMask .|. shiftMask, xK_semicolon), spawn "gvim -f")
-         , ((myModMask .|. shiftMask, xK_p), spawn "xfrun4")
          , ((myModMask .|. shiftMask, xK_t), sendMessage $ ToggleStrut D)
 
          , ((0       ,  xK_Print), spawn "xfce4-screenshooter -f")
