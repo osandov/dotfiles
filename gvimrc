@@ -10,5 +10,4 @@ set guioptions-=r " No right scrollbar
 set guioptions-=R
 
 " Solarized is pretty
-set background=light
-colorscheme solarized
+set background=dark

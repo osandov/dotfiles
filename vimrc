@@ -174,7 +174,7 @@ autocmd FileType *
 
 " Solarized is pretty
 set background=dark
-colorscheme solarized
+colorscheme base16-default
 
 set cursorline
 " set list

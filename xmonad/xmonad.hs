@@ -25,12 +25,39 @@ import Data.List (elemIndex, sortBy)
 import Data.Maybe (fromJust, isJust)
 import Data.Monoid
 import Data.Ord (comparing)
+import Text.Printf (printf)
+
+{- prompt color scheme -}
+promptBgColor  = "#222222"
+promptFgColor  = "#bababa"
+promptBgHLight = "#005577"
+promptFgHLight = "#ededed"
+
+{- base16 color scheme -}
+base00 = "#151515"
+base01 = "#202020"
+base02 = "#303030"
+base03 = "#505050"
+base04 = "#b0b0b0"
+base05 = "#d0d0d0"
+base06 = "#e0e0e0"
+base07 = "#f5f5f5"
+base08 = "#ac4142"
+base09 = "#d28445"
+base0A = "#f4bf75"
+base0B = "#90a959"
+base0C = "#75b5aa"
+base0D = "#6a9fb5"
+base0E = "#aa759f"
+base0F = "#8f5536"
+foregroundColor = base05
+backgroundColor = base00
 
 dzenCommand   = "dzen2 $(~/.xmonad/dzen_flags)"
 conkyCommand  = "conky -c ~/.xmonad/status/conky_dzen | " ++ dzenCommand
 
 promptFont = "-misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-*-*"
-dmenuCommand = "~/.dotfiles/bin/dmenu_run -fn '" ++ promptFont ++ "' -nb '#222222' -nf '#bababa' -sb '#005577' -sf '#ededed'"
+dmenuCommand = printf "~/.dotfiles/bin/dmenu_run -fn '%s' -nb '%s' -nf '%s' -sb '%s' -sf '%s'" promptFont promptBgColor promptFgColor promptBgHLight promptFgHLight
 
 xmonadStatus = dzenCommand ++ " -xs 1 -w 50% -ta l"
 systemStatus = conkyCommand ++ " -xs 1 -x 50% -w 50% -ta r"
@@ -51,9 +78,9 @@ main = do
              , manageHook = manageSpawn <+> manageDocks <+> myManageHook
              , layoutHook = avoidStrutsOn [U] $ smartBorders $ myLayout
              , logHook    = workspaceNamesPP defaultPP
-                            { ppCurrent = dzenColor "#b58900" "" . wrap "[" "]"
-                            , ppUrgent  = dzenColor "#dc322f" "" . wrap "(" ")"
-                            , ppTitle   = dzenColor "#268bd2" "" . shorten 70
+                            { ppCurrent = dzenColor base0A "" . wrap "[" "]"
+                            , ppUrgent  = dzenColor base08 "" . wrap "(" ")"
+                            , ppTitle   = dzenColor base0D "" . shorten 70
                             , ppOrder   = reverse
                             , ppOutput  = hPutStrLn dzenXmonad
                             , ppLayout  = wrap "^i(.xmonad/icons/" ".xbm)" . (map toLower)
@@ -61,8 +88,8 @@ main = do
                               >> fadeWindowsLogHook myFadeHook
                               >> wallpaperDLogHook
              , handleEventHook = ewmhDesktopsEventHook <+> fadeWindowsEventHook
-             , normalBorderColor  = "#586e75"
-             , focusedBorderColor = "#d33682"
+             , normalBorderColor  = base02
+             , focusedBorderColor = base0E
              , modMask            = myModMask
              , terminal           = "xterm"
              , workspaces         = myWorkspaces
@@ -109,17 +136,17 @@ myManageHook = composeOne
                ]
 
 myFadeHook = composeAll
-             [ isUnfocused  --> transparency 0.07
+             [ isUnfocused  --> transparency 0.1
              , isFullscreen --> opaque
              , isUnfocused  /-> opaque
              ]
 
 myXPConfig = defaultXPConfig
     { font               = promptFont
-    , bgColor            = "#222222"
-    , fgColor            = "#bababa"
-    , fgHLight           = "#005577"
-    , bgHLight           = "#ededed"
+    , bgColor            = promptBgColor
+    , fgColor            = promptFgColor
+    , bgHLight           = promptBgHLight
+    , fgHLight           = promptFgHLight
     , height             = 15
     , promptBorderWidth  = 0
     , position           = Top
@@ -134,17 +161,17 @@ tall = Tall nmaster delta ratio
 
 wide = named "Wide" $ Mirror tall
 tab  = named "Tabbed" $ tabbedBottom shrinkText defaultTheme
-    { activeColor         = "#93a1a1"
-    , activeBorderColor   = "#073642"
-    , activeTextColor     = "#073642"
+    { activeColor         = foregroundColor
+    , activeBorderColor   = "#000000"
+    , activeTextColor     = backgroundColor
 
-    , inactiveColor       = "#eee8d5"
-    , inactiveBorderColor = "#657b83"
-    , inactiveTextColor   = "#657b83"
+    , inactiveColor       = backgroundColor
+    , inactiveBorderColor = "#000000"
+    , inactiveTextColor   = foregroundColor
 
-    , urgentColor         = "#93a1a1"
-    , urgentBorderColor   = "#073642"
-    , urgentTextColor     = "#cb4b16"
+    , urgentColor         = backgroundColor
+    , urgentBorderColor   = "#000000"
+    , urgentTextColor     = base08
     }
 
 defaultLayout = tall ||| wide ||| tab

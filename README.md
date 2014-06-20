@@ -20,3 +20,31 @@ to run it again.
 `update.sh` will update the repository and installed plugins (e.g.,
 pathogen.vim). Usually, this is enough to update the configuration entirely and
 rerunning `install.sh` is not necessary.
+
+Color Schemes
+-------------
+The color scheme uses [base16](https://github.com/chriskempson/base16).
+Changing color schemes isn't automated yet, but the following files can be
+manually modified to switch out the base16 palette and foreground/background
+color. Automation should work at some point.
+
+ * `Xresources`
+ * `gtkrc-2.0`
+ * `g?vimrc`
+ * `xmonad/dzen_flags`
+ * `xmonad/startxmonad`
+ * `xmonad/status/status.lua`
+
+### Dark
+```
+foreground = base05
+background = base00
+background' = base01
+```
+
+### Light
+```
+foreground = base02
+background = base07
+background' = base06
+```

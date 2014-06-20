@@ -27,46 +27,42 @@ XTerm*vt100.translations: #override \
     Ctrl Shift <KeyPress> N:  spawn-new-terminal()
 XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
-! Solarized Light
-#define S_yellow        #b58900
-#define S_orange        #cb4b16
-#define S_red           #dc322f
-#define S_magenta       #d33682
-#define S_violet        #6c71c4
-#define S_blue          #268bd2
-#define S_cyan          #2aa198
-#define S_green         #859900
+! base16 color scheme
+#define base00 #151515
+#define base01 #202020
+#define base02 #303030
+#define base03 #505050
+#define base04 #b0b0b0
+#define base05 #d0d0d0
+#define base06 #e0e0e0
+#define base07 #f5f5f5
+#define base08 #ac4142
+#define base09 #d28445
+#define base0A #f4bf75
+#define base0B #90a959
+#define base0C #75b5aa
+#define base0D #6a9fb5
+#define base0E #aa759f
+#define base0F #8f5536
 
-#define S_base03        #fdf6e3
-#define S_base02        #eee8d5
-#define S_base01        #93a1a1
-#define S_base00        #839496
-#define S_base0         #657b83
-#define S_base1         #586e75
-#define S_base2         #073642
-#define S_base3         #002b36
+XTerm*foreground: base05
+XTerm*background: base00
+XTerm*cursorColor: base05
 
-XTerm*background:              S_base03
-XTerm*foreground:              S_base0
-XTerm*fading:                  40
-XTerm*fadeColor:               S_base03
-XTerm*cursorColor:             S_base1
-XTerm*pointerColorBackground:  S_base01
-XTerm*pointerColorForeground:  S_base1
+XTerm*color0: base00
+XTerm*color1: base08
+XTerm*color2: base0B
+XTerm*color3: base0A
+XTerm*color4: base0D
+XTerm*color5: base0E
+XTerm*color6: base0C
+XTerm*color7: base05
+XTerm*color8: base03
 
-XTerm*color0:                  S_base02
-XTerm*color1:                  S_red
-XTerm*color2:                  S_green
-XTerm*color3:                  S_yellow
-XTerm*color4:                  S_blue
-XTerm*color5:                  S_magenta
-XTerm*color6:                  S_cyan
-XTerm*color7:                  S_base2
-XTerm*color9:                  S_orange
-XTerm*color8:                  S_base03
-XTerm*color10:                 S_base01
-XTerm*color11:                 S_base00
-XTerm*color12:                 S_base0
-XTerm*color13:                 S_violet
-XTerm*color14:                 S_base1
-XTerm*color15:                 S_base3
+XTerm*color9: base09
+XTerm*color10: base01
+XTerm*color11: base02
+XTerm*color12: base04
+XTerm*color13: base06
+XTerm*color14: base0F
+XTerm*color15: base07

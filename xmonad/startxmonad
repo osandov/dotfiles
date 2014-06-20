@@ -30,7 +30,7 @@ eval $(ssh-agent)
 
 xscreensaver -no-splash & # Screensaver
 trayer --edge bottom --height 24 --SetPartialStrut true --transparent true \
-    --alpha 32 --tint 0xfdf6e3 & # Tray
+    --alpha 32 --tint 0x151515 & # Tray (base16 background)
 volumeicon &              # Volume applet
 compton -b                # Start the compositing manager
 xmonad                    # Start the window manager

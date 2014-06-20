@@ -1,9 +1,23 @@
 do
     local home = os.getenv("HOME")
-    local red = "\\#dc322f"
-    local yellow = "\\#b58900"
-    local green = "\\#859900"
-    local orange = "\\#cb4b16"
+
+    -- base16 color scheme
+    local base00 = "\\#151515"
+    local base01 = "\\#202020"
+    local base02 = "\\#303030"
+    local base03 = "\\#505050"
+    local base04 = "\\#b0b0b0"
+    local base05 = "\\#d0d0d0"
+    local base06 = "\\#e0e0e0"
+    local base07 = "\\#f5f5f5"
+    local base08 = "\\#ac4142"
+    local base09 = "\\#d28445"
+    local base0A = "\\#f4bf75"
+    local base0B = "\\#90a959"
+    local base0C = "\\#75b5aa"
+    local base0D = "\\#6a9fb5"
+    local base0E = "\\#aa759f"
+    local base0F = "\\#8f5536"
 
     function icon_file(icon_name)
         return string.format("^i(%s/.xmonad/icons/%s.xbm)", home, icon_name)
@@ -21,9 +35,9 @@ do
         if val <= lo then
             color = ""
         elseif val <= hi then
-            color = green
+            color = base0B
         else
-            color = red
+            color = base08
         end
 
         return string.format("^fg(%s)%3d%%^fg()", color, val)
@@ -93,13 +107,13 @@ do
 
         if charge >= 55 then
             icon = icon_file("bat_full")
-            color = green
+            color = base0B
         elseif charge > 20 then
             icon = icon_file("bat_low")
-            color = yellow
+            color = base0A
         else
             icon = icon_file("bat_empty")
-            color = red
+            color = base08
         end
 
         if ac == "on-line" then
@@ -116,7 +130,7 @@ do
         handle:close()
 
         if volume_str == "MUTE" then
-            icon = string.format("%s ^fg(%s)MUTE^fg()", icon_file("spkr_mute"), red)
+            icon = string.format("%s ^fg(%s)MUTE^fg()", icon_file("spkr_mute"), base08)
         else
             local volume = tonumber(volume_str)
             icon = string.format("%s %3d%%", icon_file("spkr_play"), volume)
@@ -127,6 +141,6 @@ do
 
     function conky_clock()
         local format = "%s ^fg(%s)${time %%a %%b %%_d %%Y %%I:%%M:%%S %%p}"
-        return string.format(format, icon_file("clock"), orange)
+        return string.format(format, icon_file("clock"), base09)
     end
 end

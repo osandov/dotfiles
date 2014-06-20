@@ -22,13 +22,13 @@ elif [ -d ~/.vim ]; then
     curl -LSso pathogen.vim https://tpo.pe/pathogen.vim
 
     cd ~/.vim/bundle
-    if [ -d vim-colors-solarized ]; then
-        echo "Updating Vim Solarized"
-        cd vim-colors-solarized
+    if [ -d base16-vim ]; then
+        echo "Updating Base16 Vim"
+        cd base16-vim
         git pull
     else
-        echo "Installing Vim Solarized"
-        git clone https://github.com/altercation/vim-colors-solarized.git
+        echo "Installing Base16 Vim"
+        git clone https://github.com/chriskempson/base16-vim.git
     fi
 
     cd ~/.vim/bundle
