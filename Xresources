@@ -44,10 +44,13 @@ XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 #define base0D #6a9fb5
 #define base0E #aa759f
 #define base0F #8f5536
+#define foregroundColor base05
+#define backgroundColor base00
+#define background1Color base01
 
-XTerm*foreground: base05
-XTerm*background: base00
-XTerm*cursorColor: base05
+XTerm*foreground: foregroundColor
+XTerm*background: backgroundColor
+XTerm*cursorColor: foregroundColor
 
 XTerm*color0: base00
 XTerm*color1: base08

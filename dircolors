@@ -153,6 +153,7 @@ EXEC 01;31  # Unix
 .p 32
 .pod 32
 .tex 32
+.y 32
 
 ### Multimedia formats
 
@@ -298,49 +299,27 @@ EXEC 01;31  # Unix
 # Your customizations
 
 # Unimportant text files
-# For universal scheme, use brightgreen 01;32
-# For optimal on light bg (but too prominent on dark bg), use white 01;34
-.log 01;32
-*~ 01;32
-*# 01;32
-#.log 01;34
-#*~ 01;34
-#*# 01;34
+.log 01;34
+*~ 01;34
+*# 01;34
 
 # Unimportant non-text files
-# For universal scheme, use brightcyan 01;36
-# For optimal on dark bg (but too prominent on light bg), change to 01;33
-#.bak 01;36
-#.BAK 01;36
-#.old 01;36
-#.OLD 01;36
-#.org_archive 01;36
-#.off 01;36
-#.OFF 01;36
-#.dist 01;36
-#.DIST 01;36
-#.orig 01;36
-#.ORIG 01;36
-#.swp 01;36
-#.swo 01;36
-#*,v 01;36
-.bak 01;33
-.BAK 01;33
-.old 01;33
-.OLD 01;33
-.org_archive 01;33
-.off 01;33
-.OFF 01;33
-.dist 01;33
-.DIST 01;33
-.orig 01;33
-.ORIG 01;33
-.swp 01;33
-.swo 01;33
-*,v 01;33
+.bak 01;34
+.BAK 01;34
+.old 01;34
+.OLD 01;34
+.org_archive 01;34
+.off 01;34
+.OFF 01;34
+.dist 01;34
+.DIST 01;34
+.orig 01;34
+.ORIG 01;34
+.swp 01;34
+.swo 01;34
+*,v 01;34
 
-# The brightmagenta (Solarized: purple) color is free for you to use for your
-# custom file type
+# The brightmagenta color is free for you to use for your custom file type
 .gpg 34
 .gpg 34
 .pgp 34

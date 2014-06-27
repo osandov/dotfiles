@@ -157,4 +157,5 @@ if [ -z "$NO_XMONAD" ]; then
 
     install_file ~/.dotfiles/xmonad ~/.xmonad
     install_file ~/.dotfiles/Xresources ~/.Xresources
+    install_file ~/.dotfiles/Xmodmap ~/.Xmodmap
 fi

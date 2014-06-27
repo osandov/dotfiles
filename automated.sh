@@ -20,6 +20,7 @@ chsh -s "$(which zsh)"
 
 git clone https://github.com/osandov/dzen.git /tmp/dzen
 cd /tmp/dzen
+patch -p1 < ~/.dotfiles/dzen.patch
 make
 sudo make install
 
