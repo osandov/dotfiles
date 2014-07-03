@@ -72,7 +72,7 @@ let mapleader = ","
 noremap <Leader>m :w<CR>
 
 " Use jk to exit from insert mode
-imap jk <Esc>
+" imap jk <Esc>
 
 " Map Command-Line mode navigation to arrows keys so we can have filtering
 cnoremap <C-P> <Up>
@@ -103,8 +103,6 @@ set wildmode=list:longest,list:full
 " When switching buffers, switch to an existing tab if the buffer is open or
 " create a new one if it is not
 set switchbuf=usetab,newtab
-
-let g:gofmt_command="goimports"
 
 """""""""" Useful bindings
 
@@ -143,13 +141,13 @@ noremap <C-L> :call g:ToggleNuMode()<CR>
 nnoremap <C-S> gUiw
 vnoremap <C-S> gU
 inoremap <C-S> <Esc>gUiwea
-nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
-inoremap <F3> <Esc>diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2ki
+
 nnoremap <C-N> gt
 nnoremap <C-P> gT
 
 """""""""" Plugins
 
+runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
 " Delimit comments with spaces
@@ -170,9 +168,10 @@ autocmd FileType *
             \   call SuperTabSetDefaultCompletionType("<C-X><C-U>") |
             \ endif
 
+let g:gofmt_command="goimports"
+
 """""""""" Appearance
 
-" Solarized is pretty
 set background=dark
 colorscheme base16-default
 

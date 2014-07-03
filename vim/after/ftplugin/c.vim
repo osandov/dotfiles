@@ -51,3 +51,5 @@ endfunc
 
 silent call Style9()
 noremap <Leader>sc :call ToggleCStyle()<CR>
+nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
+inoremap <F3> <Esc>diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2ki
