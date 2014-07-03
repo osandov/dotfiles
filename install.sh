@@ -100,6 +100,9 @@ install_file () {
 }
 
 if [ -z "$NO_VIM" ]; then
+    git submodule init
+    git submodule update
+
     mkdir -p ~/.vim/tmp
     mkdir -p ~/.vim/backup
 
