@@ -64,6 +64,10 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+BASE16_SCHEME="default"
+BASE16_SHELL="$HOME/.zsh/base16-shell/base16-$BASE16_SCHEME.dark.sh"
+[[ -s "$BASE16_SHELL" ]] && . "$BASE16_SHELL"
+
 # if [ -z "$TMUX" ]; then
     # exec tmx
 # elif [ "$TMUX" = "zlogin" ]; then
@@ -78,7 +82,7 @@ alias l='ls -CF'
 
 alias meminfo='watch -n 1 cat /proc/meminfo'
 alias cxclip='xclip -selection clipboard'
-alias ag="ag --color-line-number=32 --color-path=34 --color-match='35;1'"
+alias ag="ag --color-line-number=32 --color-path=34 --color-match='38;5;8;43'"
 alias da='du --apparent-size'
 alias pingg='ping 8.8.8.8'
 
