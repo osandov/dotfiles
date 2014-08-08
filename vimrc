@@ -183,6 +183,10 @@ set cursorline
 " set list
 " set listchars=eol:¬,extends:»,tab:▸\ ,trail:›
 
+" Highlight bad whitespace
+highlight BadWhitespace ctermbg=Red guibg=Red
+autocmd Syntax * syn match BadWhitespace /\s\+$\| \+\ze\t/
+
 " XTerm-specific stuff
 let s:xtermMatch = matchlist($XTERM_VERSION, 'XTerm(\(\d\+\))')
 if !has("gui_running") && len(s:xtermMatch) > 0
