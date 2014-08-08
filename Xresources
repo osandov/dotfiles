@@ -69,3 +69,6 @@ XTerm*color12: base04
 XTerm*color13: base06
 XTerm*color14: base0F
 XTerm*color15: base07
+
+! xscreensaver
+xscreensaver.fade: false
