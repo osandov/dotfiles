@@ -170,6 +170,9 @@ autocmd FileType *
 
 let g:gofmt_command="goimports"
 
+" I don't write Modula
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+
 """""""""" Appearance
 
 set background=dark
