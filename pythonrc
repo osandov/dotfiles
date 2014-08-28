@@ -30,6 +30,6 @@ try:
     readline.set_completer(my_rl_completer)
 
     del atexit, expanduser, os, readline, rlcompleter, sys
-    del hist_file, old_rl_completer, my_rl_completer, __file__
-except:
+    del hist_file, my_rl_completer, __file__
+except Exception:
     pass
