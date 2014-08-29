@@ -66,10 +66,11 @@ do
     end
 
     function conky_wifi_status(nic)
+        local ssid = conky_parse(string.format("${wireless_essid %s}", nic))
         local qual = tonumber(conky_parse(string.format("${wireless_link_qual_perc %s}", nic)))
         local icon = ""
 
-        if qual == nil then
+        if ssid == "off/any" or qual == nil then
             icon = icon_file("wifi0")
         elseif qual >= 66 then
             icon = icon_file("wifi3")
