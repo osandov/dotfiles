@@ -22,6 +22,7 @@ setopt hist_ignore_all_dups
 setopt extendedglob
 setopt inc_append_history
 bindkey -e
+export ZLE_REMOVE_SUFFIX_CHARS=""
 
 if [ -r ~/.hostcolor ]; then
     source ~/.hostcolor
@@ -45,14 +46,20 @@ case $DISTRO in
         ;;
 esac
 
-# Start the GnuPG agent and enable OpenSSH agent emulation
-gnupginf="${HOME}/.gpg-agent-info"
-
-if pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
-    eval `cat $gnupginf`
-    eval `cut -d= -f1 $gnupginf | xargs echo export`
-else
-    eval `gpg-agent -s --enable-ssh-support --daemon --write-env-file "$gnupginf"`
+# Start the GnuPG agent and enable OpenSSH agent emulation.
+if [ $EUID -ne 0 ]; then
+    # If SSH_AUTH_SOCK is already set, then we're most likely using SSH
+    # agent forwarding, so don't override it.
+    if [ -z "$SSH_AUTH_SOCK" ]; then
+        envfile="$HOME/.gnupg/gpg-agent.env"
+        if [ -e "$envfile" ]; then
+            eval "$(cat "$envfile")"
+        else
+            eval "$(gpg-agent --daemon --enable-ssh-support --write-env-file "$envfile")"
+        fi
+        unset envfile
+        export GPG_AGENT_INFO SSH_AGENT_PID SSH_AUTH_SOCK
+    fi
 fi
 
 case $TERM in
@@ -83,8 +90,6 @@ BASE16_SHELL="$HOME/.zsh/base16-shell/base16-$BASE16_SCHEME.dark.sh"
 # elif [ "$TMUX" = "zlogin" ]; then
     # export TMUX=
 # fi
-
-export ZLE_REMOVE_SUFFIX_CHARS=""
 
 alias ll='ls -alF'
 alias la='ls -A'
