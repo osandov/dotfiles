@@ -20,11 +20,6 @@ xsetroot -cursor_name left_ptr        # Don't want that ugly X cursor
 
 # Start some daemons
 xfce4-power-manager
-eval $(/usr/bin/gnome-keyring-daemon --start components=gpg,pkcs11,secrets)
-export GPG_AGENT_INFO
-export GNOME_KEYRING_CONTROL
-export GNOME_KEYRING_PID
-eval $(ssh-agent)
 
 xscreensaver -no-splash & # Screensaver
 trayer --edge bottom --height 24 --SetPartialStrut true --transparent true \
