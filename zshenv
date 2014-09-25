@@ -11,16 +11,16 @@ add_to_path () {
     export PATH="$(echo "$PATH" | sed -e "s!^$1:!!g" -e "s!:$1:!:!g" -e "s!^!$1:!")"
 }
 
-if [ -d "$HOME/.dotfiles/bin" ]; then
-    add_to_path "$HOME/.dotfiles/bin"
+if [ -d ~/.dotfiles/bin ]; then
+    add_to_path ~/.dotfiles/bin
 fi
 
-if [ -d "$HOME/bin" ]; then
-    add_to_path "$HOME/bin"
+if [ -d ~/bin ]; then
+    add_to_path ~/bin
 fi
 
-if [ -d "$HOME/.cabal/bin" ]; then
-    add_to_path "$HOME/.cabal/bin"
+if [ -d ~/.cabal/bin ]; then
+    add_to_path ~/.cabal/bin
 fi
 
 export EDITOR=vim
@@ -30,6 +30,6 @@ export PAGER=less
 export LESS=R
 export CFLAGS="-Wall -pipe"
 
-if [ -r "$HOME/.zshenv.local" ]; then
-    source "$HOME/.zshenv.local" 
+if [ -r ~/.zshenv.local ]; then
+    source ~/.zshenv.local
 fi

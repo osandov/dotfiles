@@ -1,5 +1,10 @@
 # Omar Sandoval's zshrc
 
+# Gross hack because on several distros, PATH settings get blown away when
+# /etc/profile is sourced by /etc/zsh/zprofile. This means that everything in
+# zshenv must be idempotent.
+source ~/.zshenv
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=10000
@@ -52,7 +57,7 @@ if [ $EUID -ne 0 ]; then
     # agent forwarding, so don't override it.
     if [ -z "$SSH_AUTH_SOCK" ]; then
         envfile="$HOME/.gnupg/gpg-agent.env"
-        if [ -e "$envfile" ]; then
+        if [ -e "$envfile" ] && kill -0 "$(sed -rn 's/^SSH_AGENT_PID=([0-9]+)$/\1/p' "$envfile")" >/dev/null 2>&1; then
             eval "$(cat "$envfile")"
         else
             eval "$(gpg-agent --daemon --enable-ssh-support --write-env-file "$envfile")"
