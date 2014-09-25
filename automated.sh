@@ -23,5 +23,3 @@ cd /tmp/dzen
 patch -p1 < ~/.dotfiles/dzen.patch
 make
 sudo make install
-
-~/.dotfiles/update.sh
