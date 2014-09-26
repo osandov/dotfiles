@@ -85,20 +85,16 @@ ORPHAN  5;37;41
 MISSING 5;37;41
 
 # files with execute permission
-EXEC 1;38;5;16  # Unix
-.cmd 1;38;5;16  # Win
-.exe 1;38;5;16  # Win
-.com 1;38;5;16  # Win
-.bat 1;38;5;16  # Win
-.reg 1;38;5;16  # Win
-.app 1;38;5;16  # OSX
+EXEC 1;31  # Unix
+.cmd 1;31  # Win
+.exe 1;31  # Win
+.com 1;31  # Win
+.bat 1;31  # Win
+.reg 1;31  # Win
+.app 1;31  # OSX
 
 #############################################################################
 ### By extension
-
-# List any file extensions like '.gz' or '.tar' that you would like ls
-# to colorize below. Put the extension, a space, and the color init string.
-# (and any comments you want to add after a '#')
 
 ### Text formats
 
@@ -295,30 +291,6 @@ EXEC 1;38;5;16  # Unix
 .ANSI-37-white 37
 .ANSI-01;37-brwhite 01;37
 
-#############################################################################
-# Your customizations
-
-# Unimportant text files
-.log 38;5;8
-*~ 38;5;8
-*# 38;5;8
-
-# Unimportant non-text files
-.bak 38;5;8
-.BAK 38;5;8
-.old 38;5;8
-.OLD 38;5;8
-.org_archive 38;5;8
-.off 38;5;8
-.OFF 38;5;8
-.dist 38;5;8
-.DIST 38;5;8
-.orig 38;5;8
-.ORIG 38;5;8
-.swp 38;5;8
-.swo 38;5;8
-*,v 38;5;8
-
 .gpg 34
 .pgp 34
 .asc 34
@@ -330,3 +302,24 @@ EXEC 1;38;5;16  # Unix
 .pem 34
 .cer 34
 .p12 34
+
+# Unimportant text files
+.log 01;34
+*~ 01;34
+*# 01;34
+
+# Unimportant non-text files
+.bak 01;34
+.BAK 01;34
+.old 01;34
+.OLD 01;34
+.org_archive 01;34
+.off 01;34
+.OFF 01;34
+.dist 01;34
+.DIST 01;34
+.orig 01;34
+.ORIG 01;34
+.swp 01;34
+.swo 01;34
+*,v 01;34

@@ -176,8 +176,7 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 """""""""" Appearance
 
 set background=dark
-let base16colorspace=256
-colorscheme base16-default
+colorscheme solarized
 
 set cursorline
 " set list

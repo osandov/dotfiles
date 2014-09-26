@@ -33,26 +33,6 @@ promptFgColor  = "#bababa"
 promptBgHLight = "#005577"
 promptFgHLight = "#ededed"
 
-{- base16 color scheme -}
-base00 = "#151515"
-base01 = "#202020"
-base02 = "#303030"
-base03 = "#505050"
-base04 = "#b0b0b0"
-base05 = "#d0d0d0"
-base06 = "#e0e0e0"
-base07 = "#f5f5f5"
-base08 = "#ac4142"
-base09 = "#d28445"
-base0A = "#f4bf75"
-base0B = "#90a959"
-base0C = "#75b5aa"
-base0D = "#6a9fb5"
-base0E = "#aa759f"
-base0F = "#8f5536"
-foregroundColor = base05
-backgroundColor = base00
-
 dzenCommand   = "dzen2 $(~/.xmonad/dzen_flags)"
 conkyCommand  = "conky -c ~/.xmonad/status/conky_dzen | " ++ dzenCommand
 
@@ -78,9 +58,9 @@ main = do
              , manageHook = manageSpawn <+> manageDocks <+> myManageHook
              , layoutHook = avoidStrutsOn [U] $ smartBorders $ myLayout
              , logHook    = workspaceNamesPP defaultPP
-                            { ppCurrent = dzenColor base0A "" . wrap "[" "]"
-                            , ppUrgent  = dzenColor base08 "" . wrap "(" ")"
-                            , ppTitle   = dzenColor base0D "" . shorten 70
+                            { ppCurrent = dzenColor "#b58900" "" . wrap "[" "]"
+                            , ppUrgent  = dzenColor "#dc322f" "" . wrap "(" ")"
+                            , ppTitle   = dzenColor "#268bd2" "" . shorten 70
                             , ppOrder   = reverse
                             , ppOutput  = hPutStrLn dzenXmonad
                             , ppLayout  = wrap "^i(.xmonad/icons/" ".xbm)" . (map toLower)
@@ -88,8 +68,8 @@ main = do
                               >> fadeWindowsLogHook myFadeHook
                               >> wallpaperDLogHook
              , handleEventHook = ewmhDesktopsEventHook <+> fadeWindowsEventHook
-             , normalBorderColor  = base02
-             , focusedBorderColor = base0E
+             , normalBorderColor  = "#586e75"
+             , focusedBorderColor = "#d33682"
              , modMask            = myModMask
              , terminal           = "xterm"
              , workspaces         = myWorkspaces
@@ -161,17 +141,17 @@ tall = Tall nmaster delta ratio
 
 wide = named "Wide" $ Mirror tall
 tab  = named "Tabbed" $ tabbedBottom shrinkText defaultTheme
-    { activeColor         = foregroundColor
-    , activeBorderColor   = "#000000"
-    , activeTextColor     = backgroundColor
+    { activeColor         = "#586e75"
+    , activeBorderColor   = "#eee8d5"
+    , activeTextColor     = "#eee8d5"
 
-    , inactiveColor       = backgroundColor
-    , inactiveBorderColor = "#000000"
-    , inactiveTextColor   = foregroundColor
+    , inactiveColor       = "#073642"
+    , inactiveBorderColor = "#839496"
+    , inactiveTextColor   = "#839496"
 
-    , urgentColor         = backgroundColor
-    , urgentBorderColor   = "#000000"
-    , urgentTextColor     = base08
+    , urgentColor         = "#586e75"
+    , urgentBorderColor   = "#eee8d5"
+    , urgentTextColor     = "#cb4b16"
     }
 
 defaultLayout = tall ||| wide ||| tab

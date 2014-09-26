@@ -23,7 +23,7 @@ xfce4-power-manager
 
 xscreensaver -no-splash & # Screensaver
 trayer --edge bottom --height 24 --SetPartialStrut true --transparent true \
-    --alpha 32 --tint 0x151515 & # Tray (base16 background)
+    --alpha 32 --tint 0x002b36 & # Tray (base16 background)
 volumeicon &              # Volume applet
 compton -b                # Start the compositing manager
 xmonad                    # Start the window manager
