@@ -16,7 +16,11 @@ fi
 
 chsh -s "$(which zsh)"
 
-~/.dotfiles/install.sh "$@"
+if [ $# -gt 0 ]; then
+    ~/.dotfiles/install.sh "$@"
+else
+    ~/.dotfiles/install.sh -a
+fi
 
 git clone https://github.com/osandov/dzen.git /tmp/dzen
 cd /tmp/dzen

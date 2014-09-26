@@ -8,18 +8,19 @@ if [ "$(pwd)" != ~/.dotfiles ]; then
 fi
 
 usage () {
-    USAGE_STRING="Usage: $0 [-vztpdgx] [-y | -n]
-Usage: $0 -h
+    USAGE_STRING="Usage: $0 [-avztgpdkx] [-y | -n]
+       $0 -h
 
 Optional installation:
-  -v    Don't install Vim config
-  -z    Don't install zsh config
-  -t    Don't install tmux config
-  -g    Don't install Git config
-  -p    Don't install Python config
-  -d    Don't install dircolors config
-  -k    Don't install graphic application config (Vimperator, zathura)
-  -x    Don't install xmonad config
+  -a    Install all config
+  -v    Install Vim config
+  -z    Install zsh config
+  -t    Install tmux config
+  -g    Install Git config
+  -p    Install Python config
+  -d    Install dircolors config
+  -k    Install graphic application config (Vimperator, zathura)
+  -x    Install xmonad config
 
 Prompts:
   -y    Assume yes when prompted about overwriting a file
@@ -40,31 +41,38 @@ Miscellaneous:
     esac
 }
 
-while getopts ":vztgpdkxynh" OPT; do
+if [ $# -eq 0 ]; then
+    usage "err"
+fi
+
+while getopts ":avztgpdkxynh" OPT; do
     case "$OPT" in
+        a)
+            DO_ALL=1
+            ;;
         v)
-            NO_VIM=1
+            DO_VIM=1
             ;;
         z)
-            NO_ZSH=1
+            DO_ZSH=1
             ;;
         t)
-            NO_TMUX=1
+            DO_TMUX=1
             ;;
         g)
-            NO_GIT=1
+            DO_GIT=1
             ;;
         p)
-            NO_PYTHON=1
+            DO_PYTHON=1
             ;;
         d)
-            NO_DIRCOLORS=1
+            DO_DIRCOLORS=1
             ;;
         k)
-            NO_GTK=1
+            DO_GTK=1
             ;;
         x)
-            NO_XMONAD=1
+            DO_XMONAD=1
             ;;
         y)
             ASSUME_ANSWER=y
@@ -99,7 +107,11 @@ install_file () {
     esac
 }
 
-if [ -z "$NO_VIM" ]; then
+do_install () {
+    ! [ -z "$DO_ALL" -a -z "$1" ]
+}
+
+if do_install "$DO_VIM"; then
     git submodule init
     git submodule update
 
@@ -113,29 +125,29 @@ if [ -z "$NO_VIM" ]; then
     install_file ~/.dotfiles/gvimrc ~/.gvimrc
 fi
 
-if [ -z "$NO_ZSH" ]; then
+if do_install "$DO_ZSH"; then
     install_file ~/.dotfiles/zsh ~/.zsh
     install_file ~/.dotfiles/zshenv ~/.zshenv
     install_file ~/.dotfiles/zshrc ~/.zshrc
 fi
 
-if [ -z "$NO_TMUX" ]; then
+if do_install "$DO_TMUX"; then
     install_file ~/.dotfiles/tmux.conf ~/.tmux.conf
 fi
 
-if [ -z "$NO_GIT" ]; then
+if do_install "$DO_GIT"; then
     install_file ~/.dotfiles/gitconfig ~/.gitconfig
 fi
 
-if [ -z "$NO_PYTHON" ]; then
+if do_install "$DO_PYTHON"; then
     install_file ~/.dotfiles/pythonrc ~/.pythonrc
 fi
 
-if [ -z "$NO_DIRCOLORS" ]; then
+if do_install "$DO_DIRCOLORS"; then
     install_file ~/.dotfiles/dircolors ~/.dircolors
 fi
 
-if [ -z "$NO_GTK" ]; then
+if do_install "$DO_GTK"; then
     mkdir -p ~/.config/gtk-3.0
     mkdir -p ~/.config/zathura
     install_file ~/.dotfiles/gtkrc-2.0 ~/.gtkrc-2.0
@@ -144,7 +156,7 @@ if [ -z "$NO_GTK" ]; then
     install_file ~/.dotfiles/zathurarc ~/.config/zathura/zathurarc
 fi
 
-if [ -z "$NO_XMONAD" ]; then
+if do_install "$DO_XMONAD"; then
     case "$DISTRO" in
         arch)
             install_file ~/.dotfiles/xmonad/startxmonad ~/.xinitrc

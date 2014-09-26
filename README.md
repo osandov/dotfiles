@@ -17,7 +17,7 @@ are added or moved around, it may be necessary to run it again.
 
 Color Schemes
 -------------
-The following files hardcode stuff relevant to the color scheme:
+The following files hard-code stuff relevant to the color scheme:
 
 * `g?vimrc`
 * `Xresources`
