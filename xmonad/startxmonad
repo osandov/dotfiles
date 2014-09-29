@@ -14,7 +14,7 @@ feh --bg-fill ~/.xmonad/root.png     # Set the wallpaper
 # X11 settings
 numlockx on                           # Turn on Num Lock
 xmodmap ~/.Xmodmap
-xset r rate 175 35                    # Faster key repeat
+xset r rate 175 35 -b                 # Faster key repeat, no beep
 xrdb ~/.Xresources                    # Overall X appearance and behavior
 xsetroot -cursor_name left_ptr        # Don't want that ugly X cursor
 
