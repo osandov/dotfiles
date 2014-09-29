@@ -33,10 +33,16 @@ if [ -r ~/.hostcolor ]; then
     source ~/.hostcolor
 fi
 
+if [ -r /usr/share/git/git-prompt.sh ]; then
+    source /usr/share/git/git-prompt.sh
+    GIT_PROMPT='%F{green}$(__git_ps1 " %s")%f'
+fi
+
 # One line prompt
 # PROMPT="%F{blue}[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%1~%k%F{blue}]%(#.#.$)%f "
 # Two line prompt
-PROMPT="%F{blue}┌[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%~%k%F{blue}]
+setopt prompt_subst
+PROMPT="%F{blue}┌[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%~%k$GIT_PROMPT%F{blue}]
 └%(#.#.$)%f "
 
 autoload -Uz zshmarks
