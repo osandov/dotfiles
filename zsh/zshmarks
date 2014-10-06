@@ -65,7 +65,7 @@ marks () {
 
     find ${^MARKDIRS}/.marks -type f | while read -r MARKFILE; do
         printf "%s -> %s\n" "$MARKFILE:t" "$(cat "$MARKFILE")"
-    done
+    done | sort
 }
 
 # Print the location of the mark file itself.
