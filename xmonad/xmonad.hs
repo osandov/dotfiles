@@ -3,11 +3,12 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.WorkspaceNames
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Hooks.FadeWindows
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.PerWorkspace
@@ -53,9 +54,8 @@ followTo dir t = doTo dir t getSortByIndex $ \w ->
 main = do
     dzenXmonad <- spawnPipe xmonadStatus
     dzenSystem <- spawnPipe systemStatus
-    xmonad $ withUrgencyHook NoUrgencyHook $ ewmh $ defaultConfig
-             { startupHook = ewmhDesktopsStartup
-             , manageHook = manageSpawn <+> manageDocks <+> myManageHook
+    xmonad $ withUrgencyHook NoUrgencyHook $ ewmh defaultConfig
+             { manageHook = manageSpawn <+> manageDocks <+> myManageHook
              , layoutHook = avoidStrutsOn [U] $ smartBorders $ myLayout
              , logHook    = workspaceNamesPP defaultPP
                             { ppCurrent = dzenColor "#b58900" "" . wrap "[" "]"
@@ -66,8 +66,9 @@ main = do
                             , ppLayout  = wrap "^i(.xmonad/icons/" ".xbm)" . (map toLower)
                             } >>= dynamicLogWithPP
                               >> fadeWindowsLogHook myFadeHook
-                              >> wallpaperDLogHook
-             , handleEventHook = ewmhDesktopsEventHook <+> fadeWindowsEventHook
+                              >> setWMName "LG3D"
+             , handleEventHook = handleEventHook defaultConfig <+> fadeWindowsEventHook
+                                                               <+> fullscreenEventHook
              , normalBorderColor  = "#586e75"
              , focusedBorderColor = "#d33682"
              , modMask            = myModMask
@@ -159,24 +160,3 @@ defaultLayout = tall ||| wide ||| tab
 netLayout = tab ||| tall ||| wide
 
 myLayout = onWorkspace "net" netLayout defaultLayout
-
-wallpaperDLogHook :: X ()
-wallpaperDLogHook = withWindowSet $ \s -> do
-    sort' <- getSortByIndex
-    let ws = sort' $ W.workspaces s
-        sids = map (W.screen) (W.screens s)
-        tags = map (flip W.lookupWorkspace s) sids
-    when (all isJust tags) $ do
-        let tags' = map (\tag -> elemIndex (fromJust tag) (map W.tag ws)) tags
-        when (all isJust tags') $ do
-            let sids' = map (\(S sid) -> sid) sids
-                tags'' = zip sids' (map fromJust tags')
-                workspaces = map snd $ sortBy (comparing fst) tags''
-            setWallpaperDWorkspaces workspaces
-
-setWallpaperDWorkspaces :: (Integral a) => [a] -> X ()
-setWallpaperDWorkspaces ws = withDisplay $ \dpy -> do
-    r <- asks theRoot
-    a <- getAtom "OWALLPAPERD_WORKSPACES"
-    c <- getAtom "CARDINAL"
-    io $ changeProperty32 dpy r a c propModeReplace (map fromIntegral ws)
