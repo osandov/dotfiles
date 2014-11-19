@@ -2,5 +2,7 @@
 	ui = true
 [push]
 	default = simple
+[format]
+	thread = shallow
 [include]
 	path = ~/.gitconfig.local
