@@ -1,7 +1,5 @@
 #!/bin/sh
 
-if pgrep compton; then
-    killall compton
-else
+if ! pkill -u "$USER" compton; then
     compton -b
 fi
