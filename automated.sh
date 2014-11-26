@@ -27,3 +27,9 @@ cd /tmp/dzen
 patch -p1 < ~/.dotfiles/dzen.patch
 make
 sudo make install
+
+git clone https://github.com/osandov/trayer-srg.git /tmp/trayer-srg
+cd /tmp/trayer-srg
+./configure
+make
+sudo make install

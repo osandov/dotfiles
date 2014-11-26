@@ -22,8 +22,8 @@ xsetroot -cursor_name left_ptr        # Don't want that ugly X cursor
 xfce4-power-manager
 
 xscreensaver -no-splash & # Screensaver
-trayer --edge bottom --height 24 --SetPartialStrut true --transparent true \
-    --alpha 32 --tint 0x002b36 & # Tray (base16 background)
+trayer --edge bottom --align right --height 24 --SetPartialStrut true \
+    --transparent true --alpha 32 --tint 0x002b36 --monitor primary &
 volumeicon &              # Volume applet
 compton -b                # Start the compositing manager
 xmonad                    # Start the window manager

@@ -8,11 +8,11 @@ set -e
 sudo pacman  -Sy
 sudo pacman --noconfirm -S --needed archlinux-themes-slim alsa-utils \
     base-devel clang dmenu feh firefox git gvfs gvim numlockx openssh pkgfile \
-    ristretto slim the_silver_searcher thunar thunar-volman tmux trayer \
-    ttf-dejavu tumbler volumeicon xcursor-vanilla-dmz xfce4-notifyd \
-    xfce4-power-manager xfce4-screenshooter xmonad xmonad-contrib \
-    xorg-xmessage xorg-xmodmap xorg-xrdb xorg-xrandr xorg-xset \
-    xorg-xsetroot xscreensaver xterm zathura zathura-pdf-poppler zsh
+    ristretto slim the_silver_searcher thunar thunar-volman tmux ttf-dejavu \
+    tumbler volumeicon xcursor-vanilla-dmz xfce4-notifyd xfce4-power-manager \
+    xfce4-screenshooter xmonad xmonad-contrib xorg-xmessage xorg-xmodmap \
+    xorg-xrdb xorg-xrandr xorg-xset xorg-xsetroot xscreensaver xterm zathura \
+    zathura-pdf-poppler zsh
 
 sudo sed -ri 's/(current_theme\s+)default/\1archlinux-simplyblack/' /etc/slim.conf
 sudo systemctl enable slim
