@@ -9,7 +9,8 @@ the following:
 
 This will clone this repo into the proper directory and begin an automated
 install process, including installing all dependencies in a distro-aware way
-(currently only Ubuntu ["ubuntu"] and Arch Linux ["arch"] are supported).
+(currenty only Arch Linux ["arch"] is fully supported, with partial support for
+Ubuntu ["ubuntu"]).
 
 `install.sh` will set up all of the necessary symlinks of configuration files.
 It is run automatically upon initial install by `automated.sh`, but if files

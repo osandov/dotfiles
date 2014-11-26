@@ -166,21 +166,24 @@ if do_install "$DO_GTK"; then
 fi
 
 if do_install "$DO_XMONAD"; then
+    install_file ~/.dotfiles/xmonad ~/.xmonad
+    install_file ~/.dotfiles/x11/Xresources ~/.Xresources
+    install_file ~/.dotfiles/x11/Xmodmap ~/.Xmodmap
+
     case "$DISTRO" in
         arch)
-            install_file ~/.dotfiles/xmonad/startxmonad ~/.xinitrc
+            install_file ~/.dotfiles/x11/xsession ~/.xsession
+            install_file ~/.dotfiles/x11/xinitrc ~/.xinitrc
             ;;
         ubuntu)
-            sudo install_file ~/.dotfiles/xmonad/startxmonad /usr/bin/startxmonad
-            sudo install_file ~/.dotfiles/xmonad/xmonad.desktop /usr/share/xsessions/
+            echo "Ubuntu xmonad configuration doesn't work right now" >&2
+            exit 1
+            # sudo install_file ~/.dotfiles/xmonad/startxmonad /usr/bin/startxmonad
+            # sudo install_file ~/.dotfiles/xmonad/xmonad.desktop /usr/share/xsessions/
             ;;
         *)
             echo "unrecognized distro; not installing X configuration" >&2
             exit 1
             ;;
     esac
-
-    install_file ~/.dotfiles/xmonad ~/.xmonad
-    install_file ~/.dotfiles/Xresources ~/.Xresources
-    install_file ~/.dotfiles/Xmodmap ~/.Xmodmap
 fi
