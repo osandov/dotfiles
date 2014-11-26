@@ -57,21 +57,8 @@ case $DISTRO in
         ;;
 esac
 
-# Start the GnuPG agent and enable OpenSSH agent emulation.
-if [ $EUID -ne 0 ]; then
-    # If SSH_AUTH_SOCK is already set, then we're most likely using SSH
-    # agent forwarding, so don't override it.
-    if [ -z "$SSH_AUTH_SOCK" ]; then
-        envfile="$HOME/.gnupg/gpg-agent.env"
-        if [ -e "$envfile" ] && kill -0 "$(sed -rn 's/^SSH_AGENT_PID=([0-9]+)$/\1/p' "$envfile")" >/dev/null 2>&1; then
-            eval "$(cat "$envfile")"
-        else
-            eval "$(gpg-agent --daemon --enable-ssh-support --write-env-file "$envfile")"
-        fi
-        unset envfile
-        export GPG_AGENT_INFO SSH_AGENT_PID SSH_AUTH_SOCK
-    fi
-fi
+gpgconf --launch gpg-agent
+export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh
 
 case $TERM in
     xterm*)

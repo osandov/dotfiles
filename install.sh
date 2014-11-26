@@ -15,6 +15,7 @@ Optional installation:
   -a    Install all config
   -v    Install Vim config
   -z    Install zsh config
+  -s    Install SSH/GnuPG config
   -t    Install tmux config
   -g    Install Git config
   -p    Install Python config
@@ -45,7 +46,7 @@ if [ $# -eq 0 ]; then
     usage "err"
 fi
 
-while getopts ":avztgpdkxynh" OPT; do
+while getopts ":avzstgpdkxynh" OPT; do
     case "$OPT" in
         a)
             DO_ALL=1
@@ -55,6 +56,9 @@ while getopts ":avztgpdkxynh" OPT; do
             ;;
         z)
             DO_ZSH=1
+            ;;
+        s)
+            DO_SSH=1
             ;;
         t)
             DO_TMUX=1
@@ -129,6 +133,11 @@ if do_install "$DO_ZSH"; then
     install_file ~/.dotfiles/zsh ~/.zsh
     install_file ~/.dotfiles/zshenv ~/.zshenv
     install_file ~/.dotfiles/zshrc ~/.zshrc
+fi
+
+if do_install "$DO_SSH"; then
+    mkdir -p ~/.gnupg
+    install_file ~/.dotfiles/gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 fi
 
 if do_install "$DO_TMUX"; then
