@@ -20,6 +20,7 @@ xsetroot -cursor_name left_ptr        # Don't want that ugly X cursor
 
 # Start some daemons
 xfce4-power-manager
+gpgconf --launch gpg-agent
 
 xscreensaver -no-splash & # Screensaver
 trayer --edge bottom --align right --height 24 --SetPartialStrut true \
