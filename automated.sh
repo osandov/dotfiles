@@ -29,6 +29,6 @@ sudo make install
 
 git clone https://github.com/osandov/trayer-srg.git /tmp/trayer-srg
 cd /tmp/trayer-srg
-./configure
+./configure --prefix=/usr/local
 make
 sudo make install
