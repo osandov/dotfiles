@@ -72,12 +72,12 @@ main = do
              , normalBorderColor  = "#586e75"
              , focusedBorderColor = "#d33682"
              , modMask            = myModMask
-             , terminal           = "xterm"
+             , terminal           = myTerminal
              , workspaces         = myWorkspaces
              } `additionalKeys` myKeys
 
 myKeys = [ ((myModMask, xK_p), spawnHere dmenuCommand)
-         , ((myModMask .|. shiftMask, xK_p), spawnHere "xterm -e python")
+         , ((myModMask .|. shiftMask, xK_p), spawnHere $ myTerminal ++ " -e python")
          , ((myModMask, xK_q), spawn
                  "xmonad --recompile && (killall conky; xmonad --restart)")
          , ((myModMask .|. shiftMask, xK_l),
@@ -102,6 +102,8 @@ myKeys = [ ((myModMask, xK_p), spawnHere dmenuCommand)
          ] ++
          [ ((myModMask .|. controlMask, k), swapWithCurrent i)
            | (i, k) <- zip myWorkspaces [xK_1 ..]]
+
+myTerminal = "urxvt"
 
 myModMask = mod4Mask
 

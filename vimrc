@@ -186,26 +186,23 @@ set cursorline
 highlight BadWhitespace ctermbg=Red guibg=Red
 autocmd Syntax * syn match BadWhitespace /\s\+$\| \+\ze\t/
 
-" XTerm-specific stuff
-let s:xtermMatch = matchlist($XTERM_VERSION, 'XTerm(\(\d\+\))')
-if !has("gui_running") && len(s:xtermMatch) > 0
+" Terminal-specific stuff
+if !has("gui_running")
     " Change cursor in insert mode like a GVim weenie
-    let s:xtermVersion = s:xtermMatch[1]
-    if s:xtermVersion >= 282
-        let &t_SI .= "\<Esc>[6 q"
-    else
-        let &t_SI .= "\<Esc>[4 q"
-    endif
-    let &t_EI .= "\<Esc>[2 q"
+    let &t_SI .= "\<Esc>[5 q"
+    let &t_EI .= "\<Esc>[1 q"
     " 0 or 1 -> blinking block
     " 2 -> solid block
     " 3 -> blinking underscore
     " 4 -> solid underscore
-    " Recent versions of xterm (282 or above) also support
+    " Recent versions of xterm (282 or above) and urxvt also support
     " 5 -> blinking vertical bar
     " 6 -> solid vertical bar
 
-    " Ugh, Meta-Alt-Escape crap
-    exec "set <M-b>=\eb"
-    exec "set <M-f>=\ef"
+    let s:xtermMatch = matchlist($XTERM_VERSION, 'XTerm(\(\d\+\))')
+    if len(s:xtermMatch) > 0
+        " Ugh, Meta-Alt-Escape crap
+        exec "set <M-b>=\eb"
+        exec "set <M-f>=\ef"
+    endif
 endif

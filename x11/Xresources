@@ -13,23 +13,6 @@ Xft.lcdfilter: lcddefault
 ! xscreensaver
 xscreensaver.fade: false
 
-! XTerm
-XTerm*termName: xterm-256color
-XTerm*cursorBlink: true
-XTerm*cursorOnTime: 400
-XTerm*cursorOffTime: 250
-XTerm*faceName: Deja Vu Sans Mono
-XTerm*faceSize: 10
-XTerm*saveLines: 10000
-XTerm*metaSendsEscape: true
-XTerm*bellIsUrgent: true
-XTerm*selectToClipboard: false
-XTerm*vt100.translations: #override \
-    Ctrl Shift <KeyPress> C:  copy-selection(CLIPBOARD) \n\
-    Ctrl Shift <KeyPress> V:  insert-selection(CLIPBOARD) \n\
-    Ctrl Shift <KeyPress> N:  spawn-new-terminal()
-XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
-
 ! Solarized Dark
 #define S_yellow        #b58900
 #define S_orange        #cb4b16
@@ -48,6 +31,54 @@ XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 #define S_base1         #93a1a1
 #define S_base2         #eee8d5
 #define S_base3         #fdf6e3
+
+! Urxvt
+URxvt*iso14755: false
+URxvt*iso14755_52: false
+URxvt*saveLines: 10000
+URxvt*urgentOnBell: true
+
+URxvt*perl-ext-common: default,spawn-new-terminal,selection-to-clipboard
+URxvt*keysym.Control-Shift-N: perl:spawn-new-terminal
+
+URxvt*scrollBar: false
+URxvt*font: xft:DejaVu Sans Mono:pixelsize=12.5:antialias=true:hinting=true
+URxvt*letterSpace: -1
+URxvt*cursorBlink: 1
+
+URxvt*background:              S_base03
+URxvt*foreground:              S_base0
+URxvt*color0:                  S_base02
+URxvt*color1:                  S_red
+URxvt*color2:                  S_green
+URxvt*color3:                  S_yellow
+URxvt*color4:                  S_blue
+URxvt*color5:                  S_magenta
+URxvt*color6:                  S_cyan
+URxvt*color7:                  S_base2
+URxvt*color9:                  S_orange
+URxvt*color8:                  S_base03
+URxvt*color10:                 S_base01
+URxvt*color11:                 S_base00
+URxvt*color12:                 S_base0
+URxvt*color13:                 S_violet
+URxvt*color14:                 S_base1
+URxvt*color15:                 S_base3
+
+! XTerm
+XTerm*termName: xterm-256color
+XTerm*cursorBlink: true
+XTerm*faceName: Deja Vu Sans Mono
+XTerm*faceSize: 10
+XTerm*saveLines: 10000
+XTerm*metaSendsEscape: true
+XTerm*bellIsUrgent: true
+XTerm*selectToClipboard: false
+XTerm*vt100.translations: #override \
+    Ctrl Shift <KeyPress> C:  copy-selection(CLIPBOARD) \n\
+    Ctrl Shift <KeyPress> V:  insert-selection(CLIPBOARD) \n\
+    Ctrl Shift <KeyPress> N:  spawn-new-terminal()
+XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
 XTerm*background:              S_base03
 XTerm*foreground:              S_base0

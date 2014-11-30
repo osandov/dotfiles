@@ -6,7 +6,7 @@
 set -e
 
 sudo pacman  -Sy
-sudo pacman --noconfirm -S --needed alsa-utils base-devel clang dmenu feh \
+sudo pacman --noconfirm -S --needed alsa-utils base-devel clang cvs dmenu feh \
     firefox git gvfs gvim numlockx openssh pkgfile ristretto \
     the_silver_searcher thunar thunar-volman tmux ttf-dejavu tumbler \
     volumeicon xcursor-vanilla-dmz xfce4-notifyd xfce4-power-manager \
