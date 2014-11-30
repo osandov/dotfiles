@@ -20,6 +20,7 @@ Optional installation:
   -g    Install Git config
   -p    Install Python config
   -d    Install dircolors config
+  -u    Install terminal config
   -k    Install graphic application config (Vimperator, zathura)
   -x    Install xmonad config
 
@@ -46,7 +47,7 @@ if [ $# -eq 0 ]; then
     usage "err"
 fi
 
-while getopts ":avzstgpdkxynh" OPT; do
+while getopts ":avzstgpdukxynh" OPT; do
     case "$OPT" in
         a)
             DO_ALL=1
@@ -71,6 +72,9 @@ while getopts ":avzstgpdkxynh" OPT; do
             ;;
         d)
             DO_DIRCOLORS=1
+            ;;
+        u)
+            DO_TERMINAL=1
             ;;
         k)
             DO_GTK=1
@@ -154,6 +158,10 @@ fi
 
 if do_install "$DO_DIRCOLORS"; then
     install_file ~/.dotfiles/dircolors ~/.dircolors
+fi
+
+if do_install "$DO_TERMINAL"; then
+    install_file ~/.dotfiles/urxvt ~/.urxvt
 fi
 
 if do_install "$DO_GTK"; then
