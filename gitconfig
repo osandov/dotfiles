@@ -1,8 +1,10 @@
+[alias]
+	limpio = clean -dqfx
 [color]
 	ui = true
-[push]
-	default = simple
 [format]
 	thread = shallow
 [include]
 	path = ~/.gitconfig.local
+[push]
+	default = simple
