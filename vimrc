@@ -177,6 +177,12 @@ let g:gofmt_command="goimports"
 " I don't write Modula
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 
+" I do write AsciiDoc, though
+autocmd BufRead,BufNewFile *.adoc set filetype=asciidoc
+
+" Close enough for Coccinelle
+autocmd BufRead,BufNewFile *.cocci set filetype=diff
+
 """""""""" Appearance
 
 set background=dark
