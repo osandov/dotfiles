@@ -147,6 +147,10 @@ nnoremap <C-P> gT
 
 """""""""" Plugins
 
+let g:pathogen_disabled = []
+if !executable("clang") || 1
+    call add(g:pathogen_disabled, 'clang_complete')
+endif
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
