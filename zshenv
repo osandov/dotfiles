@@ -6,21 +6,14 @@ elif egrep 'NAME="Ubuntu"' /etc/os-release &> /dev/null; then
     export DISTRO=ubuntu
 fi
 
-# Add a directory to the PATH or move it to the front if it's already there
-add_to_path () {
-    export PATH="$(echo "$PATH" | sed -e "s!^$1:!!g" -e "s!:$1:!:!g" -e "s!^!$1:!")"
-}
+typeset -U path
 
 if [ -d ~/.dotfiles/bin ]; then
-    add_to_path ~/.dotfiles/bin
+    path=(~/.dotfiles/bin "$path[@]")
 fi
 
 if [ -d ~/bin ]; then
-    add_to_path ~/bin
-fi
-
-if [ -d ~/.cabal/bin ]; then
-    add_to_path ~/.cabal/bin
+    path=(~/bin "$path[@]")
 fi
 
 export EDITOR=vim
