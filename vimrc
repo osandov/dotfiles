@@ -52,17 +52,17 @@ augroup END
 """""""""" Essentials
 
 " Use 4 spaces instead of the tab character for indentation
-set expandtab
-set shiftwidth=4
-set softtabstop=4
+" set expandtab
+" set shiftwidth=4
+" set softtabstop=4
 
 " Sane tabs
-set smarttab
-set shiftround
-set nojoinspaces
+" set smarttab
+" set shiftround
+" set nojoinspaces
 
 " Wrap at 79 characters
-set textwidth=79
+" set textwidth=79
 
 " Leader
 nnoremap \ ,
@@ -95,6 +95,7 @@ set number                " Number lines
 set relativenumber        " Relative line numbering
 " set spell                 " Spellcheck by default
 " set autochdir             " Always cd to the current file's directory
+set nojoinspaces          " One space after periods when joining
 
 " Make Command-Line mode tab completion behave more like zsh
 set wildmenu
@@ -181,7 +182,11 @@ autocmd FileType *
             \   call SuperTabSetDefaultCompletionType("<C-X><C-U>") |
             \ endif
 
-let g:gofmt_command="goimports"
+if executable("goimports")
+    let g:gofmt_command="goimports"
+endif
+
+nnoremap <silent><C-\><C-]> <C-w><C-]><C-w>T
 
 " I don't write Modula
 autocmd BufRead,BufNewFile *.md set filetype=markdown
@@ -207,9 +212,10 @@ autocmd Syntax * syn match BadWhitespace /\s\+$\| \+\ze\t/
 
 " Terminal-specific stuff
 if !has("gui_running")
-    " Change cursor in insert mode like a GVim weenie
+    " Change cursor in insert mode and replace mode like a GVim weenie
     let &t_SI .= "\<Esc>[5 q"
     let &t_EI .= "\<Esc>[1 q"
+    let &t_SR .= "\<Esc>[3 q"
     " 0 or 1 -> blinking block
     " 2 -> solid block
     " 3 -> blinking underscore

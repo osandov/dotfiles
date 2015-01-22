@@ -25,41 +25,6 @@ fi
 mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-git clone https://github.com/osandov/rxvt-unicode.git /tmp/rxvt-unicode
-cd /tmp/rxvt-unicode
-./configure \
-    --prefix=/usr/local \
-    --with-terminfo=/usr/share/terminfo \
-    --enable-256-color \
-    --enable-combining \
-    --enable-fading \
-    --enable-font-styles \
-    --enable-iso14755 \
-    --enable-keepscrolling \
-    --enable-lastlog \
-    --enable-mousewheel \
-    --enable-next-scroll \
-    --enable-perl \
-    --enable-pointer-blank \
-    --enable-rxvt-scroll \
-    --enable-selectionscrolling \
-    --enable-slipwheeling \
-    --disable-smart-resize \
-    --enable-startup-notification \
-    --enable-transparency \
-    --enable-unicode3 \
-    --enable-utmp \
-    --enable-wtmp \
-    --enable-xft \
-    --enable-xim \
-    --enable-xterm-scroll \
-    --disable-pixbuf \
-    --disable-frills
-cvs -z3 -d :pserver:anonymous@cvs.schmorp.de/schmorpforge co libev
-cvs -z3 -d :pserver:anonymous@cvs.schmorp.de/schmorpforge co libptytty
-make
-sudo make install
-
 git clone https://github.com/osandov/dzen.git /tmp/dzen
 cd /tmp/dzen
 make

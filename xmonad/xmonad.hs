@@ -103,7 +103,7 @@ myKeys = [ ((myModMask, xK_p), spawnHere dmenuCommand)
          [ ((myModMask .|. controlMask, k), swapWithCurrent i)
            | (i, k) <- zip myWorkspaces [xK_1 ..]]
 
-myTerminal = "urxvt"
+myTerminal = "st"
 
 myModMask = mod4Mask
 
