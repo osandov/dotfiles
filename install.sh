@@ -120,15 +120,11 @@ do_install () {
 }
 
 if do_install "$DO_VIM"; then
-    git submodule init
-    git submodule update
-
     mkdir -p ~/.vim/tmp
     mkdir -p ~/.vim/backup
 
     install_file ~/.dotfiles/vim/plugin ~/.vim/plugin
     install_file ~/.dotfiles/vim/after ~/.vim/after
-    install_file ~/.dotfiles/vim/bundle ~/.vim/bundle
     install_file ~/.dotfiles/vimrc ~/.vimrc
     install_file ~/.dotfiles/gvimrc ~/.gvimrc
 fi

@@ -147,24 +147,33 @@ nnoremap <C-P> gT
 
 """""""""" Plugins
 
-let g:pathogen_disabled = []
-if !executable("clang") || 1
-    call add(g:pathogen_disabled, 'clang_complete')
-endif
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-execute pathogen#infect()
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'ervandew/supertab'
+Plugin 'osandov/vim-colors-solarized'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-rsi'
+
+call vundle#end()
+filetype plugin indent on
 
 " Delimit comments with spaces
 let g:NERDSpaceDelims = 1
+
+" SuperTab scroll down
+let g:SuperTabDefaultCompletionType = "<C-N>"
 
 " Disable annoying {clang_,omni}complete preview window
 set completeopt-=preview
 
 " Also autocomplete C preprocessor macros
 let g:clang_complete_macros = 1
-
-" SuperTab scroll down
-let g:SuperTabDefaultCompletionType = "<C-N>"
 
 autocmd FileType *
             \ if &omnifunc != '' |
