@@ -22,9 +22,6 @@ export PYTHONSTARTUP=~/.pythonrc
 export PAGER=less
 export LESS=R
 export CFLAGS="-Wall -pipe"
-if [ -z "$TERM_PROGRAM" ]; then
-    export TERM_PROGRAM="$TERM"
-fi
 
 if [ -r ~/.zshenv.local ]; then
     source ~/.zshenv.local
