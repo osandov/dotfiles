@@ -57,8 +57,10 @@ case $DISTRO in
         ;;
 esac
 
-gpgconf --launch gpg-agent
-export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh
+if [ -r ~/.gnupg/gpg-agent.conf ]; then
+    gpgconf --launch gpg-agent
+    export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh
+fi
 
 case $TERM in
     xterm*)
