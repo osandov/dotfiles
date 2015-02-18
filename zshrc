@@ -68,17 +68,6 @@ if [ -r ~/.gnupg/gpg-agent.conf ]; then
     export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh
 fi
 
-case $TERM in
-    xterm*)
-        stty -ixon
-        precmd () {print -Pn "\e]0;%~\a"}
-        preexec () {
-            COMMAND=$(echo "$1" | awk '{print $1}')
-            print -n "\e]0;$COMMAND\a"
-        }
-        ;;
-esac
-
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
