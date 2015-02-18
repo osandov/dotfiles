@@ -34,14 +34,21 @@ if [ -r ~/.hostcolor ]; then
 fi
 
 if [ -r /usr/share/git/git-prompt.sh ]; then
+    # Arch Linux
     source /usr/share/git/git-prompt.sh
-    GIT_PROMPT='%F{green}$(__git_ps1 " %s")%f'
+elif [ -r /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+    # Fedora
+    source /usr/share/git-core/contrib/completion/git-prompt.sh
+elif [ -r /etc/bash_completion.d/git-prompt ]; then
+    # Ubuntu
+    source /etc/bash_completion.d/git-prompt
 fi
+GIT_PROMPT='%F{green}$(whence -f __git_ps1 &>/dev/null && __git_ps1 " %s")%f'
 
+setopt prompt_subst
 # One line prompt
 # PROMPT="%F{blue}[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%1~%k%F{blue}]%(#.#.$)%f "
 # Two line prompt
-setopt prompt_subst
 PROMPT="%F{blue}┌[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%~%k$GIT_PROMPT%F{blue}]
 └%(#.#.$)%f "
 
