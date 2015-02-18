@@ -55,14 +55,13 @@ PROMPT="%F{blue}┌[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%~%k$GIT_PRO
 autoload -Uz zshmarks
 zshmarks
 
-case $DISTRO in
-    arch)
-        source /usr/share/doc/pkgfile/command-not-found.zsh
-        ;;
-    ubuntu)
-        source /etc/zsh_command_not_found
-        ;;
-esac
+if [ -r /usr/share/doc/pkgfile/command-not-found.zsh ]; then
+    # Arch Linux
+    source /usr/share/doc/pkgfile/command-not-found.zsh
+elif [ -r /etc/zsh_command_not_found ]; then
+    # Ubuntu
+    source /etc/zsh_command_not_found
+fi
 
 if [ -r ~/.gnupg/gpg-agent.conf ]; then
     gpgconf --launch gpg-agent
