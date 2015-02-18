@@ -2,11 +2,11 @@
 
 watch_dropbox ()
 {
-    echo "Dropbox status: " $(dropbox status)
+    echo "Dropbox status: " $(dropbox-cli status)
     while [ $? -eq 0 ]
     do
         sleep 1
-        echo "Dropbox status: " $(dropbox status)
+        echo "Dropbox status: " $(dropbox-cli status)
     done
 }
 

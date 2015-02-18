@@ -31,7 +31,7 @@ do
     end
 
     function conky_dropbox_status()
-        local handle = io.popen("dropbox status", "r")
+        local handle = io.popen("dropbox-cli status", "r")
         local dropbox_status = handle:read()
         handle:close()
 
