@@ -28,7 +28,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/socket.h>
 #include <sys/types.h>
+#include <sys/un.h>
 #include <sys/wait.h>
 #include <X11/cursorfont.h>
 #include <X11/keysym.h>
@@ -229,6 +231,7 @@ static void updatewmhints(Client *c);
 static void view(const Arg *arg);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
+static void wordystatus(const Arg *arg);
 static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
@@ -266,6 +269,9 @@ static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
 static Window root;
+static int ctl_fd = -1;
+static struct sockaddr_un ctl_addr;
+static char *home, *display;
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
@@ -484,6 +490,11 @@ cleanup(void) {
 	XSync(dpy, False);
 	XSetInputFocus(dpy, PointerRoot, RevertToPointerRoot, CurrentTime);
 	XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
+	free(home);
+	free(display);
+	shutdown(ctl_fd, SHUT_RDWR);
+	close(ctl_fd);
+	unlink(ctl_addr.sun_path);
 }
 
 void
@@ -1499,6 +1510,29 @@ void
 setup(void) {
 	XSetWindowAttributes wa;
 
+	/* get home/display (it's unsafe to store the return value from getenv) */
+	if(!(home = getenv("HOME")))
+		die("dwm: $HOME is not set\n");
+	if(!(home = strdup(home)))
+		die("dwm: out of memory\n");
+	if(!(display = getenv("DISPLAY")))
+		die("dwm: $DISPLAY is not set\n");
+	if(!(display = strdup(display)))
+		die("dwm: out of memory\n");
+
+	/* create control socket */
+	ctl_fd = socket(AF_UNIX, SOCK_DGRAM, 0);
+	if(ctl_fd == -1)
+		die("dwm: could not create control socket\n");
+	ctl_addr.sun_family = AF_UNIX;
+	if(snprintf(ctl_addr.sun_path, sizeof(ctl_addr.sun_path),
+		    "%s/.dwm-%s.ctl", home, display) >= sizeof(ctl_addr.sun_path))
+		die("dwm: control socket address too long\n");
+	if(unlink(ctl_addr.sun_path) == -1 && errno != ENOENT)
+		die("dwm: could not unlink control socket\n");
+	if(bind(ctl_fd, (const struct sockaddr *)&ctl_addr, sizeof(ctl_addr)) == -1)
+		die("dwm: could not bind control socket\n");
+
 	/* clean up any zombies immediately */
 	sigchld(0);
 
@@ -2009,6 +2043,21 @@ wintomon(Window w) {
 	if((c = wintoclient(w)))
 		return c->mon;
 	return selmon;
+}
+
+void
+wordystatus(const Arg *arg)
+{
+	static const char *msg = "togglewordy";
+	struct sockaddr_un sa;
+
+	sa.sun_family = AF_UNIX;
+	if(snprintf(sa.sun_path, sizeof(sa.sun_path), "%s/.statusbar-%s.ctl",
+		    home, display) >= sizeof(sa.sun_path))
+		return;
+	if(sendto(ctl_fd, msg, strlen(msg), 0, (const struct sockaddr *)&sa,
+		  sizeof(sa)) == -1)
+		perror("sendto");
 }
 
 /* There's no way to check accesses to destroyed windows, thus those cases are
