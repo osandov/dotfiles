@@ -6,5 +6,5 @@
 # Executed by xdm/gdm/kdm at login
 #
 
-/bin/bash --login -i ~/.xinitrc
-
+export PATH="$HOME/bin:$PATH"
+~/.xinitrc

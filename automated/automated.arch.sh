@@ -14,18 +14,18 @@ sudo pacman --noconfirm -S --needed alsa-utils base-devel clang cvs dmenu feh \
     xorg-xmessage xorg-xmodmap xorg-xrdb xorg-xrandr xorg-xset xorg-xsetroot \
     xscreensaver xterm zathura zathura-pdf-poppler zsh
 
-sudo systemctl enable xdm-archlinux@service
+sudo systemctl enable xdm-archlinux.service
 
 cd /tmp
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
-tar xvf package-query.tar.gz
+tar -xvf package-query.tar.gz
 cd package-query
 makepkg -s
 sudo pacman --noconfirm -U package-query-*.pkg.tar.xz
 
 cd /tmp
 curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz
-tar xvf yaourt.tar.gz
+tar -xvf yaourt.tar.gz
 cd yaourt
 makepkg -s
 sudo pacman --noconfirm -U yaourt-*.pkg.tar.xz

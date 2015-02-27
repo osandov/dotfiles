@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 cd "$(dirname "$0")"
 
 if [ "$(pwd)" != ~/.dotfiles ]; then
@@ -25,13 +27,12 @@ fi
 mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-git clone https://github.com/osandov/dzen.git /tmp/dzen
-cd /tmp/dzen
+git clone https://github.com/osandov/dwm.git ~/.dotfiles/dwm
+cd ~/.dotfiles/dwm
 make
-sudo make install
+make install
 
-git clone https://github.com/osandov/trayer-srg.git /tmp/trayer-srg
-cd /tmp/trayer-srg
-./configure --prefix=/usr/local
+git clone https://github.com/osandov/st.git ~/.dotfiles/st
+cd ~/.dotfiles/st
 make
-sudo make install
+make install

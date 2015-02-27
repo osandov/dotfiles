@@ -1,5 +1,2 @@
-xmonad.errors
-xmonad.hi
-xmonad.o
-xmonad-*
-xmonad/history
+/st
+/dwm
