@@ -7,12 +7,12 @@ set -e
 
 sudo pacman  -Sy
 sudo pacman --noconfirm -S --needed alsa-utils base-devel clang cvs dmenu feh \
-    firefox git gvfs gvim numlockx openssh pkgfile ristretto \
-    the_silver_searcher thunar thunar-volman tmux ttf-dejavu tumbler \
-    volumeicon xcursor-vanilla-dmz xfce4-notifyd xfce4-power-manager \
-    xfce4-screenshooter xmonad xmonad-contrib xdm-archlinux xorg-xdm \
-    xorg-xmessage xorg-xmodmap xorg-xrdb xorg-xrandr xorg-xset xorg-xsetroot \
-    xscreensaver xterm zathura zathura-pdf-poppler zsh
+	firefox git gvfs gvim numlockx openssh pkgfile ristretto \
+	the_silver_searcher thunar thunar-volman tmux ttf-dejavu tumbler \
+	volumeicon xcursor-vanilla-dmz xfce4-notifyd xfce4-power-manager \
+	xfce4-screenshooter xdm-archlinux xorg-xdm xorg-xmessage xorg-xmodmap \
+	xorg-xrdb xorg-xrandr xorg-xset xorg-xsetroot xscreensaver xterm \
+	zathura zathura-pdf-poppler zsh
 
 sudo systemctl enable xdm-archlinux.service
 
