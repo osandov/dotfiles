@@ -1,11 +1,3 @@
-if [ -f /etc/arch-release ]; then
-    export DISTRO=arch
-elif [ -f /etc/fedora-release ]; then
-    export DISTRO=fedora
-elif egrep 'NAME="Ubuntu"' /etc/os-release &> /dev/null; then
-    export DISTRO=ubuntu
-fi
-
 typeset -U path
 
 if [ -d ~/.dotfiles/bin ]; then
