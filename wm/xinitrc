@@ -25,11 +25,17 @@ xscreensaver -no-splash &
 volumeicon &
 compton -b
 
-# And finally, the window manager. If it is killed due to SIGHUP, it will be
-# restarted.
+# Start the status bar...
+~/.dotfiles/wm/statusbar.py &
+
+# And finally, start the window manager.
 while true; do
 	dwm
+	# If the window manager is killed due to SIGHUP, it will be restarted.
+	# (Poor man's restart.)
 	if [ $? -ne 129 ]; then
 		break
 	fi
 done
+
+kill $!
