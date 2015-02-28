@@ -106,10 +106,14 @@ class StatusBar:
 
             interval_active = active - self._prev_active
             interval_idle = idle - self._prev_idle
+            interval_total = interval_active + interval_idle
             self._prev_active = active
             self._prev_idle = idle
 
-            return 100 * (interval_active / (interval_active + interval_idle))
+            if interval_total:
+                return 100 * (interval_active / interval_total)
+            else:
+                return 0
 
     def cpu_usage(self):
         """
