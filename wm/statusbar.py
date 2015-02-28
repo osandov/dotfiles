@@ -213,13 +213,7 @@ class StatusBar:
         to date, and its current status message.
         """
         # TODO: is there a way to get this without dropbox.py?
-        try:
-            status = subprocess.check_output([self._dropbox_cli, 'status'])
-        except FileNotFoundError as e:
-            return False, False, str(e)
-        except subprocess.CalledProcessError as e:
-            return False, False, str(e)
-
+        status = subprocess.check_output([self._dropbox_cli, 'status'])
         running = status != b"Dropbox isn't running!\n"
         uptodate = status in [b'Up to date\n', b'Idle\n']
         return running, uptodate, status
