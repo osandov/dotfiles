@@ -249,7 +249,10 @@ class StatusBar:
         for e in event:
             with self._cv:
                 for stat_name, stat_func in stats:
-                    self.stats[stat_name] = stat_func()
+                    try:
+                        self.stats[stat_name] = stat_func()
+                    except Exception as e:
+                        print(e, file=stderr)
                 self._event_pending = True
                 self._cv.notify()
 
@@ -324,53 +327,57 @@ def show_statusbar(status):
     now = datetime.datetime.now()
 
     # Dropbox
-    db_running, db_uptodate, db_status = status.stats['dropbox_status']
-    if db_running:
-        if db_uptodate or int(time.monotonic()) % 2:
-            i = icon('dropbox_idle')
-        else:
-            i = icon('dropbox_busy')
-        if status.wordy:
-            i += ' ' + db_status.decode('utf-8').splitlines()[0]
-        sections.append(i)
+    if 'dropbox_status' in status.stats:
+        db_running, db_uptodate, db_status = status.stats['dropbox_status']
+        if db_running:
+            if db_uptodate or int(time.monotonic()) % 2:
+                i = icon('dropbox_idle')
+            else:
+                i = icon('dropbox_busy')
+            if status.wordy:
+                i += ' ' + db_status.decode('utf-8').splitlines()[0]
+            sections.append(i)
 
     # Wi-Fi
-    ssid, quality = status.stats['wifi_status']
-    if ssid is None:
-        sections.append(icon('wifi0'))
-    else:
-        if quality >= 66:
-                i = icon('wifi3')
-        elif quality >= 33:
-                i = icon('wifi2')
+    if 'wifi_status' in status.stats:
+        ssid, quality = status.stats['wifi_status']
+        if ssid is None:
+            sections.append(icon('wifi0'))
         else:
-                i = icon('wifi1')
-        if status.wordy:
-            i += ' %s (%d%%)' % (ssid.decode('utf-8'), quality)
-        sections.append(i)
+            if quality >= 66:
+                    i = icon('wifi3')
+            elif quality >= 33:
+                    i = icon('wifi2')
+            else:
+                    i = icon('wifi1')
+            if status.wordy:
+                i += ' %s (%d%%)' % (ssid.decode('utf-8'), quality)
+            sections.append(i)
 
     # CPU/memory usage
     sections.append(icon('cpu') + '%3.0f%%' % status.stats['cpu_usage'])
     sections.append(icon('mem') + '%3.0f%%' % status.stats['mem_usage'])
 
     # Power supply
-    ac_online, battery_capacity = status.stats['power_supply']
-    if ac_online:
-        i = icon('ac')
-    elif battery_capacity >= 55:
-            i = icon('bat_full')
-    elif battery_capacity > 20:
-            i = icon('bat_low')
-    else:
-            i = icon('bat_empty')
-    sections.append(i + ' %d%%' % battery_capacity)
+    if 'power_supply' in status.stats:
+        ac_online, battery_capacity = status.stats['power_supply']
+        if ac_online:
+            i = icon('ac')
+        elif battery_capacity >= 55:
+                i = icon('bat_full')
+        elif battery_capacity > 20:
+                i = icon('bat_low')
+        else:
+                i = icon('bat_empty')
+        sections.append(i + ' %d%%' % battery_capacity)
 
     # Volume
-    volume = status.stats['volume']
-    if volume is None:
-        sections.append(icon('spkr_mute') + ' MUTE')
-    else:
-        sections.append(icon('spkr_play') + ' %d%%' % volume)
+    if 'volume' in status.stats:
+        volume = status.stats['volume']
+        if volume is None:
+            sections.append(icon('spkr_mute') + ' MUTE')
+        else:
+            sections.append(icon('spkr_play') + ' %d%%' % volume)
 
     # Clock
     sections.append(icon('clock') + now.strftime(' %a, %b %d %I:%M:%S %p'))
