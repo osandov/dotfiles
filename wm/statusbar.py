@@ -249,10 +249,7 @@ class StatusBar:
         for e in event:
             with self._cv:
                 for stat_name, stat_func in stats:
-                    try:
-                        self.stats[stat_name] = stat_func()
-                    except Exception as e:
-                        print(e, file=stderr)
+                    self.stats[stat_name] = stat_func()
                 self._event_pending = True
                 self._cv.notify()
 
@@ -272,8 +269,11 @@ class StatusBar:
                 stat_func = getattr(self, stat_name)()
             else:
                 stat_func = getattr(self, stat_name)
-            self.stats[stat_name] = stat_func()
-            stats2.append((stat_name, stat_func))
+            try:
+                self.stats[stat_name] = stat_func()
+                stats2.append((stat_name, stat_func))
+            except Exception as e:
+                print(e, file=sys.stderr)
         thread = threading.Thread(target=self._update_on, args=(event, stats2), daemon=True)
         thread.start()
 
