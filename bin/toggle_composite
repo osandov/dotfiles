@@ -1,3 +1,0 @@
-#!/bin/sh
-
-pkill -u "$USER" compton || compton -b
