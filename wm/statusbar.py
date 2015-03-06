@@ -52,9 +52,14 @@ class StatusBar:
         display = os.getenv('DISPLAY')
         if not display:
             raise ValueError('$DISPLAY is not set')
-        path = os.path.expanduser('~/.statusbar-%s.ctl' % display)
+        self._ctl_sock_path = os.path.expanduser('~/.statusbar-%s.ctl' % display)
         self._ctl_sock = socket.socket(family=socket.AF_UNIX, type=socket.SOCK_DGRAM)
-        self._ctl_sock.bind(path)
+        try:
+            os.unlink(self._ctl_sock_path)
+        except OSError as e:
+            if e.errno != errno.ENOENT:
+                raise e
+        self._ctl_sock.bind(self._ctl_sock_path)
         thread = threading.Thread(target=self._handle_ctl)
         thread.start()
 
@@ -78,9 +83,9 @@ class StatusBar:
                     self._cv.notify()
 
     def close(self):
-        os.unlink(self._ctl_sock.getsockname())
         self._ctl_sock.shutdown(socket.SHUT_RDWR)
         self._ctl_sock.close()
+        os.unlink(self._ctl_sock_path)
 
     def __enter__(self):
         return self
@@ -349,7 +354,7 @@ def show_statusbar(status):
             else:
                     i = icon('wifi1')
             if status.wordy:
-                i += ' %s (%d%%)' % (ssid.decode('utf-8'), quality)
+                i += ' %s %3d%%' % (ssid.decode('utf-8'), quality)
             sections.append(i)
 
     # CPU/memory usage
