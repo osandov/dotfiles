@@ -108,5 +108,5 @@ index () {
 }
 
 pag () {
-    ag --color --group "$@" | "$PAGER"
+    ag --color --group --case-sensitive "$@" | "$PAGER"
 }
