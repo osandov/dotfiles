@@ -130,21 +130,36 @@ class StatusBar:
 
     def mem_usage(self):
         """Return the current system memory usage as a percent."""
-        available = None
         total = None
+        free = None
+        buffers = None
+        cached = None
+        slab = None
         with open('/proc/meminfo', 'rb', 0) as f:
             for line in f:
                 tokens = line.split()
                 if tokens:
                     if tokens[0] == b'MemTotal:':
                         total = int(tokens[1])
-                    elif tokens[0] == b'MemAvailable:':
-                        available = int(tokens[1])
+                    elif tokens[0] == b'MemFree:':
+                        free = int(tokens[1])
+                    elif tokens[0] == b'Buffers:':
+                        buffers = int(tokens[1])
+                    elif tokens[0] == b'Cached:':
+                        cached = int(tokens[1])
+                    elif tokens[0] == b'Slab:':
+                        slab = int(tokens[1])
         if total is None:
             raise ValueError('no MemTotal in /proc/meminfo')
-        if available is None:
-            raise ValueError('no MemAvailable in /proc/meminfo')
-        return 100 * ((total - available) / total)
+        if free is None:
+            raise ValueError('no MemFree in /proc/meminfo')
+        if buffers is None:
+            raise ValueError('no Buffers in /proc/meminfo')
+        if cached is None:
+            raise ValueError('no Cached in /proc/meminfo')
+        if slab is None:
+            raise ValueError('no Slab in /proc/meminfo')
+        return 100 * ((total - free - buffers - cached - slab) / total)
 
     def power_supply(self):
         """
