@@ -215,6 +215,9 @@ if !has("gui_running")
     " Change cursor in insert mode and replace mode like a GVim weenie
     let &t_SI .= "\<Esc>[5 q"
     let &t_EI .= "\<Esc>[1 q"
+    if exists("&t_SR")
+	    let &t_SR .= "\<Esc>[3 q"
+    endif
     " 0 or 1 -> blinking block
     " 2 -> solid block
     " 3 -> blinking underscore
