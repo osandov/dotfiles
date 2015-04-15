@@ -138,6 +138,7 @@ fi
 
 if do_install "$DO_TMUX"; then
 	install_file ~/.dotfiles/tmux.conf ~/.tmux.conf
+	tic ~/.dotfiles/screen-256color-italic.terminfo
 fi
 
 if do_install "$DO_GIT"; then

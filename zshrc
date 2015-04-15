@@ -76,12 +76,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# if [ -z "$TMUX" ]; then
-    # exec tmx
-# elif [ "$TMUX" = "zlogin" ]; then
-    # export TMUX=
-# fi
-
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
