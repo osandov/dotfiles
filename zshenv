@@ -4,9 +4,11 @@ if [ -d ~/.dotfiles/bin ]; then
     path=(~/.dotfiles/bin "$path[@]")
 fi
 
-if [ -d ~/bin ]; then
-    path=(~/bin "$path[@]")
+if [ -d ~/.local/bin ]; then
+    path=(~/.local/bin "$path[@]")
 fi
+
+export PATH
 
 export EDITOR=vim
 export VISUAL=vim
