@@ -22,7 +22,7 @@ xsetroot -cursor_name left_ptr	# Don't want that ugly X cursor
 xfce4-power-manager
 gpgconf --launch gpg-agent
 xscreensaver -no-splash &
-volumeicon &
+(sleep 1; volumeicon) & # Sleep for PulseAudio workaround
 compton -b
 
 # Start the status bar...
