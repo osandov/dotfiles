@@ -23,7 +23,7 @@ xfce4-power-manager
 gpgconf --launch gpg-agent
 xscreensaver -no-splash &
 (sleep 1; volumeicon) & # Sleep for PulseAudio workaround
-compton -b
+compton &
 
 # Start the status bar...
 ~/.dotfiles/wm/statusbar.py &
@@ -38,4 +38,5 @@ while true; do
 	fi
 done
 
-kill $!
+# Kill previously started daemons.
+kill $(jobs -p)
