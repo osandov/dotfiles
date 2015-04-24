@@ -213,8 +213,8 @@ autocmd Syntax * syn match BadWhitespace /\s\+$\| \+\ze\t/
 " Terminal-specific stuff
 if !has("gui_running")
     " Change cursor in insert mode and replace mode like a GVim weenie
-    let &t_SI .= "\<Esc>[5 q"
-    let &t_EI .= "\<Esc>[1 q"
+    let &t_SI .= "\<Esc>[6 q"
+    let &t_EI .= "\<Esc>[2 q"
     if exists("&t_SR")
 	    let &t_SR .= "\<Esc>[3 q"
     endif
