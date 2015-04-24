@@ -199,16 +199,16 @@ autocmd BufRead,BufNewFile *.cocci set filetype=diff
 
 """""""""" Appearance
 
-set background=dark
-colorscheme solarized
+set background=light
+colorscheme minimal
 
 set cursorline
 " set list
 " set listchars=eol:¬,extends:»,tab:▸\ ,trail:›
 
 " Highlight bad whitespace
-highlight BadWhitespace ctermbg=Red guibg=Red
-autocmd Syntax * syn match BadWhitespace /\s\+$\| \+\ze\t/
+" highlight BadWhitespace ctermbg=Red guibg=Red
+" autocmd Syntax * syn match BadWhitespace /\s\+$\| \+\ze\t/
 
 " Terminal-specific stuff
 if !has("gui_running")

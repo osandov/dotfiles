@@ -49,8 +49,8 @@ setopt prompt_subst
 # One line prompt
 # PROMPT="%F{blue}[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%1~%k%F{blue}]%(#.#.$)%f "
 # Two line prompt
-PROMPT="%F{blue}┌[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%~%k$GIT_PROMPT%F{blue}]
-└%(#.#.$)%f "
+PROMPT="┌[%n@%{$PREHOST%}%m%{$POSTHOST%} %F{cyan}%~%f$GIT_PROMPT]
+└%(#.#.$) "
 
 autoload -Uz zshmarks
 zshmarks
@@ -82,7 +82,7 @@ alias l='ls -CF'
 
 alias meminfo='watch -n 1 cat /proc/meminfo'
 alias cxclip='xclip -selection clipboard'
-alias ag="ag --color-line-number=32 --color-path=34 --color-match='38;5;8;43'"
+alias ag="ag --color-line-number=32 --color-path=34 --color-match=103"
 alias da='du --apparent-size'
 alias pingg='ping 8.8.8.8'
 

@@ -13,25 +13,6 @@ Xft.lcdfilter: lcddefault
 ! xscreensaver
 xscreensaver.fade: false
 
-! Solarized Dark
-#define S_yellow        #b58900
-#define S_orange        #cb4b16
-#define S_red           #dc322f
-#define S_magenta       #d33682
-#define S_violet        #6c71c4
-#define S_blue          #268bd2
-#define S_cyan          #2aa198
-#define S_green         #859900
-
-#define S_base03        #002b36
-#define S_base02        #073642
-#define S_base01        #586e75
-#define S_base00        #657b83
-#define S_base0         #839496
-#define S_base1         #93a1a1
-#define S_base2         #eee8d5
-#define S_base3         #fdf6e3
-
 ! XTerm
 XTerm*termName: xterm-256color
 XTerm*cursorBlink: false
@@ -47,27 +28,23 @@ XTerm*vt100.translations: #override \
     Ctrl Shift <KeyPress> N:  spawn-new-terminal()
 XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
-XTerm*background:              S_base03
-XTerm*foreground:              S_base0
-XTerm*fading:                  40
-XTerm*fadeColor:               S_base03
-XTerm*cursorColor:             S_base1
-XTerm*pointerColorBackground:  S_base01
-XTerm*pointerColorForeground:  S_base1
+XTerm*foreground:	#000000
+XTerm*background:	#ffffff
+XTerm*cursorColor:	#000000
 
-XTerm*color0:                  S_base02
-XTerm*color1:                  S_red
-XTerm*color2:                  S_green
-XTerm*color3:                  S_yellow
-XTerm*color4:                  S_blue
-XTerm*color5:                  S_magenta
-XTerm*color6:                  S_cyan
-XTerm*color7:                  S_base2
-XTerm*color9:                  S_orange
-XTerm*color8:                  S_base03
-XTerm*color10:                 S_base01
-XTerm*color11:                 S_base00
-XTerm*color12:                 S_base0
-XTerm*color13:                 S_violet
-XTerm*color14:                 S_base1
-XTerm*color15:                 S_base3
+XTerm*color0:		#000000
+XTerm*color1:		#aa0000
+XTerm*color2:		#00aa00
+XTerm*color3:		#aa5400
+XTerm*color4:		#0000aa
+XTerm*color5:		#aa00aa
+XTerm*color6:		#00aaaa
+XTerm*color7:		#aaaaaa
+XTerm*color8:		#545454
+XTerm*color9:		#ff5454
+XTerm*color10:		#54ff54
+XTerm*color11:		#ffff54
+XTerm*color12:		#5454ff
+XTerm*color13:		#ff54ff
+XTerm*color14:		#54ffff
+XTerm*color15:		#ffffff

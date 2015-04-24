@@ -121,6 +121,7 @@ if do_install "$DO_VIM"; then
 
 	install_file ~/.dotfiles/vim/plugin ~/.vim/plugin
 	install_file ~/.dotfiles/vim/after ~/.vim/after
+	install_file ~/.dotfiles/vim/colors ~/.vim/colors
 	install_file ~/.dotfiles/vimrc ~/.vimrc
 	install_file ~/.dotfiles/gvimrc ~/.gvimrc
 fi
