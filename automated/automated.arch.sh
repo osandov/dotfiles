@@ -37,10 +37,14 @@ PACKAGES=(
 	git
 	gvfs
 	gvim
+	librsvg # For redshift-gtk
 	numlockx
 	openssh
 	pkgfile
 	python
+	python-gobject # For redshift-gtk
+	python-xdg # For redshift-gtk
+	redshift
 	ristretto
 	the_silver_searcher
 	thunar
