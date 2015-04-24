@@ -3,6 +3,6 @@ gtk-icon-theme-name = "elementary-xfce-dark"
 gtk-fallback-icon-theme = "gnome"
 
 style "vimfix" {
-  bg[NORMAL] = "#002b36"
+  bg[NORMAL] = "#ffffff"
 }
 widget "vim-main-window.*GtkForm" style "vimfix"
