@@ -16,7 +16,7 @@ hi Ignore NONE ctermfg=White guifg=#ffffff
 hi Error NONE ctermbg=Red guibg=#ff5454
 hi Todo NONE
 
-" GUI
+" UI
 " hi ColorColumn
 " hi Conceal
 hi Cursor NONE guifg=bg guibg=fg
@@ -62,3 +62,11 @@ hi Visual NONE ctermbg=LightGray guibg=#aaaaaa
 " hi VisualNOS
 hi WarningMsg NONE ctermfg=Red guifg=#ff5454
 " hi WildMenu
+
+" Filetype-specific
+" Diff
+" TODO: git diff index lines should be diffFile
+hi diffFile NONE cterm=bold gui=bold guifg=#545454
+hi diffLine NONE ctermfg=DarkCyan guifg=#00aaaa
+hi diffAdded NONE ctermfg=DarkGreen guifg=#00aa00
+hi diffRemoved NONE ctermfg=DarkRed guifg=#aa0000
