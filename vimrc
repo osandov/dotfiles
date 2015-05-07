@@ -105,6 +105,9 @@ set wildmode=list:longest,list:full
 " create a new one if it is not
 set switchbuf=usetab,newtab
 
+" Resize splits when the terminal is resized
+autocmd VimResized * wincmd =
+
 """""""""" Useful bindings
 
 " Toggle search highlighting
