@@ -71,9 +71,6 @@ let mapleader = ","
 " Write
 noremap <Leader>m :w<CR>
 
-" Use jk to exit from insert mode
-" imap jk <Esc>
-
 " Map Command-Line mode navigation to arrows keys so we can have filtering
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
@@ -94,7 +91,6 @@ set directory=~/.vim/tmp
 set number                " Number lines
 set relativenumber        " Relative line numbering
 " set spell                 " Spellcheck by default
-" set autochdir             " Always cd to the current file's directory
 set nojoinspaces          " One space after periods when joining
 
 " Make Command-Line mode tab completion behave more like zsh
@@ -158,7 +154,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 Plugin 'ervandew/supertab'
-Plugin 'osandov/vim-colors-solarized'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-repeat'
