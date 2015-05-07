@@ -217,7 +217,7 @@ drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int
 }
 
 int
-drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, const char *text, int invert) {
+drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, const char *text, int invert, int escapes) {
 	char buf[1024];
 	int tx, ty, th;
 	Extnts tex;
@@ -244,6 +244,8 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, const char *tex
 	} else if (render) {
 		XSetForeground(drw->dpy, drw->gc, invert ? drw->scheme->fg->pix : drw->scheme->bg->pix);
 		XFillRectangle(drw->dpy, drw->drawable, drw->gc, x, y, w, h);
+		XSetForeground(drw->dpy, drw->gc, invert ? drw->scheme->bg->pix : drw->scheme->fg->pix);
+		XSetBackground(drw->dpy, drw->gc, invert ? drw->scheme->fg->pix : drw->scheme->bg->pix);
 	}
 
 	if (!text || !drw->fontcount) {
@@ -255,11 +257,14 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, const char *tex
 	}
 
 	curfont = drw->fonts[0];
+
 	while (1) {
 		utf8strlen = 0;
 		utf8str = text;
 		nextfont = NULL;
 		while (*text) {
+			if (escapes && *text == '\x1b')
+				break;
 			utf8charlen = utf8decode(text, &utf8codepoint, UTF_SIZ);
 			for (i = 0; i < drw->fontcount; i++) {
 				charexists = charexists || XftCharExists(drw->dpy, drw->fonts[i]->xfont, utf8codepoint);
@@ -307,6 +312,49 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, const char *tex
 
 		if (!*text) {
 			break;
+		} else if (escapes && *text == '\x1b') {
+			char *c, *pt;
+			long ps;
+			Pixmap bm;
+			unsigned int bm_w, bm_h;
+			int bm_xh, bm_yh;
+			text++;
+			if (*text == ']') {
+				/* Operating System Control (OSC) */
+				text++;
+				ps = strtol(text, &c, 10);
+				if (*c != ';')
+					break;
+				if (ps == 9) {
+					/* Icon */
+					text = c + 1;
+					c = strchr(text, '\a');
+					if (!c)
+						break;
+					pt = malloc(c - text + 1);
+					if (pt) {
+						memcpy(pt, text, c - text);
+						pt[c - text] = '\0';
+						if (XReadBitmapFile(drw->dpy, drw->drawable, pt, &bm_w, &bm_h, &bm, &bm_xh, &bm_yh) == BitmapSuccess) {
+							if (render) {
+								th = curfont->ascent + curfont->descent;
+								ty = y + (h / 2) - (th / 2) + curfont->ascent;
+								tx = x + (h / 2);
+								XCopyPlane(drw->dpy, bm, drw->drawable, drw->gc, 0, 0, bm_w, bm_h, tx, ty - bm_h, 1);
+							}
+							XFreePixmap(drw->dpy, bm);
+							x += bm_w + 1;
+							w -= bm_w + 1;
+						}
+						free(pt);
+					}
+					text = c + 1;
+				} else {
+					break;
+				}
+			} else {
+				break;
+			}
 		} else if (nextfont) {
 			charexists = 0;
 			curfont = nextfont;
