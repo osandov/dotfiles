@@ -400,7 +400,7 @@ def show_statusbar(status):
     # Clock
     sections.append(icon('clock') + now.strftime(' %a, %b %d %I:%M:%S %p'))
 
-    subprocess.check_call(['xsetroot', '-name', '  ' + ' | '.join(sections)])
+    subprocess.check_call(['xsetroot', '-name', ' ' + ' | '.join(sections)])
 
 
 if __name__ == '__main__':
