@@ -70,3 +70,5 @@ hi diffFile NONE cterm=bold gui=bold guifg=#545454
 hi diffLine NONE ctermfg=DarkCyan guifg=#00aaaa
 hi diffAdded NONE ctermfg=DarkGreen guifg=#00aa00
 hi diffRemoved NONE ctermfg=DarkRed guifg=#aa0000
+" Git commit
+hi def link gitcommitOverflow WarningMsg
