@@ -1,2 +1,8 @@
-/st
-/dwm
+/term/st/config.h
+/term/st/st
+/term/st/st.o
+/wm/dwm/config.h
+/wm/dwm/drw.o
+/wm/dwm/dwm
+/wm/dwm/dwm.o
+/wm/dwm/util.o
