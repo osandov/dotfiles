@@ -2,9 +2,13 @@
 	limpio = clean -dqfx
 [color]
 	ui = true
+[core]
+	abbrev = 12
 [format]
 	thread = shallow
 [include]
 	path = ~/.gitconfig.local
+[pretty]
+	refer = format:%h (\"%s\")
 [push]
 	default = simple
