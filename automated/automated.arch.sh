@@ -8,7 +8,7 @@ set -e
 sudo pacman -Sy
 
 # Install yaourt manually from the AUR first.
-# sudo pacman --noconfirm -S --needed base-devel
+sudo pacman --noconfirm -S --needed base-devel
 
 cd /tmp
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
