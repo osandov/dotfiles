@@ -26,3 +26,11 @@ fi
 
 mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+cd ~/.dotfiles/term/st
+make
+make install
+
+cd ~/.dotfiles/wm/dwm
+make
+make install
