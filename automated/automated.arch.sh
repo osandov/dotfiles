@@ -50,6 +50,7 @@ PACKAGES=(
 	thunar
 	thunar-volman
 	tmux
+	trayer-srg-git
 	ttf-dejavu
 	tumbler
 	volumeicon
