@@ -9,26 +9,26 @@ fi
 
 usage () {
 	USAGE_STRING="Usage: $0 [-avzstgpdkw] [-y | -n]
-	$0 -h
+$0 -h
 
-	Optional installation:
-	-a    Install all config
-	-v    Install Vim config
-	-z    Install zsh config
-	-s    Install SSH/GnuPG config
-	-t    Install tmux config
-	-g    Install Git config
-	-p    Install Python config
-	-d    Install dircolors config
-	-k    Install graphic application config (Vimperator, zathura)
-	-w    Install window manager config
+Optional installation:
+  -a    install all config
+  -v    install Vim config
+  -z    install zsh config
+  -s    install SSH/GnuPG config
+  -t    install tmux config
+  -g    install Git config
+  -p    install Python config
+  -d    install dircolors config
+  -k    install graphic application config (Vimperator, zathura)
+  -w    install window manager config
 
-	Prompts:
-	-y    Assume yes when prompted about overwriting a file
-	-n    Assume no when prompted about overwriting a file
+Prompts:
+  -y    assume yes when prompted about overwriting a file
+  -n    assume no when prompted about overwriting a file
 
-	Miscellaneous:
-	-h    Display this help message and exit"
+Miscellaneous:
+  -h    display this help message and exit"
 
 	case "$1" in
 		out)
@@ -46,7 +46,7 @@ if [ $# -eq 0 ]; then
 	usage "err"
 fi
 
-while getopts ":avzstgpdkwynh" OPT; do
+while getopts "avzstgpdkwynh" OPT; do
 	case "$OPT" in
 		a)
 			DO_ALL=1
