@@ -53,7 +53,7 @@ PACKAGES=(
 	trayer-srg-git
 	ttf-dejavu
 	tumbler
-	volumeicon
+	xbindkeys
 	xcursor-vanilla-dmz
 	xdm-archlinux
 	xfce4-notifyd

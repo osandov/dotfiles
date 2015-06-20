@@ -166,6 +166,7 @@ fi
 if do_install "$DO_WM"; then
 	install_file ~/.dotfiles/x11/Xresources ~/.Xresources
 	install_file ~/.dotfiles/x11/Xmodmap ~/.Xmodmap
+	install_file ~/.dotfiles/x11/xbindkeysrc ~/.xbindkeysrc
 	install_file ~/.dotfiles/wm/xsession ~/.xsession
 	install_file ~/.dotfiles/wm/xinitrc ~/.xinitrc
 	install_file ~/.dotfiles/wm/compton.conf ~/.config/compton.conf

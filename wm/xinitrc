@@ -23,7 +23,7 @@ xfce4-power-manager
 gpgconf --launch gpg-agent
 xscreensaver -no-splash &
 redshift-gtk &
-(sleep 1; volumeicon) & # Sleep for PulseAudio workaround
+xbindkeys -n &
 compton &
 
 # Start the status bar...
