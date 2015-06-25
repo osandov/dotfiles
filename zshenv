@@ -8,7 +8,11 @@ if [ -d ~/.local/bin ]; then
     path=(~/.local/bin "$path[@]")
 fi
 
-export PATH
+if [ -d ~/.local/share/man ]; then
+	manpath=(~/.local/share/man "$manpath[@]")
+fi
+
+export PATH MANPATH
 
 export EDITOR=vim
 export VISUAL=vim
