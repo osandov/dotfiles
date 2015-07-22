@@ -18,6 +18,7 @@ Optional installation:
   -s    install SSH/GnuPG config
   -t    install tmux config
   -g    install Git config
+  -m    install Mutt config
   -p    install Python config
   -d    install dircolors config
   -k    install graphic application config (Vimperator, zathura)
@@ -46,7 +47,7 @@ if [ $# -eq 0 ]; then
 	usage "err"
 fi
 
-while getopts "avzstgpdkwynh" OPT; do
+while getopts "avzstgmpdkwynh" OPT; do
 	case "$OPT" in
 		a)
 			DO_ALL=1
@@ -65,6 +66,9 @@ while getopts "avzstgpdkwynh" OPT; do
 			;;
 		g)
 			DO_GIT=1
+			;;
+		m)
+			DO_MUTT=1
 			;;
 		p)
 			DO_PYTHON=1
@@ -144,6 +148,11 @@ fi
 
 if do_install "$DO_GIT"; then
 	install_file ~/.dotfiles/gitconfig ~/.gitconfig
+fi
+
+if do_install "$DO_MUTT"; then
+	mkdir -p ~/.mutt
+	install_file ~/.dotfiles/muttrc ~/.mutt/muttrc
 fi
 
 if do_install "$DO_PYTHON"; then

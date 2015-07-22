@@ -1,0 +1,108 @@
+# Omar Sandoval's muttrc
+
+## Site-specific
+source ~/.mutt/muttrc.local
+
+## Misc
+# No delay when changing folders.
+set sleep_time = 0
+# Don't save copies of outgoing messages.
+set copy = no
+unset record
+# Don't mark unread messages as old when leaving the mailbox.
+set mark_old = no
+
+## Sorting/threading
+set sort            = threads
+set strict_threads  = yes
+set sort_browser    = reverse-date
+set sort_aux        = reverse-last-date-received
+
+## Index
+# Scroll line-by-line on menus instead of by pages
+set menu_scroll = yes
+# vim-style bindings for positioning the current entry
+bind index zt current-top
+bind index zz current-middle
+bind index z. current-middle
+bind index zb current-bottom
+# Override the list-reply binding
+bind index L bottom-page
+# Ctrl-[NP] are used for the sidebar, so use JK for threads
+bind index J next-thread
+bind index K previous-thread
+# Don't skip over deleted messages
+bind index j next-entry
+bind index k previous-entry
+bind index <Down> next-entry
+bind index <Up> previous-entry
+
+## Pager
+# Show a small index while in the pager
+set pager_index_lines = 10
+# Don't move to the next message when scrolling past the end.
+set pager_stop = yes
+# Pad empty lines with tildes
+set tilde = yes
+# Make the pager more like less
+bind pager j next-line
+bind pager k previous-line
+bind pager <Down> next-line
+bind pager <Up> previous-line
+bind pager d half-down
+bind pager u half-up
+
+## Sidebar
+set sidebar_format       = "%B%* %?N?%N/?%S"
+set sidebar_visible      = yes
+set sidebar_width        = 20
+set sidebar_sort         = yes
+set sidebar_shortpath    = yes
+set sidebar_folderindent = yes
+bind index,pager \CP sidebar-prev
+bind index,pager \CN sidebar-next
+bind index,pager \CO sidebar-open
+
+## Color scheme
+
+# Basic colors
+color normal default default
+color attachment brightblack default
+color error brightred default
+color indicator default color254
+color markers blue default
+color message color29 default
+color search default color11
+color status white black
+color tilde blue default
+color tree blue default
+
+# Index
+color index default default "~A"
+color index brightcolor29 default "~U" # Unread messages
+
+# Headers
+color hdrdefault brightblack default
+
+# Body
+color quoted red default
+color quoted1 yellow default
+color quoted2 cyan default
+color quoted3 blue default
+color quoted4 magenta default
+
+color signature color242 default
+color bold brightblack default
+color underline brightblack default
+
+# Highlight patches
+color body red default "^-.*"
+color body green default "^[+].*"
+color body cyan default "^@@.*"
+color body brightblack default "^diff --git.*"
+color body brightblack default "^index [a-f0-9].*"
+color body brightblack default "^---.*"
+color body brightblack default "^[+][+][+].*"
+
+# Sidebar
+color sidebar_new brightcolor29 default
