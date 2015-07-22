@@ -96,17 +96,17 @@ done
 install_file () {
 	case "$ASSUME_ANSWER" in
 		y)
-			ln -fns "$1" "$2"
+			ln -Tfns "$1" "$2"
 			;;
 		n)
 			if [ -e "$2" ]; then
 				echo "$2 already exists; not installing" >&2
 			else
-				ln -nfs "$1" "$2"
+				ln -Tfns "$1" "$2"
 			fi
 			;;
 		*)
-			ln -ins "$1" "$2"
+			ln -Tins "$1" "$2"
 			;;
 	esac
 }
