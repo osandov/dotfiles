@@ -84,7 +84,13 @@ set ttimeoutlen=50
 
 " Backup files in another directory to avoid clutter
 set backupdir=~/.vim/backup
+if !isdirectory(&backupdir)
+	call mkdir(&backupdir, "p")
+endif
 set directory=~/.vim/tmp
+if !isdirectory(&directory)
+	call mkdir(&directory, "p")
+endif
 
 " A few conveniences
 " set splitright splitbelow " Personal preference

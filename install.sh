@@ -120,8 +120,7 @@ do_install () {
 }
 
 if do_install "$DO_VIM"; then
-	mkdir -p ~/.vim/tmp
-	mkdir -p ~/.vim/backup
+	mkdir -p ~/.vim
 
 	install_file ~/.dotfiles/vim/plugin ~/.vim/plugin
 	install_file ~/.dotfiles/vim/after ~/.vim/after
