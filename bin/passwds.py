@@ -1,0 +1,228 @@
+#!/usr/bin/env python3
+
+import argparse
+import codecs
+import getpass
+import json
+import os.path
+from subprocess import Popen, check_output, PIPE
+import sys
+import tempfile
+import urllib.parse
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Manage passwords')
+    parser.add_argument(
+        '--db', default=os.path.expanduser('~/.passwds.gpg'),
+        help='password database to use (defaults to ~/.passwds.gpg)')
+    subparsers = parser.add_subparsers(
+        title='subcommands', description='password operations', dest='op')
+    subparsers.required = True
+
+    create_parser = subparsers.add_parser('create', help='create a password database')
+    create_parser.set_defaults(func=cmd_create)
+
+    reencrypt_parser = subparsers.add_parser('reencrypt', help='change the master passphrase')
+    reencrypt_parser.set_defaults(func=cmd_reencrypt)
+
+    list_parser = subparsers.add_parser('list', help='list known accounts')
+    list_parser.set_defaults(func=cmd_list)
+
+    get_parser = subparsers.add_parser('get', help='write the password for an account to stdout')
+    get_parser.add_argument('account', help='account to read password for')
+    get_parser.set_defaults(func=cmd_get)
+
+    set_parser = subparsers.add_parser('set', help='read a password from stdin and save it')
+    set_parser.add_argument('account', help='account to save password for')
+    set_parser.set_defaults(func=cmd_set)
+
+    delete_parser = subparsers.add_parser('delete', help='delete a password')
+    delete_parser.add_argument('account', help='account to delete')
+    delete_parser.set_defaults(func=cmd_delete)
+
+    lock_parser = subparsers.add_parser('lock', help='lock the password database')
+    lock_parser.set_defaults(func=cmd_lock)
+
+    unlock_parser = subparsers.add_parser('unlock', help='unlock the password database')
+    unlock_parser.set_defaults(func=cmd_unlock)
+
+    args = parser.parse_args()
+    try:
+        args.func(args)
+    except PasswdsException as e:
+        exit(e)
+
+
+class PasswdsException(Exception):
+    pass
+
+
+class PasswdDbNotFoundException(PasswdsException):
+    def __init__(self, path):
+        super().__init__("Password database '%s' does not exist" % path)
+
+
+class AccountNotFoundException(PasswdsException):
+    def __init__(self, account):
+        super().__init__("Account '%s' does not exist" % account)
+
+
+def cmd_create(args):
+    if os.path.exists(args.db):
+        # This is racy but good enough.
+        raise PasswdsException("Password database '%s' already exists" % args.db)
+    invalidate_master_passphrase(args.db)
+    passphrase = get_master_passphrase(args.db, repeat=1)
+    save_passwd_db(args.db, {}, passphrase)
+
+
+def cmd_reencrypt(args):
+    db = load_passwd_db(args.db)
+    invalidate_master_passphrase(args.db)
+    passphrase = get_master_passphrase(args.db, prompt='New passphrase:',
+                                       description='Enter new master passphrase\n',
+                                       repeat=1)
+    save_passwd_db(args.db, db, passphrase)
+
+
+def cmd_list(args):
+    db = load_passwd_db(args.db)
+    for account in db:
+        print(account)
+
+
+def cmd_get(args):
+    db = load_passwd_db(args.db)
+    try:
+        print(db[args.account])
+    except KeyError:
+        raise AccountNotFoundException(args.account)
+
+
+def cmd_set(args):
+    db, passphrase = load_passwd_db_and_passphrase(args.db)
+    if os.isatty(sys.stdin.fileno()):
+        password = getpass.getpass("Password for '%s': " % args.account)
+    else:
+        password = input()
+    db[args.account] = password
+    save_passwd_db(args.db, db, passphrase)
+
+
+def cmd_delete(args):
+    db, passphrase = load_passwd_db_and_passphrase(args.db)
+    try:
+        del db[args.account]
+    except KeyError:
+        raise AccountNotFoundException(args.account)
+    save_passwd_db(args.db, db, passphrase)
+
+
+def cmd_lock(args):
+    if not os.path.exists(args.db):
+        raise PasswdDbNotFoundException(args.db)
+    invalidate_master_passphrase(args.db)
+
+
+def cmd_unlock(args):
+    load_passwd_db(args.db)
+
+
+def get_master_passphrase(path, *, error_message=None, prompt='Passphrase:',
+                          description='Enter master passphrase\n', repeat=0):
+    if error_message is None:
+        error_message = 'X'
+    else:
+        error_message = urllib.parse.quote(error_message)
+
+    if prompt is None:
+        prompt = 'X'
+    else:
+        prompt = urllib.parse.quote(prompt)
+
+    if description is None:
+        description = 'X'
+    else:
+        description = urllib.parse.quote(description)
+
+    ipc = 'GET_PASSPHRASE --repeat=%d passwds.py:%s %s %s %s' % \
+          (repeat, path, error_message, prompt, description)
+    output = check_output(['gpg-connect-agent'], input=ipc.encode('utf-8'))
+    tokens = output.split(maxsplit=2)
+    if tokens[0] == b'OK':
+        if len(tokens) < 2:
+            raise PasswdsException('Invalid passphrase')
+        else:
+            return codecs.decode(tokens[1], 'hex')
+    elif tokens[0] == b'ERR':
+        raise PasswdsException(tokens[-1].decode('utf-8').strip())
+    else:
+        raise PasswdsException("Unrecognized output from gpg-connect-agent")
+
+
+def invalidate_master_passphrase(path):
+    ipc = 'CLEAR_PASSPHRASE passwds.py:%s' % path
+    output = check_output(['gpg-connect-agent'], input=ipc.encode('utf-8'))
+    tokens = output.split(maxsplit=2)
+    if tokens[0] == b'ERR':
+        raise PasswdsException(tokens[-1].decode('utf-8').strip())
+    elif tokens[0] != b'OK':
+        raise PasswdsException("Unrecognized output from gpg-connect-agent")
+
+
+def _load_passwd_db(file, passphrase):
+    rd, wr = os.pipe()
+    with os.fdopen(rd, 'rb') as pipe_rd, os.fdopen(wr, 'wb') as pipe_wr:
+        cmd = ['gpg2', '--quiet', '--batch', '--passphrase-fd=%d' % rd, '--decrypt']
+        gpg = Popen(cmd, stdin=file, stdout=PIPE, pass_fds=[rd])
+        pipe_rd.close()
+        pipe_wr.write(passphrase)
+        pipe_wr.close()
+        output = gpg.stdout.read()
+        returncode = gpg.wait()
+        if returncode != 0:
+            raise PasswdsException("Failed to decrypt password database")
+    return json.loads(output.decode('utf-8'))
+
+
+def load_passwd_db(path):
+    return load_passwd_db_and_passphrase(path)[0]
+
+
+def load_passwd_db_and_passphrase(path):
+    try:
+        with open(path, 'rb') as file:
+            passphrase = get_master_passphrase(path)
+            return _load_passwd_db(file, passphrase), passphrase
+    except PasswdsException:
+        invalidate_master_passphrase(path)
+    except FileNotFoundError:
+        raise PasswdDbNotFoundException(path)
+
+
+def save_passwd_db(path, db, passphrase):
+    rd, wr = os.pipe()
+    file = tempfile.NamedTemporaryFile('wb', prefix='tmp_passwds',
+                                       dir=os.path.dirname(path), delete=False)
+    with os.fdopen(rd, 'rb') as pipe_rd, os.fdopen(wr, 'wb') as pipe_wr:
+        cmd = ['gpg2', '--quiet', '--batch', '--passphrase-fd=%d' % rd, '--symmetric']
+        gpg = Popen(cmd, stdin=PIPE, stdout=file, pass_fds=[rd])
+        pipe_rd.close()
+        pipe_wr.write(passphrase)
+        pipe_wr.close()
+        json.dump(db, codecs.getwriter('utf-8')(gpg.stdin))
+        gpg.stdin.close()
+        returncode = gpg.wait()
+        if returncode != 0:
+            invalidate_master_passphrase(path)
+            file.close()
+            os.unlink(file.name)
+            raise PasswdsException("Failed to encrypt password database")
+
+    file.close()
+    os.rename(file.name, path)
+
+
+if __name__ == '__main__':
+    main()
