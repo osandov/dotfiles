@@ -195,8 +195,9 @@ def load_passwd_db_and_passphrase(path):
         with open(path, 'rb') as file:
             passphrase = get_master_passphrase(path)
             return _load_passwd_db(file, passphrase), passphrase
-    except PasswdsException:
+    except PasswdsException as e:
         invalidate_master_passphrase(path)
+        raise e
     except FileNotFoundError:
         raise PasswdDbNotFoundException(path)
 
