@@ -142,7 +142,7 @@ function! g:ToggleNuMode()
     endif
 endfunc
 
-noremap <C-L> :call g:ToggleNuMode()<CR>
+noremap <Leader>ln :call g:ToggleNuMode()<CR>
 
 nnoremap <C-S> gUiw
 vnoremap <C-S> gU
