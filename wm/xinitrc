@@ -23,7 +23,7 @@ xfce4-power-manager
 gpgconf --launch gpg-agent
 xscreensaver -no-splash &
 redshift-gtk &
-xbindkeys -n &
+supavolumed &
 compton &
 
 # Start the status bar...
