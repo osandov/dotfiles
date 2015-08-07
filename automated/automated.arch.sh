@@ -53,6 +53,7 @@ PACKAGES=(
 	trayer-srg-git
 	ttf-dejavu
 	tumbler
+	xautomation
 	xbindkeys
 	xcursor-vanilla-dmz
 	xdm-archlinux
@@ -60,6 +61,7 @@ PACKAGES=(
 	xfce4-power-manager
 	xfce4-screenshooter
 	xfce-theme-greybird
+	xorg-xclip
 	xorg-xdm
 	xorg-xmessage
 	xorg-xmodmap
