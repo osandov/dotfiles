@@ -54,7 +54,6 @@ PACKAGES=(
 	ttf-dejavu
 	tumbler
 	xautomation
-	xbindkeys
 	xcursor-vanilla-dmz
 	xdm-archlinux
 	xfce4-notifyd
