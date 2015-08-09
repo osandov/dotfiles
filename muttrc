@@ -52,6 +52,10 @@ bind pager <Up> previous-line
 bind pager d half-down
 bind pager u half-up
 
+## Macros
+set pipe_split = yes
+macro index,pager ,s "<tag-prefix><pipe-message>mutt-save-patch.py" "save tagged patches"
+
 ## Sidebar
 set sidebar_format       = "%B%* %?N?%N/?%S"
 set sidebar_visible      = yes
