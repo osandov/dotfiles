@@ -12,7 +12,10 @@ PatchSubject = namedtuple('PatchSubject', ['prefix', 'title', 'index', 'total', 
 
 def main():
     message = email.message_from_binary_file(sys.stdin.buffer)
-    subject = parse_subject(message.get('Subject'))
+    try:
+        subject = parse_subject(message.get('Subject'))
+    except ValueError as e:
+        exit(e)
     path = []
     if subject.version is not None:
         path.append('v%d' % subject.version)
