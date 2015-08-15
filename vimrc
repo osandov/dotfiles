@@ -69,7 +69,7 @@ nnoremap \ ,
 let mapleader = ","
 
 " Write
-noremap <Leader>m :w<CR>
+noremap <Leader>m :up<CR>
 
 " Map Command-Line mode navigation to arrows keys so we can have filtering
 cnoremap <C-P> <Up>
