@@ -52,6 +52,9 @@ setopt prompt_subst
 PROMPT="┌[%n@%{$PREHOST%}%m%{$POSTHOST%} %F{cyan}%~%f$GIT_PROMPT]
 └%(#.#.$) "
 
+# Disable Ctrl-S/Ctrl-Q flow control nonsense
+stty -ixon
+
 autoload -Uz zshmarks
 zshmarks
 
