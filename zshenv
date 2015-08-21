@@ -1,4 +1,4 @@
-typeset -U path
+typeset -U path manpath
 
 if [ -d ~/.dotfiles/bin ]; then
     path=(~/.dotfiles/bin "$path[@]")
@@ -9,7 +9,7 @@ if [ -d ~/.local/bin ]; then
 fi
 
 if [ -d ~/.local/share/man ]; then
-	manpath=(~/.local/share/man "$manpath[@]")
+	manpath=(~/.local/share/man "$manpath[@]" "")
 fi
 
 export PATH MANPATH
