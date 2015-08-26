@@ -18,7 +18,6 @@ export EDITOR=vim
 export VISUAL=vim
 export PYTHONSTARTUP=~/.pythonrc
 export PAGER=less
-export CFLAGS="-Wall -pipe"
 # Clear the screen properly and allow ANSI color escape sequences in less
 export LESS=cR
 
