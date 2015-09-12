@@ -24,10 +24,8 @@ gpgconf --launch gpg-agent
 xscreensaver -no-splash &
 redshift-gtk &
 supavolumed &
+statusbar &
 compton &
-
-# Start the status bar...
-~/.dotfiles/wm/statusbar.py &
 
 # And finally, start the window manager.
 while true; do

@@ -7,3 +7,5 @@
 /wm/dwm/dwm.o
 /wm/dwm/util.o
 /wm/supavolumed/supavolumed
+/wm/statusbar/*.o
+/wm/statusbar/statusbar

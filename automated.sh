@@ -38,3 +38,7 @@ make install
 cd ~/.dotfiles/wm/supavolumed
 make
 make install
+
+cd ~/.dotfiles/wm/statusbar
+make
+make install
