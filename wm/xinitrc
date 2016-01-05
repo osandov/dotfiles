@@ -14,6 +14,7 @@ feh --no-fehbg --bg-fill ~/.dotfiles/wm/root.png # Set the wallpaper
 # X11 settings...
 numlockx on			# Turn on Num Lock
 xmodmap ~/.Xmodmap		# Key mappings
+synclient VertScrollDelta=-114 HorizScrollDelta=-114 # Natural scrolling
 xset r rate 150 50 -b		# Faster key repeat, no beep
 xrdb ~/.Xresources		# Overall X appearance and behavior
 xsetroot -cursor_name left_ptr	# Don't want that ugly X cursor
