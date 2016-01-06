@@ -201,6 +201,9 @@ autocmd BufRead,BufNewFile *.adoc set filetype=asciidoc
 " Close enough for Coccinelle
 autocmd BufRead,BufNewFile *.cocci set filetype=diff
 
+" Use LaTeX instead of plain TeX for .tex files
+let g:tex_flavor = 'latex'
+
 """""""""" Appearance
 
 set background=light
