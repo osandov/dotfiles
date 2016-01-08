@@ -90,6 +90,8 @@ static void init_notify(void)
 
 static void cleanup_notify(void)
 {
+	if (notification)
+		g_object_unref(G_OBJECT(notification));
 	if (notify_inited)
 		notify_uninit();
 }
@@ -180,10 +182,20 @@ static void show_volume_notification(unsigned int volume_pct, int muted)
 		icon = "audio-volume-high";
 
 	if (notification) {
-		notify_notification_update(notification, APP_NAME, NULL, icon);
+		GError *err = NULL;
+
+		if (!notify_notification_update(notification, APP_NAME, NULL, icon)) {
+			fprintf(stderr, "Invalid parameter passed to notify_notification_update()");
+			return;
+		}
 		notify_notification_set_hint_int32(notification, "value",
 						   (gint)volume_pct);
-		notify_notification_show(notification, NULL);
+		notify_notification_show(notification, &err);
+		if (err) {
+			fprintf(stderr, "notify_notification_show() failed: %s\n", err->message);
+			g_error_free(err);
+			return;
+		}
 	}
 }
 
