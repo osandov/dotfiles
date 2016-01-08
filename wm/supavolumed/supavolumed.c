@@ -1,170 +1,37 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <gdk/gdkx.h>
+#include <gtk/gtk.h>
 #include <libnotify/notify.h>
 #include <pulse/pulseaudio.h>
+#include <pulse/glib-mainloop.h>
 #include <X11/Xlib.h>
 #include <xkbcommon/xkbcommon.h>
 
 #define APP_NAME "supavolumed"
 
-static Display *display;
-static gboolean notify_inited;
-static NotifyNotification *notification;
-static pa_mainloop *mainloop;
-static pa_context *context;
-static int actions;
-
 /* Volume increment step in percent. */
-#define VOLUME_INCREMENT 5.0
+#define VOLUME_INCREMENT 5
 
-static void init_x11(void)
-{
-	static KeySym keysyms[] = {
-		XKB_KEY_XF86AudioRaiseVolume,
-		XKB_KEY_XF86AudioLowerVolume,
-		XKB_KEY_XF86AudioMute,
-		XKB_KEY_XF86AudioMicMute,
-	};
-	KeyCode code;
-	Window root;
-	int screen;
-	size_t i;
+static NotifyNotification *notification;
 
-	display = XOpenDisplay(NULL);
-	if (!display) {
-		fprintf(stderr, "Could not open display\n");
-		exit(EXIT_FAILURE);
-	}
+enum {
+	RAISE_VOLUME,
+	LOWER_VOLUME,
+	MUTE,
+	MIC_MUTE,
+};
 
-	XAllowEvents(display, AsyncKeyboard, CurrentTime);
+static KeySym keysyms[] = {
+	[RAISE_VOLUME] = XKB_KEY_XF86AudioRaiseVolume,
+	[LOWER_VOLUME] = XKB_KEY_XF86AudioLowerVolume,
+	[MUTE] = XKB_KEY_XF86AudioMute,
+	[MIC_MUTE] = XKB_KEY_XF86AudioMicMute,
+};
 
-	for (screen = 0; screen < ScreenCount(display); screen++) {
-		root = RootWindow(display, screen);
-		XSelectInput(display, root, KeyPressMask);
-		for (i = 0; i < sizeof(keysyms) / sizeof(keysyms[0]); i++) {
-			code = XKeysymToKeycode(display, keysyms[i]);
-			if (!code) {
-				fprintf(stderr, "%s is not mapped on this keyboard\n",
-					XKeysymToString(keysyms[i]));
-				continue;
-			}
-			XGrabKey(display, code, AnyModifier, root, False,
-				 GrabModeAsync, GrabModeAsync);
-		}
-	}
-}
-
-static void cleanup_x11(void)
-{
-	Window root;
-	int screen;
-
-	if (display) {
-		for (screen = 0; screen < ScreenCount(display); screen++) {
-			root = RootWindow(display, screen);
-			XUngrabKey(display, AnyKey, AnyModifier, root);
-		}
-
-		XCloseDisplay(display);
-	}
-}
-
-static void init_notify(void)
-{
-	notify_inited = notify_init(APP_NAME);
-	if (!notify_inited) {
-		fprintf(stderr, "Could not initialize libnotify\n");
-		return;
-	}
-
-	notification = notify_notification_new(APP_NAME, NULL, NULL);
-	if (!notification) {
-		fprintf(stderr, "notify_notification_new() failed\n");
-		return;
-	}
-
-	notify_notification_set_timeout(notification, NOTIFY_EXPIRES_DEFAULT);
-	notify_notification_set_hint_string(notification, "synchronous", "volume");
-}
-
-static void cleanup_notify(void)
-{
-	if (notification)
-		g_object_unref(G_OBJECT(notification));
-	if (notify_inited)
-		notify_uninit();
-}
-
-static void init_pulse(void)
-{
-	pa_mainloop_api *mainloop_api;
-	pa_context_state_t state;
-	int ret;
-
-	mainloop = pa_mainloop_new();
-	if (!mainloop) {
-		fprintf(stderr, "pa_mainloop_new() failed\n");
-		exit(EXIT_FAILURE);
-	}
-
-	mainloop_api = pa_mainloop_get_api(mainloop);
-	context = pa_context_new(mainloop_api, NULL);
-	if (!context) {
-		fprintf(stderr, "pa_context_new() failed\n");
-		exit(EXIT_FAILURE);
-	}
-
-	ret = pa_context_connect(context, NULL, 0, NULL);
-	if (ret < 0) {
-		fprintf(stderr, "pa_context_connect() failed: %s\n",
-			pa_strerror(pa_context_errno(context)));
-		exit(EXIT_FAILURE);
-	}
-
-	while (1) {
-		switch ((state = pa_context_get_state(context))) {
-		case PA_CONTEXT_UNCONNECTED:
-		case PA_CONTEXT_CONNECTING:
-		case PA_CONTEXT_AUTHORIZING:
-		case PA_CONTEXT_SETTING_NAME:
-			break;
-		case PA_CONTEXT_READY:
-			return;
-		case PA_CONTEXT_FAILED:
-			fprintf(stderr, "pa_context failed\n");
-			pa_mainloop_quit(mainloop, 1);
-		case PA_CONTEXT_TERMINATED:
-			fprintf(stderr, "pa_context terminated\n");
-			pa_mainloop_quit(mainloop, 0);
-			break;
-		default:
-			fprintf(stderr, "unknown pa_context state %d\n", state);
-			break;
-		}
-
-		ret = pa_mainloop_iterate(mainloop, 1, NULL);
-		if (ret < 0) {
-			fprintf(stderr, "pa_mainloop_iterate() failed\n");
-			exit(EXIT_FAILURE);
-		}
-	}
-}
-
-static void cleanup_pulse(void)
-{
-	if (context)
-		pa_context_unref(context);
-	if (mainloop)
-		pa_mainloop_free(mainloop);
-}
-
-static void cleanup(int status, void *arg)
-{
-	cleanup_pulse();
-	cleanup_notify();
-	cleanup_x11();
-}
+static KeyCode keycodes[sizeof(keysyms) / sizeof(keysyms[0])];
 
 static void show_volume_notification(unsigned int volume_pct, int muted)
 {
@@ -205,21 +72,6 @@ static void simple_callback(pa_context *c, int success, void *userdata)
 		fprintf(stderr, "Failure: %s\n",
 			pa_strerror(pa_context_errno(c)));
 	}
-
-	actions--;
-}
-
-static void run_all_actions(void)
-{
-	int ret;
-
-	while (actions > 0) {
-		ret = pa_mainloop_iterate(mainloop, 1, NULL);
-		if (ret < 0) {
-			fprintf(stderr, "pa_mainloop_iterate() failed\n");
-			exit(EXIT_FAILURE);
-		}
-	}
 }
 
 static unsigned int volume_pct_from_cv(const pa_cvolume *cv)
@@ -244,7 +96,6 @@ static void change_sink_volume_callback(pa_context *c, const pa_sink_info *i,
 	if (is_last < 0) {
 		fprintf(stderr, "Failed to get sink information: %s\n",
 			pa_strerror(pa_context_errno(c)));
-		actions--;
 		return;
 	}
 
@@ -252,7 +103,7 @@ static void change_sink_volume_callback(pa_context *c, const pa_sink_info *i,
 		return;
 
 	cv = i->volume;
-	v = *(double *)userdata * PA_VOLUME_NORM / 100.0;
+	v = (intptr_t)userdata / 100.0 * PA_VOLUME_NORM;
 	for (j = 0; j < cv.channels; j++) {
 		if (v < 0 && cv.values[j] < -v)
 			cv.values[j] = PA_VOLUME_MUTED;
@@ -266,8 +117,7 @@ static void change_sink_volume_callback(pa_context *c, const pa_sink_info *i,
 					       NULL);
 	if (!o) {
 		fprintf(stderr, "Operation failed: %s\n",
-			pa_strerror(pa_context_errno(context)));
-		actions--;
+			pa_strerror(pa_context_errno(c)));
 		return;
 	}
 	pa_operation_unref(o);
@@ -275,21 +125,19 @@ static void change_sink_volume_callback(pa_context *c, const pa_sink_info *i,
 	show_volume_notification(volume_pct_from_cv(&cv), i->mute);
 }
 
-static void change_volume(double increment)
+static void change_volume(pa_context *c, intptr_t increment)
 {
 	pa_operation *o;
 
-	o = pa_context_get_sink_info_by_name(context, "@DEFAULT_SINK@",
+	o = pa_context_get_sink_info_by_name(c, "@DEFAULT_SINK@",
 					     change_sink_volume_callback,
-					     (void *)&increment);
+					     (void *)increment);
 	if (!o) {
 		fprintf(stderr, "Operation failed: %s\n",
-			pa_strerror(pa_context_errno(context)));
+			pa_strerror(pa_context_errno(c)));
 		return;
 	}
-	actions++;
 	pa_operation_unref(o);
-	run_all_actions();
 }
 
 static void sink_toggle_mute_callback(pa_context *c, const pa_sink_info *i,
@@ -300,7 +148,6 @@ static void sink_toggle_mute_callback(pa_context *c, const pa_sink_info *i,
 	if (is_last < 0) {
 		fprintf(stderr, "Failed to get sink information: %s\n",
 			pa_strerror(pa_context_errno(c)));
-		actions--;
 		return;
 	}
 
@@ -311,8 +158,7 @@ static void sink_toggle_mute_callback(pa_context *c, const pa_sink_info *i,
 					     simple_callback, NULL);
 	if (!o) {
 		fprintf(stderr, "Operation failed: %s\n",
-			pa_strerror(pa_context_errno(context)));
-		actions--;
+			pa_strerror(pa_context_errno(c)));
 		return;
 	}
 	pa_operation_unref(o);
@@ -320,20 +166,18 @@ static void sink_toggle_mute_callback(pa_context *c, const pa_sink_info *i,
 	show_volume_notification(volume_pct_from_cv(&i->volume), !i->mute);
 }
 
-static void toggle_mute(void)
+static void toggle_mute(pa_context *c)
 {
 	pa_operation *o;
 
-	o = pa_context_get_sink_info_by_name(context, "@DEFAULT_SINK@",
+	o = pa_context_get_sink_info_by_name(c, "@DEFAULT_SINK@",
 					     sink_toggle_mute_callback, NULL);
 	if (!o) {
 		fprintf(stderr, "Operation failed: %s\n",
-			pa_strerror(pa_context_errno(context)));
+			pa_strerror(pa_context_errno(c)));
 		return;
 	}
-	actions++;
 	pa_operation_unref(o);
-	run_all_actions();
 }
 
 static void source_toggle_mute_callback(pa_context *c, const pa_source_info *i,
@@ -344,7 +188,6 @@ static void source_toggle_mute_callback(pa_context *c, const pa_source_info *i,
 	if (is_last < 0) {
 		fprintf(stderr, "Failed to get source information: %s\n",
 			pa_strerror(pa_context_errno(c)));
-		actions--;
 		return;
 	}
 
@@ -355,62 +198,163 @@ static void source_toggle_mute_callback(pa_context *c, const pa_source_info *i,
 					     simple_callback, NULL);
 	if (!o) {
 		fprintf(stderr, "Operation failed: %s\n",
-			pa_strerror(pa_context_errno(context)));
-		actions--;
+			pa_strerror(pa_context_errno(c)));
 		return;
 	}
 	pa_operation_unref(o);
 }
 
-static void toggle_mic_mute(void)
+static void toggle_mic_mute(pa_context *c)
 {
 	pa_operation *o;
 
-	o = pa_context_get_source_info_by_name(context, "@DEFAULT_SOURCE@",
+	o = pa_context_get_source_info_by_name(c, "@DEFAULT_SOURCE@",
 					       source_toggle_mute_callback,
 					       NULL);
 	if (!o) {
 		fprintf(stderr, "Operation failed: %s\n",
-			pa_strerror(pa_context_errno(context)));
+			pa_strerror(pa_context_errno(c)));
 		return;
 	}
-	actions++;
 	pa_operation_unref(o);
-	run_all_actions();
+}
+
+GdkFilterReturn filter(GdkXEvent *xevent, GdkEvent *event, gpointer data)
+{
+	XEvent *e = (XEvent *)xevent;
+	pa_context *c = (pa_context *)data;
+
+	if (pa_context_get_state(c) != PA_CONTEXT_READY)
+		return GDK_FILTER_CONTINUE;
+
+	switch (e->type) {
+	case KeyPress:
+		if (e->xkey.keycode == keycodes[RAISE_VOLUME])
+			change_volume(c, +VOLUME_INCREMENT);
+		else if (e->xkey.keycode == keycodes[LOWER_VOLUME])
+			change_volume(c, -VOLUME_INCREMENT);
+		else if (e->xkey.keycode == keycodes[MUTE])
+			toggle_mute(c);
+		else if (e->xkey.keycode == keycodes[MIC_MUTE])
+			toggle_mic_mute(c);
+		break;
+	default:
+		break;
+	}
+
+	return GDK_FILTER_CONTINUE;
+}
+
+static void context_state_callback(pa_context *c, void *userdata)
+{
+	switch (pa_context_get_state(c)) {
+	case PA_CONTEXT_CONNECTING:
+	case PA_CONTEXT_AUTHORIZING:
+	case PA_CONTEXT_SETTING_NAME:
+	case PA_CONTEXT_READY:
+		break;
+	case PA_CONTEXT_TERMINATED:
+		gtk_main_quit();
+		break;
+	case PA_CONTEXT_FAILED:
+	default:
+		fprintf(stderr, "Connection failure: %s",
+			pa_strerror(pa_context_errno(c)));
+		gtk_main_quit();
+		break;
+	}
+}
+
+static void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata)
+{
+	gtk_main_quit();
 }
 
 int main(int argc, char **argv)
 {
-	XEvent e;
-	KeyCode raise_code, lower_code, mute_code, mic_mute_code;
+	pa_glib_mainloop *mainloop;
+	pa_mainloop_api *mainloop_api;
+	pa_context *context;
+	GdkWindow *root;
+	int status = EXIT_SUCCESS;
+	int i;
 
-	on_exit(cleanup, NULL);
-	init_x11();
-	init_notify();
-	init_pulse();
+	gtk_init(&argc, &argv);
 
-	raise_code = XKeysymToKeycode(display, XKB_KEY_XF86AudioRaiseVolume);
-	lower_code = XKeysymToKeycode(display, XKB_KEY_XF86AudioLowerVolume);
-	mute_code = XKeysymToKeycode(display, XKB_KEY_XF86AudioMute);
-	mic_mute_code = XKeysymToKeycode(display, XKB_KEY_XF86AudioMicMute);
-
-	while (1) {
-		XNextEvent(display, &e);
-		switch (e.type) {
-		case KeyPress:
-			if (e.xkey.keycode == raise_code)
-				change_volume(+VOLUME_INCREMENT);
-			else if (e.xkey.keycode == lower_code)
-				change_volume(-VOLUME_INCREMENT);
-			else if (e.xkey.keycode == mute_code)
-				toggle_mute();
-			else if (e.xkey.keycode == mic_mute_code)
-				toggle_mic_mute();
-			break;
-		default:
-			break;
-		}
+	mainloop = pa_glib_mainloop_new(NULL);
+	if (!mainloop) {
+		fprintf(stderr, "pa_glib_mainloop_new() failed\n");
+		status = EXIT_FAILURE;
+		goto out;
 	}
 
-	return EXIT_SUCCESS;
+	mainloop_api = pa_glib_mainloop_get_api(mainloop);
+
+	if (pa_signal_init(mainloop_api) < 0) {
+		fprintf(stderr, "pa_signal_init() failed\n");
+		status = EXIT_FAILURE;
+		goto mainloop_free;
+	}
+	pa_signal_new(SIGINT, exit_signal_callback, NULL);
+	pa_signal_new(SIGTERM, exit_signal_callback, NULL);
+
+	context = pa_context_new(mainloop_api, NULL);
+	if (!context) {
+		fprintf(stderr, "pa_context_new() failed\n");
+		status = EXIT_FAILURE;
+		goto mainloop_free;
+	}
+
+	pa_context_set_state_callback(context, context_state_callback, NULL);
+	if (pa_context_connect(context, NULL, 0, NULL) < 0) {
+		fprintf(stderr, "pa_context_connect() failed: %s\n",
+			pa_strerror(pa_context_errno(context)));
+		status = EXIT_FAILURE;
+		goto context_unref;
+	}
+
+	if (!notify_init(APP_NAME)) {
+		fprintf(stderr, "Could not initialize libnotify\n");
+		status = EXIT_FAILURE;
+		goto context_unref;
+	}
+
+	notification = notify_notification_new(APP_NAME, NULL, NULL);
+	if (!notification) {
+		fprintf(stderr, "notify_notification_new() failed\n");
+		status = EXIT_FAILURE;
+		goto notify_uninit;
+	}
+
+	notify_notification_set_timeout(notification, NOTIFY_EXPIRES_DEFAULT);
+	notify_notification_set_hint_string(notification, "synchronous", "volume");
+
+	root = gdk_get_default_root_window();
+
+	gdk_window_set_events(root, GDK_KEY_PRESS_MASK);
+	gdk_window_add_filter(root, filter, context);
+
+	for (i = 0; i < sizeof(keysyms) / sizeof(keysyms[0]); i++) {
+		keycodes[i] = XKeysymToKeycode(GDK_WINDOW_XDISPLAY(root), keysyms[i]);
+		if (!keycodes[i]) {
+			fprintf(stderr, "%s is not mapped on this keyboard\n",
+				XKeysymToString(keysyms[i]));
+			continue;
+		}
+		XGrabKey(GDK_WINDOW_XDISPLAY(root), keycodes[i], AnyModifier,
+			 GDK_WINDOW_XID(root), False, GrabModeAsync,
+			 GrabModeAsync);
+	}
+
+	gtk_main();
+
+	g_object_unref(G_OBJECT(notification));
+notify_uninit:
+	notify_uninit();
+context_unref:
+	pa_context_unref(context);
+mainloop_free:
+	pa_glib_mainloop_free(mainloop);
+out:
+	return status;
 }
