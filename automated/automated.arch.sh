@@ -80,3 +80,9 @@ yaourt --noconfirm -S --needed "${PACKAGES[@]}"
 # Post-install stuff.
 sudo systemctl enable xdm-archlinux.service
 sudo pkgfile --update
+
+for package in dwm-osandov st-osandov supavolumed-git verbar-git; do
+	cd ~/.dotfiles/packages/"$package"
+	makepkg -sfCc
+	sudo pacman -U --noconfirm "$package"-*.pkg.tar.xz
+done

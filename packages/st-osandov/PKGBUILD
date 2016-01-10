@@ -1,0 +1,45 @@
+# Maintainer: Omar Sandoval <osandov@osandov.com>
+
+pkgname=st-osandov
+_pkgname=st
+pkgver=0.5.r231.g71fa10f
+pkgrel=1
+pkgdesc='A simple virtual terminal emulator for X.'
+arch=('x86_64' 'i686')
+url="http://st.suckless.org"
+license=('MIT')
+options=(zipman)
+depends=('libxft' 'libxext')
+makedepends=('git' 'ncurses')
+conflicts=('st')
+_commit=71fa10f613a22b3e75e0e897ee1be6667be3f449
+source=("${_pkgname}::git+http://git.suckless.org/st#commit=$_commit"
+        config.h)
+md5sums=('SKIP'
+         '9ebbb4423e08c80006860fdf57c5a4b5')
+
+pkgver() {
+  cd "$_pkgname"
+  git describe --abbrev=7 --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+prepare() {
+  cd "$_pkgname"
+  # skip terminfo which conflicts with ncurses
+  sed -i '/\@tic /d' Makefile
+  cp "$srcdir/config.h" config.h
+}
+
+build() {
+  cd "$_pkgname"
+  make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11
+}
+
+package() {
+  cd "$_pkgname"
+  make PREFIX=/usr DESTDIR="$pkgdir" TERMINFO="$pkgdir/usr/share/terminfo" install
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 README "$pkgdir/usr/share/doc/$pkgname/README"
+}
+
+# vim:set ts=2 sw=2 et:

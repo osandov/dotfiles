@@ -25,7 +25,7 @@ gpgconf --launch gpg-agent
 xscreensaver -no-splash &
 redshift-gtk &
 supavolumed &
-statusbar &
+verbar &
 compton &
 
 # And finally, start the window manager.

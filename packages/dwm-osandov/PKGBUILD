@@ -1,0 +1,53 @@
+# Maintainer: Omar Sandoval <osandov@osandov.com>
+
+pkgname=dwm-osandov
+_pkgname=dwm
+pkgver=6.0.r43.g14343e6
+pkgrel=1
+pkgdesc="A dynamic window manager for X"
+arch=('x86_64' 'i686')
+url="http://dwm.suckless.org"
+license=('MIT')
+options=(zipman)
+depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
+makedepends=('git')
+conflicts=('dwm')
+_commit=14343e69cc596b847f71f1e825d3019ab1a29aa8
+source=("${_pkgname}::git+http://git.suckless.org/dwm#commit=$_commit"
+	      config.h
+	      dwm.desktop
+        0001-Set-class-name-on-status-bar.patch
+        0002-Add-control-socket-and-wordy-status-toggle.patch
+        0003-Add-support-for-XBM-icons-in-the-status-bar.patch)
+md5sums=('SKIP'
+         'bec88681a46f6ab57becc9d207b0a41c'
+         '939f403a71b6e85261d09fc3412269ee'
+         '718c69554ecad5f9ed9107a199492e76'
+         '9d7436f49d5c4717008c9fb059ac8f58'
+         '90c17bc97e65734e1f2b544ad3823831')
+
+pkgver() {
+  cd "$_pkgname"
+  git describe --abbrev=7 --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+prepare() {
+  cd "$_pkgname"
+  git apply "$srcdir"/*.patch
+  cp "$srcdir/config.h" config.h
+}
+
+build() {
+  cd "$_pkgname"
+  make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2
+}
+
+package() {
+  cd "$_pkgname"
+  make PREFIX=/usr DESTDIR="$pkgdir" install
+  install -m644 -D LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -m644 -D README "$pkgdir/usr/share/doc/$pkgname/README"
+  install -m644 -D "$srcdir/dwm.desktop" "$pkgdir/usr/share/xsessions/dwm.desktop"
+}
+
+# vim:set ts=2 sw=2 et:
