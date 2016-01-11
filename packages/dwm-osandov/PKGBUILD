@@ -2,7 +2,7 @@
 
 pkgname=dwm-osandov
 _pkgname=dwm
-pkgver=6.0.r43.g14343e6
+pkgver=6.1.r2.g3465bed
 pkgrel=1
 pkgdesc="A dynamic window manager for X"
 arch=('x86_64' 'i686')
@@ -12,7 +12,7 @@ options=(zipman)
 depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
 makedepends=('git')
 conflicts=('dwm')
-_commit=14343e69cc596b847f71f1e825d3019ab1a29aa8
+_commit=3465bed290abc62cb2e69a8096084ba6b8eb4956
 source=("${_pkgname}::git+http://git.suckless.org/dwm#commit=$_commit"
 	      config.h
 	      dwm.desktop
@@ -20,11 +20,11 @@ source=("${_pkgname}::git+http://git.suckless.org/dwm#commit=$_commit"
         0002-Add-control-socket-and-wordy-status-toggle.patch
         0003-Add-support-for-XBM-icons-in-the-status-bar.patch)
 md5sums=('SKIP'
-         'bec88681a46f6ab57becc9d207b0a41c'
+         '4b78312fe8079111eee4832afce4be9a'
          '939f403a71b6e85261d09fc3412269ee'
-         '718c69554ecad5f9ed9107a199492e76'
-         '9d7436f49d5c4717008c9fb059ac8f58'
-         '90c17bc97e65734e1f2b544ad3823831')
+         '975bd62ab19fea9e6f09780837109e88'
+         'd954f24d23b216f8ea8bb0eb4806e5d7'
+         '8cc34d8cbab271f120bf7d62f4f27141')
 
 pkgver() {
   cd "$_pkgname"

@@ -1,7 +1,4 @@
-From 6ef2aa4f6e8cf51abc63bd1152e5c4e763ca1729 Mon Sep 17 00:00:00 2001
-Message-Id: <6ef2aa4f6e8cf51abc63bd1152e5c4e763ca1729.1452419633.git.osandov@osandov.com>
-In-Reply-To: <4cf4da1d76098ccc224779067f14df4dbb22194d.1452419633.git.osandov@osandov.com>
-References: <4cf4da1d76098ccc224779067f14df4dbb22194d.1452419633.git.osandov@osandov.com>
+From a63b146d4c1ec84bbd51293d8a1fefdb85fc27e8 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:51:15 -0800
 Subject: [PATCH 2/3] Add control socket and wordy status toggle
@@ -12,7 +9,7 @@ The control socket is only used as an endpoint for sendto.
  1 file changed, 49 insertions(+)
 
 diff --git a/dwm.c b/dwm.c
-index 0d6cc85..2cd63eb 100644
+index 21a2684874da..afd3cf75c1d2 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -28,7 +28,9 @@
@@ -43,7 +40,7 @@ index 0d6cc85..2cd63eb 100644
  
  /* configuration, allows nested code to access above variables */
  #include "config.h"
-@@ -484,6 +490,11 @@ cleanup(void) {
+@@ -490,6 +496,11 @@ cleanup(void)
  	XSync(dpy, False);
  	XSetInputFocus(dpy, PointerRoot, RevertToPointerRoot, CurrentTime);
  	XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
@@ -55,8 +52,8 @@ index 0d6cc85..2cd63eb 100644
  }
  
  void
-@@ -1499,6 +1510,29 @@ void
- setup(void) {
+@@ -1553,6 +1564,29 @@ setup(void)
+ {
  	XSetWindowAttributes wa;
  
 +	/* get home/display (it's unsafe to store the return value from getenv) */
@@ -85,7 +82,7 @@ index 0d6cc85..2cd63eb 100644
  	/* clean up any zombies immediately */
  	sigchld(0);
  
-@@ -2011,6 +2045,21 @@ wintomon(Window w) {
+@@ -2080,6 +2114,21 @@ wintomon(Window w)
  	return selmon;
  }
  
