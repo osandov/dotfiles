@@ -4,7 +4,7 @@
 static const char *fonts[] = {
 	"Fixed:pixelsize=13",
 };
-static const char dmenufont[] = "-misc-fixed-medium-r-normal-*-13-*-*-*-*-*-*-*";
+static const char dmenufont[]       = "Fixed:pixelsize=13";
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
