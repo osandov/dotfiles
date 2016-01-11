@@ -2,7 +2,7 @@
 
 pkgname=st-osandov
 _pkgname=st
-pkgver=0.5.r231.g71fa10f
+pkgver=0.6.r56.g610723a
 pkgrel=1
 pkgdesc='A simple virtual terminal emulator for X.'
 arch=('x86_64' 'i686')
@@ -12,11 +12,11 @@ options=(zipman)
 depends=('libxft' 'libxext')
 makedepends=('git' 'ncurses')
 conflicts=('st')
-_commit=71fa10f613a22b3e75e0e897ee1be6667be3f449
+_commit=610723a58f1fbd3c5d911c853a8b94c315fc7c2a
 source=("${_pkgname}::git+http://git.suckless.org/st#commit=$_commit"
         config.h)
 md5sums=('SKIP'
-         '9ebbb4423e08c80006860fdf57c5a4b5')
+         '50095d364a51d4eb3cdddde798fedc2f')
 
 pkgver() {
   cd "$_pkgname"
