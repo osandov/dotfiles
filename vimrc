@@ -23,6 +23,7 @@ inoremap <C-U> <C-G>u<C-U>
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
     set mouse=a
+    set ttymouse=sgr
 endif
 
 " Switch syntax highlighting on, when the terminal has colors
