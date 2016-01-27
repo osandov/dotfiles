@@ -1,7 +1,7 @@
 From 8fba900dddf16c99b8a99a609235edc1bc458b17 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:52:27 -0800
-Subject: [PATCH 3/3] Add support for XBM icons in the status bar
+Subject: [PATCH] Add support for XBM icons in the status bar
 
 This is done with an OSC escape code: "\e]9;icon path\a".
 ---

@@ -3,7 +3,7 @@
 pkgname=dwm-osandov
 _pkgname=dwm
 pkgver=6.1.r2.g3465bed
-pkgrel=2
+pkgrel=3
 pkgdesc="A dynamic window manager for X"
 arch=('x86_64' 'i686')
 url="http://dwm.suckless.org"
@@ -18,13 +18,15 @@ source=("${_pkgname}::git+http://git.suckless.org/dwm#commit=$_commit"
 	      dwm.desktop
         0001-Set-class-name-on-status-bar.patch
         0002-Add-control-socket-and-wordy-status-toggle.patch
-        0003-Add-support-for-XBM-icons-in-the-status-bar.patch)
+        0003-Add-support-for-XBM-icons-in-the-status-bar.patch
+        0004-Set-the-EWMH-_NET_SUPPORTING_WM_CHECK-atom.patch)
 md5sums=('SKIP'
          'b10fa49c62dc18de09c96bf09720bd06'
          '939f403a71b6e85261d09fc3412269ee'
-         '975bd62ab19fea9e6f09780837109e88'
-         'd954f24d23b216f8ea8bb0eb4806e5d7'
-         '8cc34d8cbab271f120bf7d62f4f27141')
+         'c9c5e1ff71f0b7cfda92191ccbb82b6a'
+         '793f2104b9746e28b168715ea0b52d25'
+         'a9aa40b33fdb0ecc2ef689f31531eb1a'
+         '50842eb3c99eeac30609c73585ac6a07')
 
 pkgver() {
   cd "$_pkgname"

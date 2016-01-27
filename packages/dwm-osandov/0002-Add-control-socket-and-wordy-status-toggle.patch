@@ -1,7 +1,7 @@
 From a63b146d4c1ec84bbd51293d8a1fefdb85fc27e8 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:51:15 -0800
-Subject: [PATCH 2/3] Add control socket and wordy status toggle
+Subject: [PATCH] Add control socket and wordy status toggle
 
 The control socket is only used as an endpoint for sendto.
 ---
