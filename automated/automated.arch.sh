@@ -11,14 +11,14 @@ sudo pacman -Sy
 sudo pacman --noconfirm -S --needed base-devel
 
 cd /tmp
-curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
+curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
 tar -xvf package-query.tar.gz
 cd package-query
 makepkg -s
 sudo pacman --noconfirm -U package-query-*.pkg.tar.xz
 
 cd /tmp
-curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz
+curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
 tar -xvf yaourt.tar.gz
 cd yaourt
 makepkg -s
@@ -29,7 +29,6 @@ PACKAGES=(
 	alsa-utils
 	clang
 	compton-git
-	conky-lua
 	dmenu
 	elementary-xfce-icons
 	feh
@@ -50,17 +49,17 @@ PACKAGES=(
 	thunar
 	thunar-volman
 	tmux
-	trayer-srg-git
+	trayer-srg
 	ttf-dejavu
 	tumbler
 	xautomation
+	xclip
 	xcursor-vanilla-dmz
 	xdm-archlinux
 	xfce4-notifyd
 	xfce4-power-manager
 	xfce4-screenshooter
 	xfce-theme-greybird
-	xorg-xclip
 	xorg-xdm
 	xorg-xmessage
 	xorg-xmodmap
