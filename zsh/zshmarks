@@ -8,7 +8,7 @@ DEFAULT_MARKDIR=~
 MARKDIRS=("$DEFAULT_MARKDIR")
 
 # Sync marks in Dropbox.
-for DROPBOX_DIR in ~/Dropbox*(/); do
+for DROPBOX_DIR in ~/Dropbox*(/N); do
     MARKDIRS=("$DROPBOX_DIR" $MARKDIRS)
 done
 
