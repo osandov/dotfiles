@@ -106,7 +106,9 @@ install_file () {
 			fi
 			;;
 		*)
-			ln -Tins "$1" "$2"
+			if [ ! -L "$2" -o "$(readlink "$2")" != "$1" ]; then
+				ln -Tins "$1" "$2"
+			fi
 			;;
 	esac
 }
