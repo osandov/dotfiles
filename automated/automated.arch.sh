@@ -31,6 +31,7 @@ PACKAGES=(
 	compton-git
 	dmenu
 	elementary-xfce-icons
+	evince
 	feh
 	firefox
 	git
@@ -69,8 +70,6 @@ PACKAGES=(
 	xorg-xsetroot
 	xscreensaver
 	xterm
-	zathura
-	zathura-pdf-poppler
 	zsh
 )
 

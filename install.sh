@@ -21,7 +21,7 @@ Optional installation:
   -g    install Git config
   -m    install Mutt config
   -s    install SSH/GnuPG config
-  -k    install graphic application config (Vimperator, zathura)
+  -k    install graphic application config (Vimperator)
   -w    install window manager config
 
 Prompts:
@@ -167,11 +167,9 @@ fi
 
 if do_install "$DO_GTK"; then
 	mkdir -p ~/.config/gtk-3.0
-	mkdir -p ~/.config/zathura
 	install_file ~/.dotfiles/gtkrc-2.0 ~/.gtkrc-2.0
 	install_file ~/.dotfiles/gtkrc-3.0 ~/.config/gtk-3.0/settings.ini
 	install_file ~/.dotfiles/vimperatorrc ~/.vimperatorrc
-	install_file ~/.dotfiles/zathurarc ~/.config/zathura/zathurarc
 fi
 
 if do_install "$DO_WM"; then
