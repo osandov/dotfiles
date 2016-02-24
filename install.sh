@@ -8,7 +8,7 @@ if [ "$(pwd)" != ~/.dotfiles ]; then
 fi
 
 usage () {
-	USAGE_STRING="Usage: $0 [-avzdtpgmskw] [-y | -n]
+	USAGE_STRING="Usage: $0 [-avzdtpgmsw] [-y | -n]
 $0 -h
 
 Optional installation:
@@ -21,7 +21,6 @@ Optional installation:
   -g    install Git config
   -m    install Mutt config
   -s    install SSH/GnuPG config
-  -k    install graphic application config (Vimperator)
   -w    install window manager config
 
 Prompts:
@@ -47,7 +46,7 @@ if [ $# -eq 0 ]; then
 	usage "err"
 fi
 
-while getopts "avzdtpgmskwynh" OPT; do
+while getopts "avzdtpgmswynh" OPT; do
 	case "$OPT" in
 		a)
 			DO_ALL=1
@@ -75,9 +74,6 @@ while getopts "avzdtpgmskwynh" OPT; do
 			;;
 		s)
 			DO_SSH=1
-			;;
-		k)
-			DO_GTK=1
 			;;
 		w)
 			DO_WM=1
@@ -165,14 +161,10 @@ if do_install "$DO_DIRCOLORS"; then
 	install_file ~/.dotfiles/dircolors ~/.dircolors
 fi
 
-if do_install "$DO_GTK"; then
+if do_install "$DO_WM"; then
 	mkdir -p ~/.config/gtk-3.0
 	install_file ~/.dotfiles/gtkrc-2.0 ~/.gtkrc-2.0
 	install_file ~/.dotfiles/gtkrc-3.0 ~/.config/gtk-3.0/settings.ini
-	install_file ~/.dotfiles/vimperatorrc ~/.vimperatorrc
-fi
-
-if do_install "$DO_WM"; then
 	install_file ~/.dotfiles/x11/Xresources ~/.Xresources
 	install_file ~/.dotfiles/x11/Xmodmap ~/.Xmodmap
 	install_file ~/.dotfiles/wm/xsession ~/.xsession
