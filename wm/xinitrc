@@ -23,7 +23,9 @@ xsetroot -cursor_name left_ptr	# Don't want that ugly X cursor
 xfce4-power-manager
 gpgconf --launch gpg-agent
 xscreensaver -no-splash &
-redshift-gtk &
+if [ -r ~/.config/redshift.conf ]; then
+	redshift-gtk &
+fi
 supavolumed &
 verbar &
 compton &
