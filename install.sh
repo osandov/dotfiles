@@ -8,19 +8,19 @@ if [ "$(pwd)" != ~/.dotfiles ]; then
 fi
 
 usage () {
-	USAGE_STRING="Usage: $0 [-avzstgpdkw] [-y | -n]
+	USAGE_STRING="Usage: $0 [-avzdtpgmskw] [-y | -n]
 $0 -h
 
 Optional installation:
   -a    install all config
   -v    install Vim config
   -z    install zsh config
-  -s    install SSH/GnuPG config
+  -d    install dircolors config
   -t    install tmux config
+  -p    install Python config
   -g    install Git config
   -m    install Mutt config
-  -p    install Python config
-  -d    install dircolors config
+  -s    install SSH/GnuPG config
   -k    install graphic application config (Vimperator, zathura)
   -w    install window manager config
 
@@ -47,7 +47,7 @@ if [ $# -eq 0 ]; then
 	usage "err"
 fi
 
-while getopts "avzstgmpdkwynh" OPT; do
+while getopts "avzdtpgmskwynh" OPT; do
 	case "$OPT" in
 		a)
 			DO_ALL=1
@@ -58,11 +58,14 @@ while getopts "avzstgmpdkwynh" OPT; do
 		z)
 			DO_ZSH=1
 			;;
-		s)
-			DO_SSH=1
+		d)
+			DO_DIRCOLORS=1
 			;;
 		t)
 			DO_TMUX=1
+			;;
+		p)
+			DO_PYTHON=1
 			;;
 		g)
 			DO_GIT=1
@@ -70,11 +73,8 @@ while getopts "avzstgmpdkwynh" OPT; do
 		m)
 			DO_MUTT=1
 			;;
-		p)
-			DO_PYTHON=1
-			;;
-		d)
-			DO_DIRCOLORS=1
+		s)
+			DO_SSH=1
 			;;
 		k)
 			DO_GTK=1
