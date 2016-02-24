@@ -8,10 +8,9 @@ DEFAULT_MARKDIR=~
 MARKDIRS=("$DEFAULT_MARKDIR")
 
 # Sync marks in Dropbox.
-DROPBOX_DIR=~/Dropbox
-if [[ -d $DROPBOX_DIR ]]; then
+for DROPBOX_DIR in ~/Dropbox*(/); do
     MARKDIRS=("$DROPBOX_DIR" $MARKDIRS)
-fi
+done
 
 # Create all of the mark directories.
 for MARKDIR in $MARKDIRS; do
