@@ -12,3 +12,7 @@
 	refer = format:%h (\"%s\")
 [push]
 	default = simple
+[tag]
+	sort = version:refname
+[versionsort]
+	prereleaseSuffix = -rc
