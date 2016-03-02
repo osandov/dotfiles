@@ -3,8 +3,8 @@
 command! -bar ToggleHex call ToggleHex()
 nnoremap <Leader>hx :ToggleHex<CR>
 
-command! -bar HexRefresh call HexRefresh()
-nnoremap <Leader>hr :HexRefresh<CR>
+command! -bar RefreshHex call RefreshHex()
+nnoremap <Leader>hr :RefreshHex<CR>
 
 " helper function to toggle hex mode
 function! ToggleHex()
@@ -43,7 +43,7 @@ function! ToggleHex()
     let &modifiable=l:oldmodifiable
 endfunction
 
-function! HexRefresh()
+function! RefreshHex()
     call <SID>PreWrite()
     call <SID>PostWrite()
 endfunction
