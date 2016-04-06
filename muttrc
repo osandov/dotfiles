@@ -56,17 +56,6 @@ bind pager u half-up
 set pipe_split = yes
 macro index,pager ,s "<tag-prefix><pipe-message>mutt-save-patch.py<return>" "save tagged patches"
 
-## Sidebar
-set sidebar_format       = "%B%* %?N?%N/?%S"
-set sidebar_visible      = yes
-set sidebar_width        = 20
-set sidebar_sort         = yes
-set sidebar_shortpath    = yes
-set sidebar_folderindent = yes
-bind index,pager \CP sidebar-prev
-bind index,pager \CN sidebar-next
-bind index,pager \CO sidebar-open
-
 ## Color scheme
 
 # Basic colors
@@ -107,6 +96,3 @@ color body brightblack default "^diff --git.*"
 color body brightblack default "^index [a-f0-9].*"
 color body brightblack default "^---.*"
 color body brightblack default "^[+][+][+].*"
-
-# Sidebar
-color sidebar_new brightcolor29 default
