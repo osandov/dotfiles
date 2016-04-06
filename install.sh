@@ -120,7 +120,7 @@ do_install () {
 if do_install "$DO_VIM"; then
 	mkdir -p ~/.vim/bundle
 	if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
-		git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+		git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 	fi
 	vim +VundleUpdate +qall
 
