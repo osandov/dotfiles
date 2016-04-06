@@ -80,9 +80,10 @@ color hdrdefault brightblack default
 # Body
 color quoted red default
 color quoted1 yellow default
-color quoted2 cyan default
-color quoted3 blue default
-color quoted4 magenta default
+color quoted2 green default
+color quoted3 cyan default
+color quoted4 blue default
+color quoted5 magenta default
 
 color signature color242 default
 color bold brightblack default
