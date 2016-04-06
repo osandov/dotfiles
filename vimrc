@@ -6,7 +6,7 @@ set nocompatible
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-set backup		" keep a backup file
+set nobackup		" don't keep backup files
 set history=1000	" keep 1000 lines of command line history
 set tabpagemax=50       " we can afford more than 10 tabs
 set ruler		" show the cursor position all the time
@@ -83,11 +83,7 @@ set ttimeoutlen=50
 
 """""""""" Convenient options
 
-" Backup files in another directory to avoid clutter
-set backupdir=~/.vim/backup
-if !isdirectory(&backupdir)
-	call mkdir(&backupdir, "p")
-endif
+" Put swap files in another directory to avoid clutter
 set directory=~/.vim/tmp
 if !isdirectory(&directory)
 	call mkdir(&directory, "p")
