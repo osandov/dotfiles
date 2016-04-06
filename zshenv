@@ -1,16 +1,23 @@
 typeset -U path manpath
+# New environment variables of this sort can be added with typeset -TU. For
+# example, for GOPATH:
+# typeset -TU GOPATH gopath
 
-if [ -d ~/.dotfiles/bin ]; then
-    path=(~/.dotfiles/bin "$path[@]")
-fi
+add_to_path() {
+	if [ -d "$1" ]; then
+		path=("$1" "$path[@]")
+	fi
+}
 
-if [ -d ~/.local/bin ]; then
-    path=(~/.local/bin "$path[@]")
-fi
+add_to_manpath() {
+	if [ -d "$1" ]; then
+		manpath=("$1" "$manpath[@]" "")
+	fi
+}
 
-if [ -d ~/.local/share/man ]; then
-	manpath=(~/.local/share/man "$manpath[@]" "")
-fi
+add_to_path ~/.dotfiles/bin
+add_to_path ~/.local/bin
+add_to_manpath ~/.local/share/man
 
 export PATH MANPATH
 
