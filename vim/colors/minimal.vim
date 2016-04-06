@@ -24,10 +24,10 @@ hi Cursor NONE guifg=bg guibg=fg
 hi CursorLine NONE ctermbg=254 guibg=#e4e4e4
 hi CursorColumn NONE ctermbg=254 guibg=#e4e4e4
 hi Directory NONE ctermfg=DarkCyan guifg=#00aaaa
-hi DiffAdd NONE ctermbg=LightGreen guibg=#54ff54
-" hi DiffChange
-hi DiffDelete NONE ctermbg=LightRed guibg=#ff5454
-hi DiffText NONE cterm=bold ctermbg=Red guibg=#ff5454
+hi DiffAdd NONE ctermbg=LightGreen guibg=LightGreen
+hi DiffChange NONE ctermbg=LightCyan guibg=LightCyan
+hi DiffDelete NONE ctermbg=LightRed guibg=LightRed
+hi DiffText NONE ctermbg=LightBlue guibg=LightBlue
 hi ErrorMsg NONE ctermfg=White ctermbg=DarkRed guifg=#ffffff guibg=#aa0000
 hi VertSplit NONE cterm=reverse gui=reverse
 " hi Folded
