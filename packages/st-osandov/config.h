@@ -28,11 +28,41 @@ static float cwscale = 1.0;
 static float chscale = 1.0;
 
 /*
- * word delimiter string
- *
- * More advanced example: " `'\"()[]{}"
+ * word delimiters
  */
-static char worddelimiters[] = " ";
+static inline int isdelim(wchar_t c)
+{
+	if (iswalnum(c))
+		return 0;
+	switch (c) {
+	case '!':
+	case '#':
+	case '$':
+	case '%':
+	case '&':
+	case '\'':
+	case '(':
+	case ')':
+	case '*':
+	case '+':
+	case ',':
+	case '-':
+	case '.':
+	case '/':
+	case ':':
+	case ';':
+	case '=':
+	case '?':
+	case '@':
+	case '[':
+	case ']':
+	case '_':
+	case '~':
+		return 0;
+	default:
+		return !iswalnum(c);
+	}
+}
 
 /* selection timeouts (in milliseconds) */
 static unsigned int doubleclicktimeout = 300;
@@ -408,4 +438,13 @@ static Key key[] = {
 static uint selmasks[] = {
 	[SEL_RECTANGULAR] = Mod1Mask,
 };
+
+/*
+ * Printable characters in ASCII, used to estimate the advance width
+ * of single wide characters.
+ */
+static char ascii_printable[] =
+	" !\"#$%&'()*+,-./0123456789:;<=>?"
+	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
+	"`abcdefghijklmnopqrstuvwxyz{|}~";
 

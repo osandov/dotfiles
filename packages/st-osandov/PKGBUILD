@@ -2,7 +2,7 @@
 
 pkgname=st-osandov
 _pkgname=st
-pkgver=0.6.r56.g610723a
+pkgver=0.6.r69.g3996461
 pkgrel=1
 pkgdesc='A simple virtual terminal emulator for X.'
 arch=('x86_64' 'i686')
@@ -12,11 +12,13 @@ options=(zipman)
 depends=('libxft' 'libxext')
 makedepends=('git' 'ncurses')
 conflicts=('st')
-_commit=610723a58f1fbd3c5d911c853a8b94c315fc7c2a
+_commit=39964614b742c4ec98a326762d98470cb987a45b
 source=("${_pkgname}::git+http://git.suckless.org/st#commit=$_commit"
-        config.h)
+        config.h
+        0001-Use-more-sane-logic-for-word-delimiters.patch)
 md5sums=('SKIP'
-         '50095d364a51d4eb3cdddde798fedc2f')
+         '90f30d8170b5e697cce0b33408b9e509'
+         'd066bd7e0625a17c89325ffd87a2106b')
 
 pkgver() {
   cd "$_pkgname"
@@ -25,6 +27,7 @@ pkgver() {
 
 prepare() {
   cd "$_pkgname"
+  git apply "$srcdir"/*.patch
   # skip terminfo which conflicts with ncurses
   sed -i '/\@tic /d' Makefile
   cp "$srcdir/config.h" config.h
