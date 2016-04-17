@@ -129,6 +129,25 @@ def cmd_unlock(args):
     load_passwd_db(args.db)
 
 
+def gpg_connect_agent(command):
+    proc = Popen(['gpg-connect-agent'], stdin=PIPE, stdout=PIPE)
+    proc.stdin.write(command.encode('utf-8'))
+    proc.stdin.close()
+    for line in proc.stdout:
+        line = line[:-1]
+        if line == b'OK':
+            return None
+        elif line.startswith(b'OK '):
+            return line[3:]
+        elif line.startswith(b'ERR '):
+            tokens = line.split(maxsplit=2)
+            raise PasswdsException(tokens[-1].decode('utf-8'))
+        elif line.startswith(b'S PROGRESS '):
+            pass
+        else:
+            raise PasswdsException("Unrecognized output from gpg-connect-agent")
+
+
 def get_master_passphrase(path, *, error_message=None, prompt='Passphrase:',
                           description='Enter master passphrase\n', repeat=0):
     if error_message is None:
@@ -148,27 +167,16 @@ def get_master_passphrase(path, *, error_message=None, prompt='Passphrase:',
 
     ipc = 'GET_PASSPHRASE --repeat=%d passwds.py:%s %s %s %s' % \
           (repeat, path, error_message, prompt, description)
-    output = check_output(['gpg-connect-agent'], input=ipc.encode('utf-8'))
-    tokens = output.split(maxsplit=2)
-    if tokens[0] == b'OK':
-        if len(tokens) < 2:
-            raise PasswdsException('Invalid passphrase')
-        else:
-            return codecs.decode(tokens[1], 'hex')
-    elif tokens[0] == b'ERR':
-        raise PasswdsException(tokens[-1].decode('utf-8').strip())
+    passphrase = gpg_connect_agent(ipc)
+    if len(passphrase) == 0:
+        raise PasswdsException("Invalid passphrase")
     else:
-        raise PasswdsException("Unrecognized output from gpg-connect-agent")
+        return codecs.decode(passphrase, 'hex')
 
 
 def invalidate_master_passphrase(path):
     ipc = 'CLEAR_PASSPHRASE passwds.py:%s' % path
-    output = check_output(['gpg-connect-agent'], input=ipc.encode('utf-8'))
-    tokens = output.split(maxsplit=2)
-    if tokens[0] == b'ERR':
-        raise PasswdsException(tokens[-1].decode('utf-8').strip())
-    elif tokens[0] != b'OK':
-        raise PasswdsException("Unrecognized output from gpg-connect-agent")
+    gpg_connect_agent(ipc)
 
 
 def _load_passwd_db(file, passphrase):
