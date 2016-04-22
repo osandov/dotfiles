@@ -2,7 +2,7 @@
 
 pkgname=st-osandov
 _pkgname=st
-pkgver=0.6.r69.g3996461
+pkgver=0.6.r70.g66556d9
 pkgrel=1
 pkgdesc='A simple virtual terminal emulator for X.'
 arch=('x86_64' 'i686')
@@ -12,7 +12,7 @@ options=(zipman)
 depends=('libxft' 'libxext')
 makedepends=('git' 'ncurses')
 conflicts=('st')
-_commit=39964614b742c4ec98a326762d98470cb987a45b
+_commit=66556d967028a0b770e9bfcb9667389a6e994a58
 source=("${_pkgname}::git+http://git.suckless.org/st#commit=$_commit"
         config.h
         0001-Use-more-sane-logic-for-word-delimiters.patch)
