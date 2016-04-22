@@ -12,6 +12,7 @@ Xft.lcdfilter: lcddefault
 
 ! xscreensaver
 xscreensaver.fade: false
+xscreensaver.mode: blank
 
 ! XTerm
 XTerm*termName: xterm-256color
