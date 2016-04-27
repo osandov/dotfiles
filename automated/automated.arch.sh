@@ -81,6 +81,7 @@ sudo pkgfile --update
 
 LOCAL_PACKAGES=(
 	dwm-osandov
+	inputconfd-git
 	st-osandov
 	supavolumed-git
 	verbar-git

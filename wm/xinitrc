@@ -13,19 +13,20 @@ feh --no-fehbg --bg-fill ~/.dotfiles/wm/root.png # Set the wallpaper
 
 # X11 settings...
 numlockx on			# Turn on Num Lock
-xmodmap ~/.Xmodmap		# Key mappings
 synclient VertScrollDelta=-114 HorizScrollDelta=-114 # Natural scrolling
-xset r rate 150 50 -b		# Faster key repeat, no beep
 xrdb ~/.Xresources		# Overall X appearance and behavior
 xsetroot -cursor_name left_ptr	# Don't want that ugly X cursor
 
 # Start some daemons...
-xfce4-power-manager
-gpgconf --launch gpg-agent
-xscreensaver -no-splash &
+inputconfd --keyboard="xmodmap ~/.Xmodmap; xset r rate 150 50 -b" &
+if [ -r ~/.gnupg/gpg-agent.conf ]; then
+	gpgconf --launch gpg-agent
+fi
 if [ -r ~/.config/redshift.conf ]; then
 	redshift-gtk &
 fi
+xfce4-power-manager --no-daemon &
+xscreensaver -no-splash &
 supavolumed &
 verbar &
 compton &

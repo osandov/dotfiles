@@ -2,6 +2,7 @@
 /packages/*/src
 /packages/*/*.pkg.tar.xz
 /packages/dwm-osandov/dwm
+/packages/inputconfd-git/inputconfd
 /packages/st-osandov/st
 /packages/supavolumed-git/supavolumed
 /packages/verbar-git/verbar

@@ -1,0 +1,31 @@
+# Maintainer: Omar Sandoval <osandov@osandov.com>
+
+pkgname=inputconfd-git
+_pkgname=inputconfd
+pkgver=r1.d4f9639
+pkgrel=1
+pkgdesc="Daemon for configuring hotplugged keyboards and mice in X11"
+arch=('x86_64' 'i686')
+url="https://github.com/osandov/inputconfd"
+license=('GPL3')
+depends=('libsystemd')
+makedepends=('git')
+source=("$_pkgname::git+https://github.com/osandov/inputconfd.git")
+md5sums=('SKIP')
+
+pkgver() {
+  cd "$_pkgname"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short=7 HEAD)"
+}
+
+build() {
+  cd "$_pkgname"
+  make
+}
+
+package() {
+  cd "$_pkgname"
+  make PREFIX=/usr DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:
