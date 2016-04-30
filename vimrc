@@ -3,10 +3,10 @@
 """""""""" Settings
 
 " Miscellaneous settings for the 21st century
-set nocompatible         " No Vi-compatibility
+set nocompatible         " no Vi-compatibility
 set backspace=indent,eol,start " more powerful backspace
-set history=1000	 " keep 1000 lines of command line history
-set showcmd		 " display incomplete commands
+set history=1000         " keep 1000 lines of command line history
+set showcmd              " display incomplete commands
 set tabpagemax=50        " we can afford more than 10 tabs
 set ttimeoutlen=50       " avoid annoying delay in terminal
 if has('mouse')
@@ -15,15 +15,15 @@ if has('mouse')
 endif
 
 " Avoid clutter
-set nobackup		 " don't keep backup files
+set nobackup             " don't keep backup files
 set directory=~/.vim/tmp " put swap files somewhere else
 if !isdirectory(&directory)
-	call mkdir(&directory, "p")
+    call mkdir(&directory, "p")
 endif
 
 " Behavior
 set completeopt-=preview " no annoying completion preview window
-set incsearch		 " do incremental searching
+set incsearch            " do incremental searching
 set nojoinspaces         " one space after periods when joining
 set wildmenu             " zsh-ish command-line tab completion
 set wildmode=list:longest,list:full
@@ -33,13 +33,13 @@ set cursorline           " indicate current line
 set hlsearch             " highlight search matches
 set number               " number lines
 set relativenumber       " relative line numbering
-set ruler		 " show the cursor position all the time
+set ruler                " show the cursor position all the time
 if !has("gui_running")
     " Change cursor in insert mode and replace mode like a GVim weenie
     let &t_SI .= "\<Esc>[6 q"
     let &t_EI .= "\<Esc>[2 q"
     if exists("&t_SR")
-	    let &t_SR .= "\<Esc>[4 q"
+        let &t_SR .= "\<Esc>[4 q"
     endif
     " 0 or 1 -> blinking block
     " 2 -> solid block
