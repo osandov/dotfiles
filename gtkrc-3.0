@@ -1,4 +1,3 @@
 [Settings]
-gtk-theme-name = Greybird
-gtk-icon-theme-name = elementary-xfce-dark
-gtk-fallback-icon-theme = gnome
+gtk-theme-name = Vertex-Light
+gtk-icon-theme-name = Vertex-Icons

@@ -30,7 +30,6 @@ PACKAGES=(
 	clang
 	compton-git
 	dmenu
-	elementary-xfce-icons
 	evince
 	feh
 	firefox
@@ -38,6 +37,7 @@ PACKAGES=(
 	gvfs
 	gvim
 	librsvg # For redshift-gtk
+	moka-icon-theme-git
 	numlockx
 	openssh
 	pkgfile
@@ -53,6 +53,8 @@ PACKAGES=(
 	trayer-srg
 	ttf-dejavu
 	tumbler
+	vertex-icons-git
+	vertex-themes-git
 	xautomation
 	xclip
 	xcursor-vanilla-dmz
@@ -60,7 +62,6 @@ PACKAGES=(
 	xfce4-notifyd
 	xfce4-power-manager
 	xfce4-screenshooter
-	xfce-theme-greybird
 	xorg-xdm
 	xorg-xmessage
 	xorg-xmodmap
