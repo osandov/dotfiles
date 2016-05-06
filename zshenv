@@ -28,6 +28,10 @@ export PAGER=less
 # Clear the screen properly and allow ANSI color escape sequences in less
 export LESS=cR
 
+# Used by .zshrc for the prompt. This is an SGR sequence, so the default "0"
+# means normal text, but, e.g., "31;1" means bold red. See console_codes(4).
+HOSTNAME_COLOR=0
+
 if [ -r ~/.zshenv.local ]; then
     source ~/.zshenv.local
 fi

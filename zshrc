@@ -30,10 +30,6 @@ setopt inc_append_history
 bindkey -e
 export ZLE_REMOVE_SUFFIX_CHARS=""
 
-if [ -r ~/.hostcolor ]; then
-    source ~/.hostcolor
-fi
-
 if [ -r /usr/share/git/git-prompt.sh ]; then
     # Arch Linux
     source /usr/share/git/git-prompt.sh
@@ -44,14 +40,16 @@ elif [ -r /etc/bash_completion.d/git-prompt ]; then
     # Ubuntu
     source /etc/bash_completion.d/git-prompt
 fi
-GIT_PROMPT='%F{green}$(whence -f __git_ps1 &>/dev/null && __git_ps1 " %s")%f'
 
-setopt prompt_subst
-# One line prompt
-# PROMPT="%F{blue}[%n@%{$PREHOST%}%m%{$POSTHOST%} %K{black}%F{cyan}%1~%k%F{blue}]%(#.#.$)%f "
-# Two line prompt
-PROMPT="┌[%n@%{$PREHOST%}%m%{$POSTHOST%} %F{cyan}%~%f$GIT_PROMPT]
+function () {
+    local prehost=$'\e'"[${HOSTNAME_COLOR}m"
+    local posthost=$'\e[0m'
+    local git_prompt='%F{green}$(whence -f __git_ps1 &>/dev/null && __git_ps1 " %s")%f'
+
+    setopt prompt_subst
+    PROMPT="┌[%n@%{${prehost}%}%m%{${posthost}%} %F{cyan}%~%f${git_prompt}]
 └%(#.#.$) "
+}
 
 # Disable Ctrl-S/Ctrl-Q flow control nonsense
 stty -ixon
