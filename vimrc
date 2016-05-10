@@ -152,6 +152,7 @@ Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
+Plugin 'tpope/vim-vinegar'
 
 call vundle#end()
 filetype plugin indent on
