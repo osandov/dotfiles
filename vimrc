@@ -142,19 +142,21 @@ noremap <Leader>ln :set rnu!<CR>
 """""""""" Plugins
 
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+if isdirectory($HOME . "/.vim/bundle/Vundle.vim")
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
 
-Plugin 'VundleVim/Vundle.vim'
+    Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'ervandew/supertab'
-Plugin 'rking/ag.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-rsi'
-Plugin 'tpope/vim-vinegar'
+    Plugin 'ervandew/supertab'
+    Plugin 'rking/ag.vim'
+    Plugin 'scrooloose/nerdcommenter'
+    Plugin 'tpope/vim-repeat'
+    Plugin 'tpope/vim-rsi'
+    Plugin 'tpope/vim-vinegar'
 
-call vundle#end()
+    call vundle#end()
+endif
 filetype plugin indent on
 
 " Delimit comments with spaces
