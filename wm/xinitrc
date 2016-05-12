@@ -28,7 +28,7 @@ fi
 xfce4-power-manager --no-daemon &
 xscreensaver -no-splash &
 supavolumed &
-verbar &
+verbar --wordy &
 compton &
 
 # And finally, start the window manager.
