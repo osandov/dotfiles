@@ -106,3 +106,7 @@ index () {
 pag () {
     ag --color --group --case-sensitive "$@" | "$PAGER"
 }
+
+if [ -r ~/.zshrc.local ]; then
+	source ~/.zshrc.local
+fi
