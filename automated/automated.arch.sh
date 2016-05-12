@@ -80,17 +80,4 @@ yaourt --noconfirm -S --needed "${PACKAGES[@]}"
 sudo systemctl enable xdm-archlinux.service
 sudo pkgfile --update
 
-LOCAL_PACKAGES=(
-	dwm-osandov
-	inputconfd-git
-	st-osandov
-	supavolumed-git
-	verbar-git
-	xfce4-notifyd-osandov
-)
-
-for package in "${LOCAL_PACKAGES[@]}"; do
-	cd ~/.dotfiles/packages/"$package"
-	makepkg -sfCc
-	sudo pacman -U --noconfirm "$package"-*.pkg.tar.xz
-done
+~/.dotfiles/packages/update_packages.sh
