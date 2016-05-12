@@ -2,7 +2,7 @@
 
 pkgname=verbar-git
 _pkgname=verbar
-pkgver=r3.7192164
+pkgver=r7.63c8efa
 pkgrel=1
 pkgdesc="Status bar for dwm"
 arch=('x86_64' 'i686')

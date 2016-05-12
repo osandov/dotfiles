@@ -2,7 +2,7 @@
 
 pkgname=inputconfd-git
 _pkgname=inputconfd
-pkgver=r1.d4f9639
+pkgver=r2.02da169
 pkgrel=1
 pkgdesc="Daemon for configuring hotplugged keyboards and mice in X11"
 arch=('x86_64' 'i686')
