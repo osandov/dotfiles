@@ -87,13 +87,11 @@ alias cxclip='xclip -selection clipboard'
 alias ag="ag --color-line-number=32 --color-path=34 --color-match=103"
 alias da='du --apparent-size'
 alias pingg='ping 8.8.8.8'
+alias info='info --vi-keys'
 
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
 alias ts='tmux switch -t'
-
-alias sml='rlwrap sml'
-alias racket='rlwrap racket'
 
 open () {
     exo-open "$@" &!
