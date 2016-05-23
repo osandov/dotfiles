@@ -122,6 +122,9 @@ noremap <Leader>m :up<CR>
 " Move between windows
 noremap <Leader>w <C-W>w
 
+" Start a search for a whole word
+noremap <Leader>/ /\<\><Left><Left>
+
 " Edit .vimrc on the fly
 noremap <Leader>ev :split $MYVIMRC<CR>
 noremap <Leader>sv :source $MYVIMRC<CR>
