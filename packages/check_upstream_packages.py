@@ -61,6 +61,17 @@ def check_git_package(package, remote, pkgver_re):
     _print_result(package, head.startswith(pkgver))
 
 
+def check_arch_package(package, source_package):
+    pkgver_re = re.compile('_pkgver=([^\n]+)\n')
+    pkgrel_re = re.compile('_pkgrel=([^\n]+)\n')
+    version_re = re.compile(b'Version\\s*:\\s*([^\n]+)\n')
+    pkgver = grep_file(os.path.join(package, 'PKGBUILD'), pkgver_re)
+    pkgrel = grep_file(os.path.join(package, 'PKGBUILD'), pkgrel_re)
+    pkgbuild_version = '{}-{}'.format(pkgver, pkgrel)
+    sync_version = grep_proc(['pacman', '-Si', source_package], version_re).decode('ascii')
+    _print_result(package, pkgbuild_version == sync_version)
+
+
 def check_xfce4_notifyd():
     package = 'xfce4-notifyd-osandov'
     pkgver_re = re.compile('_pkgver=([^\n]+)\n')
@@ -84,4 +95,5 @@ if __name__ == '__main__':
                       simple_pkgver_re)
     check_git_package('verbar-git', 'https://github.com/osandov/verbar.git',
                       simple_pkgver_re)
-    check_xfce4_notifyd()
+    check_arch_package('xfce4-notifyd-osandov', 'xfce4-notifyd')
+    check_arch_package('xfce4-power-manager-osandov', 'xfce4-power-manager')

@@ -1,0 +1,50 @@
+From bf6675a9db8d05d205ecb8696da47bd68ea4e17f Mon Sep 17 00:00:00 2001
+From: Omar Sandoval <osandov@osandov.com>
+Date: Wed, 25 May 2016 23:30:31 -0700
+Subject: [PATCH] Run screensaver synchronously
+
+This fixes the really annoying (and potentially insecure) window after
+opening the laptop lid where the screensaver hasn't activated yet.
+---
+ common/xfpm-common.c | 25 +------------------------
+ 1 file changed, 1 insertion(+), 24 deletions(-)
+
+diff --git a/common/xfpm-common.c b/common/xfpm-common.c
+index 51283b64f4af..965b09f06598 100644
+--- a/common/xfpm-common.c
++++ b/common/xfpm-common.c
+@@ -55,30 +55,7 @@ GtkBuilder *xfpm_builder_new_from_string (const gchar *ui, GError **error)
+ gboolean
+ xfpm_lock_screen (void)
+ {
+-    gboolean ret = g_spawn_command_line_async ("xflock4", NULL);
+-    
+-    if ( !ret )
+-    {
+-        ret = g_spawn_command_line_async ("gnome-screensaver-command -l", NULL);
+-    }
+-    
+-    if ( !ret )
+-    {
+-        /* this should be the default*/
+-        ret = g_spawn_command_line_async ("xdg-screensaver lock", NULL);
+-    }
+-    
+-    if ( !ret )
+-    {
+-        ret = g_spawn_command_line_async ("xscreensaver-command -lock", NULL);
+-    }
+-    
+-    if ( !ret )
+-    {
+-        g_critical ("Connot lock screen\n");
+-    }
+-
+-    return ret;
++    return g_spawn_command_line_sync ("xdg-screensaver lock", NULL, NULL, NULL, NULL);
+ }
+ 
+ void       
+-- 
+2.8.3
+
