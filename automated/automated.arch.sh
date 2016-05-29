@@ -59,8 +59,6 @@ PACKAGES=(
 	xclip
 	xcursor-vanilla-dmz
 	xdm-archlinux
-	xfce4-notifyd
-	xfce4-power-manager
 	xfce4-screenshooter
 	xorg-xdm
 	xorg-xmessage
