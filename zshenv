@@ -3,13 +3,19 @@ typeset -U path manpath
 # example, for GOPATH:
 # typeset -TU GOPATH gopath
 
-add_to_path() {
+add_to_path () {
 	if [ -d "$1" ]; then
 		path=("$1" "$path[@]")
 	fi
 }
 
-add_to_manpath() {
+append_to_path () {
+	if [ -d "$1" ]; then
+		path=("$path[@]" "$1")
+	fi
+}
+
+add_to_manpath () {
 	if [ -d "$1" ]; then
 		manpath=("$1" "$manpath[@]" "")
 	fi
