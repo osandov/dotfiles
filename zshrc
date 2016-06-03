@@ -47,7 +47,8 @@ function () {
     local git_prompt='%F{green}$(whence -f __git_ps1 &>/dev/null && __git_ps1 " %s")%f'
 
     setopt prompt_subst
-    PROMPT="┌[%n@%{${prehost}%}%m%{${posthost}%} %F{cyan}%~%f${git_prompt}]
+
+    PROMPT="┌[%n@%{${prehost}%}%m%{${posthost}%} %F{cyan}%~%f${git_prompt}]%(?.. %F{red}:(%f)
 └%(#.#.$) "
 }
 
