@@ -183,3 +183,8 @@ autocmd FileType *
             \   call SuperTabChain(&omnifunc, "<C-N>") |
             \   call SuperTabSetDefaultCompletionType("<C-X><C-U>") |
             \ endif
+
+" Override the vim-vinegar settings for the following
+autocmd FileType * let g:netrw_sort_sequence=''
+" Ignore ".*" but not "./" or "../", "*.o", and "*.dwo"
+autocmd FileType * let g:netrw_list_hide='^\.\([^./]\|\.[^/]\),\.o$,\.dwo$'
