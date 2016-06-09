@@ -16,6 +16,7 @@ tar -xvf package-query.tar.gz
 cd package-query
 makepkg -s
 sudo pacman --noconfirm -U package-query-*.pkg.tar.xz
+rm -rf /tmp/package-query /tmp/package-query.tar.gz
 
 cd /tmp
 curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
@@ -23,6 +24,7 @@ tar -xvf yaourt.tar.gz
 cd yaourt
 makepkg -s
 sudo pacman --noconfirm -U yaourt-*.pkg.tar.xz
+rm -rf /tmp/yaourt /tmp/yaourt.tar.gz
 
 # Install the packages.
 PACKAGES=(
