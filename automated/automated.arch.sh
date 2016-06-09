@@ -10,21 +10,25 @@ sudo pacman -Sy
 # Install yaourt manually from the AUR first.
 sudo pacman --noconfirm -S --needed base-devel
 
-cd /tmp
-curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
-tar -xvf package-query.tar.gz
-cd package-query
-makepkg -s
-sudo pacman --noconfirm -U package-query-*.pkg.tar.xz
-rm -rf /tmp/package-query /tmp/package-query.tar.gz
+if ! pacman -Q package-query >/dev/null 2>&1; then
+	cd /tmp
+	curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
+	tar -xvf package-query.tar.gz
+	cd package-query
+	makepkg -s
+	sudo pacman --noconfirm -U package-query-*.pkg.tar.xz
+	rm -rf /tmp/package-query /tmp/package-query.tar.gz
+fi
 
-cd /tmp
-curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
-tar -xvf yaourt.tar.gz
-cd yaourt
-makepkg -s
-sudo pacman --noconfirm -U yaourt-*.pkg.tar.xz
-rm -rf /tmp/yaourt /tmp/yaourt.tar.gz
+if ! pacman -Q yaourt >/dev/null 2>&1; then
+	cd /tmp
+	curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
+	tar -xvf yaourt.tar.gz
+	cd yaourt
+	makepkg -s
+	sudo pacman --noconfirm -U yaourt-*.pkg.tar.xz
+	rm -rf /tmp/yaourt /tmp/yaourt.tar.gz
+fi
 
 # Install the packages.
 PACKAGES=(
