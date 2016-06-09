@@ -50,7 +50,7 @@ PACKAGES=(
 	thunar
 	thunar-volman
 	tmux
-	trayer-srg
+	trayer-srg-git
 	ttf-dejavu
 	tumbler
 	vertex-icons-git
