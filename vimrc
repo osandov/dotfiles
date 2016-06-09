@@ -25,6 +25,8 @@ endif
 set completeopt-=preview " no annoying completion preview window
 set incsearch            " do incremental searching
 set nojoinspaces         " one space after periods when joining
+set splitbelow           " personal preference
+set splitright
 set wildmenu             " zsh-ish command-line tab completion
 set wildmode=list:longest,list:full
 
@@ -122,18 +124,16 @@ noremap <Leader>m :up<CR>
 " Move between windows
 noremap <Leader>w <C-W>w
 
+" Splits
+noremap <Leader>s <C-W>s
+noremap <Leader>v <C-W>v
+noremap <Leader>t <C-W>s<C-W>T
+
 " Start a search for a whole word
 noremap <Leader>/ /\<\><Left><Left>
 
-" Edit .vimrc on the fly
-noremap <Leader>ev :split $MYVIMRC<CR>
-noremap <Leader>sv :source $MYVIMRC<CR>
-
 " Manual autochdir
 noremap <Leader>cd :cd %:p:h<CR>
-
-" Toggle spell check
-noremap <Leader>sp :set spell!<CR>
 
 " Quick and dirty sessions
 noremap <Leader>km :mksession! ~/.vim/tmp/session<CR>
