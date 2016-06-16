@@ -2,12 +2,23 @@
 	limpio = clean -dqfx
 [color]
 	ui = true
+[color "diff-highlight"]
+	oldNormal = red
+	newNormal = green
+	oldHighlight = red 224
+	newHighlight = green 194
 [core]
 	abbrev = 12
 [format]
 	thread = shallow
 [include]
 	path = ~/.gitconfig.local
+[interactive]
+	diffFilter = "if command -v diff-highlight; then diff-highlight; else cat; fi"
+[pager]
+	log = "if command -v diff-highlight; then diff-highlight | \"${PAGER:-less}\"; else \"${PAGER:-less}\"; fi"
+	show = "if command -v diff-highlight; then diff-highlight | \"${PAGER:-less}\"; else \"${PAGER:-less}\"; fi"
+	diff = "if command -v diff-highlight; then diff-highlight | \"${PAGER:-less}\"; else \"${PAGER:-less}\"; fi"
 [pretty]
 	refer = format:%h (\"%s\")
 [push]

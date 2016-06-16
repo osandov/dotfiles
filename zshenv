@@ -21,6 +21,9 @@ add_to_manpath () {
 	fi
 }
 
+# Only on Arch Linux
+add_to_path /usr/share/git/diff-highlight
+
 add_to_path ~/.dotfiles/bin
 add_to_path ~/.local/bin
 add_to_manpath ~/.local/share/man
