@@ -1,7 +1,7 @@
-From 8fba900dddf16c99b8a99a609235edc1bc458b17 Mon Sep 17 00:00:00 2001
+From 004d17f7ede8912e4514263dbe5f8a920194d8d9 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:52:27 -0800
-Subject: [PATCH] Add support for XBM icons in the status bar
+Subject: [PATCH 3/4] Add support for XBM icons in the status bar
 
 This is done with an OSC escape code: "\e]9;icon path\a".
 ---
@@ -110,7 +110,7 @@ index e3b8515235f6..bab169a099a3 100644
  /* Map functions */
  void drw_map(Drw *, Window, int, int, unsigned int, unsigned int);
 diff --git a/dwm.c b/dwm.c
-index afd3cf75c1d2..df8246250c29 100644
+index 9380032df909..de930fb5ce90 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -57,7 +57,8 @@
@@ -179,5 +179,5 @@ index afd3cf75c1d2..df8246250c29 100644
  		} else {
  			drw_setscheme(drw, &scheme[SchemeNorm]);
 -- 
-2.7.0
+2.9.0
 

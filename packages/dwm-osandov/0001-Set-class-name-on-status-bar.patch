@@ -1,7 +1,7 @@
-From a48c499b53f6f8050319edc2f31c8f00acdaa50a Mon Sep 17 00:00:00 2001
+From d0276a97d8f68ad630b0256726840ac57d9679bc Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:50:22 -0800
-Subject: [PATCH] Set class name on status bar
+Subject: [PATCH 1/4] Set class name on status bar
 
 This is useful for, e.g., compton.
 ---
@@ -9,10 +9,10 @@ This is useful for, e.g., compton.
  1 file changed, 5 insertions(+)
 
 diff --git a/dwm.c b/dwm.c
-index ff7e096f61fc..21a2684874da 100644
+index 9585683327c3..764e7581e519 100644
 --- a/dwm.c
 +++ b/dwm.c
-@@ -1806,6 +1806,9 @@ updatebars(void)
+@@ -1807,6 +1807,9 @@ updatebars(void)
  		.background_pixmap = ParentRelative,
  		.event_mask = ButtonPressMask|ExposureMask
  	};
@@ -22,7 +22,7 @@ index ff7e096f61fc..21a2684874da 100644
  	for (m = mons; m; m = m->next) {
  		if (m->barwin)
  			continue;
-@@ -1814,7 +1817,9 @@ updatebars(void)
+@@ -1815,7 +1818,9 @@ updatebars(void)
  		                          CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
  		XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
  		XMapRaised(dpy, m->barwin);
@@ -33,5 +33,5 @@ index ff7e096f61fc..21a2684874da 100644
  
  void
 -- 
-2.7.0
+2.9.0
 

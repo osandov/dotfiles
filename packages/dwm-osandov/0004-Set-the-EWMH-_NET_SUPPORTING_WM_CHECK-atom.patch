@@ -1,14 +1,14 @@
-From f2cebaf5c74f9cd989916f8fe8d39127b2ceb20f Mon Sep 17 00:00:00 2001
+From 49c11cf69c276b4b88ac37de0032feaced8b3cc7 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sat, 23 Jan 2016 15:07:21 -0800
-Subject: [PATCH] Set the EWMH _NET_SUPPORTING_WM_CHECK atom
+Subject: [PATCH 4/4] Set the EWMH _NET_SUPPORTING_WM_CHECK atom
 
 ---
  dwm.c | 12 +++++++++++-
  1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/dwm.c b/dwm.c
-index df8246250c29..95a5f036601c 100644
+index de930fb5ce90..0740fa46ec54 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -63,7 +63,7 @@
@@ -20,7 +20,7 @@ index df8246250c29..95a5f036601c 100644
         NetWMFullscreen, NetActiveWindow, NetWMWindowType,
         NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
  enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
-@@ -1609,6 +1609,7 @@ setup(void)
+@@ -1610,6 +1610,7 @@ setup(void)
  	wmatom[WMTakeFocus] = XInternAtom(dpy, "WM_TAKE_FOCUS", False);
  	netatom[NetActiveWindow] = XInternAtom(dpy, "_NET_ACTIVE_WINDOW", False);
  	netatom[NetSupported] = XInternAtom(dpy, "_NET_SUPPORTED", False);
@@ -28,7 +28,7 @@ index df8246250c29..95a5f036601c 100644
  	netatom[NetWMName] = XInternAtom(dpy, "_NET_WM_NAME", False);
  	netatom[NetWMState] = XInternAtom(dpy, "_NET_WM_STATE", False);
  	netatom[NetWMFullscreen] = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
-@@ -1842,8 +1843,10 @@ updatebars(void)
+@@ -1843,8 +1844,10 @@ updatebars(void)
  		.event_mask = ButtonPressMask|ExposureMask
  	};
  	XClassHint *ch = XAllocClassHint();
@@ -39,7 +39,7 @@ index df8246250c29..95a5f036601c 100644
  	for (m = mons; m; m = m->next) {
  		if (m->barwin)
  			continue;
-@@ -1853,7 +1856,14 @@ updatebars(void)
+@@ -1854,7 +1857,14 @@ updatebars(void)
  		XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
  		XMapRaised(dpy, m->barwin);
  		XSetClassHint(dpy, m->barwin, ch);
@@ -55,5 +55,5 @@ index df8246250c29..95a5f036601c 100644
  }
  
 -- 
-2.7.0
+2.9.0
 
