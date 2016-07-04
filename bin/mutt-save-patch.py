@@ -2,6 +2,7 @@
 
 from collections import namedtuple
 import email
+import email.policy
 import re
 import sys
 import unittest
@@ -11,7 +12,8 @@ PatchSubject = namedtuple('PatchSubject', ['prefix', 'title', 'index', 'total', 
 
 
 def main():
-    message = email.message_from_binary_file(sys.stdin.buffer)
+    message = email.message_from_binary_file(
+        sys.stdin.buffer, policy=email.policy.default)
     try:
         subject = parse_subject(message.get('Subject'))
     except ValueError as e:
@@ -47,7 +49,7 @@ def parse_subject(subject):
         version = int_or_none(match.group(4))
         return PatchSubject(prefix, title, index, total, version)
 
-    raise ValueError('could not parse subject')
+    raise ValueError('could not parse subject %r' % subject)
 
 
 def int_or_none(x):
