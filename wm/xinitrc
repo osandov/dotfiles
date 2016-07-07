@@ -13,9 +13,15 @@ feh --no-fehbg --bg-fill ~/.dotfiles/wm/root.png # Set the wallpaper
 
 # X11 settings...
 numlockx on			# Turn on Num Lock
-synclient VertScrollDelta=-114 HorizScrollDelta=-114 # Natural scrolling
 xrdb ~/.Xresources		# Overall X appearance and behavior
 xsetroot -cursor_name left_ptr	# Don't want that ugly X cursor
+
+# Touchpad settings...
+for touchpad in $(xinput --list | sed -rn 's/.*touchpad.*id=([0-9]+).*/\1/Ip'); do
+	xinput --set-prop "${touchpad}" "libinput Disable While Typing Enabled" 0
+	xinput --set-prop "${touchpad}" "libinput Natural Scrolling Enabled" 1
+	xinput --set-prop "${touchpad}" "libinput Tapping Enabled" 1
+done
 
 # Start some daemons...
 inputconfd --keyboard="xmodmap ~/.Xmodmap; xset r rate 150 50 -b" &

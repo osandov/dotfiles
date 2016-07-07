@@ -65,8 +65,10 @@ PACKAGES=(
 	xclip
 	xcursor-vanilla-dmz
 	xdm-archlinux
+	xf86-input-libinput
 	xfce4-screenshooter
 	xorg-xdm
+	xorg-xinput
 	xorg-xmessage
 	xorg-xmodmap
 	xorg-xrandr
