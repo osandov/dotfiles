@@ -4,6 +4,7 @@ import argparse
 import codecs
 import getpass
 import json
+import os
 import os.path
 from subprocess import Popen, check_output, PIPE
 import sys
@@ -212,26 +213,33 @@ def load_passwd_db_and_passphrase(path):
 
 def save_passwd_db(path, db, passphrase):
     rd, wr = os.pipe()
-    file = tempfile.NamedTemporaryFile('wb', prefix='tmp_passwds',
-                                       dir=os.path.dirname(path), delete=False)
-    with os.fdopen(rd, 'rb') as pipe_rd, os.fdopen(wr, 'wb') as pipe_wr:
-        cmd = ['gpg2', '--quiet', '--batch', '--passphrase-fd=%d' % rd, '--symmetric']
-        gpg = Popen(cmd, stdin=PIPE, stdout=file, pass_fds=[rd])
-        pipe_rd.close()
-        pipe_wr.write(passphrase)
-        pipe_wr.close()
-        json.dump(db, codecs.getwriter('utf-8')(gpg.stdin))
-        gpg.stdin.close()
-        returncode = gpg.wait()
-        if returncode != 0:
-            invalidate_master_passphrase(path)
-            file.close()
-            os.unlink(file.name)
-            raise PasswdsException("Failed to encrypt password database")
+    parent_dir = os.path.dirname(path)
+    parent_fd = os.open(parent_dir, os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC)
+    try:
+        file = tempfile.NamedTemporaryFile('wb', prefix='tmp_passwds',
+                                           dir=parent_dir, delete=False)
+        with os.fdopen(rd, 'rb') as pipe_rd, os.fdopen(wr, 'wb') as pipe_wr:
+            cmd = ['gpg2', '--quiet', '--batch', '--passphrase-fd=%d' % rd, '--symmetric']
+            gpg = Popen(cmd, stdin=PIPE, stdout=file, pass_fds=[rd])
+            pipe_rd.close()
+            pipe_wr.write(passphrase)
+            pipe_wr.close()
+            json.dump(db, codecs.getwriter('utf-8')(gpg.stdin))
+            gpg.stdin.close()
+            returncode = gpg.wait()
+            if returncode != 0:
+                invalidate_master_passphrase(path)
+                file.close()
+                os.unlink(file.name)
+                raise PasswdsException("Failed to encrypt password database")
 
-    file.close()
-    os.rename(file.name, path)
-
+        file.flush()
+        os.fsync(file.fileno())
+        file.close()
+        os.rename(file.name, path)
+        os.fsync(parent_fd)
+    finally:
+        os.close(parent_fd)
 
 if __name__ == '__main__':
     main()
