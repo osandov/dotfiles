@@ -1,5 +1,6 @@
 [alias]
 	limpio = clean -dqfx
+	refer = !git --no-pager show -s --abbrev=12 --pretty='tformat:%h (\"%s\")'
 [color]
 	ui = true
 [color "diff-highlight"]
@@ -7,8 +8,6 @@
 	newNormal = green
 	oldHighlight = red 224
 	newHighlight = green 194
-[core]
-	abbrev = 12
 [format]
 	thread = shallow
 [include]
@@ -19,8 +18,6 @@
 	log = "if command -v diff-highlight >/dev/null 2>&1; then diff-highlight | \"${PAGER:-less}\"; else \"${PAGER:-less}\"; fi"
 	show = "if command -v diff-highlight >/dev/null 2>&1; then diff-highlight | \"${PAGER:-less}\"; else \"${PAGER:-less}\"; fi"
 	diff = "if command -v diff-highlight >/dev/null 2>&1; then diff-highlight | \"${PAGER:-less}\"; else \"${PAGER:-less}\"; fi"
-[pretty]
-	refer = format:%h (\"%s\")
 [push]
 	default = simple
 [tag]
