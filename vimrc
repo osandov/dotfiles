@@ -93,6 +93,9 @@ augroup END
 " Use LaTeX instead of plain TeX for .tex files
 let g:tex_flavor = 'latex'
 
+" Use C syntax for *.h files, not C++
+let g:c_syntax_for_h = 1
+
 """""""""" Mappings
 
 " Map Command-Line mode navigation to arrows keys so we can have filtering
