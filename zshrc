@@ -66,9 +66,20 @@ elif [ -r /etc/zsh_command_not_found ]; then
     source /etc/zsh_command_not_found
 fi
 
-if ! pgrep -u "$USER" -x ssh-agent >/dev/null; then
-	eval $(ssh-agent) >/dev/null
-fi
+function () {
+	if [ -z "$SSH_AUTH_SOCK" ]; then
+		local ssh_auth_sock="/run/user/$UID/ssh/agent.sock"
+		local ssh_agent_pid="$(pgrep -n -u "$USER" -x ssh-agent)"
+
+		if [ -n "$ssh_agent_pid" ]; then
+			export SSH_AGENT_PID="$ssh_agent_pid"
+			export SSH_AUTH_SOCK="$ssh_auth_sock"
+		else
+			mkdir -p "/run/user/$UID/ssh"
+			eval "$(ssh-agent -a "$ssh_auth_sock")" >/dev/null
+		fi
+	fi
+}
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
