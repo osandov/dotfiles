@@ -66,10 +66,8 @@ elif [ -r /etc/zsh_command_not_found ]; then
     source /etc/zsh_command_not_found
 fi
 
-if [ -r ~/.gnupg/gpg-agent.conf ]; then
-    export GPG_TTY="$(tty)"
-    gpgconf --launch gpg-agent
-    export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+if ! pgrep -u "$USER" -x ssh-agent >/dev/null; then
+	eval $(ssh-agent) >/dev/null
 fi
 
 if [ -x /usr/bin/dircolors ]; then
