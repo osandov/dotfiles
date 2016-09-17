@@ -1,4 +1,4 @@
-From a527b50656c55fe3b1ffd62ddfa71507d4c76dd7 Mon Sep 17 00:00:00 2001
+From df83c9cbd307fe401a80bd98de0712b231afa756 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Thu, 21 Apr 2016 22:02:38 -0700
 Subject: [PATCH] Use a GTK_WINDOW_POPUP for notification window
@@ -10,10 +10,10 @@ on a tag in dwm.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/xfce4-notifyd/xfce-notify-window.c b/xfce4-notifyd/xfce-notify-window.c
-index 3b72ddd..4fed793 100644
+index 6ed3d7e..82b1276 100644
 --- a/xfce4-notifyd/xfce-notify-window.c
 +++ b/xfce4-notifyd/xfce-notify-window.c
-@@ -680,7 +680,7 @@ xfce_notify_window_new_with_actions(const gchar *summary,
+@@ -681,7 +681,7 @@ xfce_notify_window_new_with_actions(const gchar *summary,
      XfceNotifyWindow *window;
  
      window = g_object_new(XFCE_TYPE_NOTIFY_WINDOW,
