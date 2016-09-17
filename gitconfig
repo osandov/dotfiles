@@ -1,4 +1,5 @@
 [alias]
+	amend = commit -a --amend --no-edit
 	limpio = clean -dqfx
 	refer = !git --no-pager show -s --abbrev=12 --pretty='tformat:%h (\"%s\")'
 [color]
