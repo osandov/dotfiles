@@ -14,19 +14,13 @@ PatchSubject = namedtuple('PatchSubject', ['prefix', 'title', 'index', 'total', 
 def main():
     message = email.message_from_binary_file(
         sys.stdin.buffer, policy=email.policy.default)
+    subject_header = message.get('Subject')
     try:
-        subject = parse_subject(message.get('Subject'))
+        subject = parse_subject(subject_header)
     except ValueError as e:
-        exit(e)
-    path = []
-    if subject.version is not None:
-        path.append('v%d' % subject.version)
-    if subject.index is not None:
-        path.append('%04d' % subject.index)
-    else:
-        path.append('0001')
-    path.append(sanitize_title(subject.title))
-    with open('-'.join(path) + '.patch', 'wb') as f:
+        print(e, file=sys.stderr)
+        subject = PatchSubject(None, subject_header, None, None, None)
+    with open(subject_to_path(subject), 'wb') as f:
         f.write(message.as_bytes())
 
 
@@ -50,6 +44,18 @@ def parse_subject(subject):
         return PatchSubject(prefix, title, index, total, version)
 
     raise ValueError('could not parse subject %r' % subject)
+
+
+def subject_to_path(subject):
+    path = []
+    if subject.version is not None:
+        path.append('v%d' % subject.version)
+    if subject.index is not None:
+        path.append('%04d' % subject.index)
+    else:
+        path.append('0001')
+    path.append(sanitize_title(subject.title))
+    return '-'.join(path) + '.patch'
 
 
 def int_or_none(x):
