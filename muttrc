@@ -54,6 +54,7 @@ bind pager u half-up
 
 ## Macros
 set pipe_split = yes
+set pipe_decode = yes
 macro index,pager ,s "<tag-prefix><pipe-message>mutt-save-patch.py<return>" "save tagged patches"
 
 ## Color scheme
