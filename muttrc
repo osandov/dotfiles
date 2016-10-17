@@ -52,6 +52,9 @@ bind pager <Up> previous-line
 bind pager d half-down
 bind pager u half-up
 
+## Folder browser
+set folder_format = "%-7C %-7n %f"
+
 ## Macros
 set pipe_split = yes
 set pipe_decode = yes
