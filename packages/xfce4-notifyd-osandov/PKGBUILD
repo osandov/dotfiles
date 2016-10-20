@@ -2,9 +2,9 @@
 
 pkgname=xfce4-notifyd-osandov
 _pkgname=xfce4-notifyd
-pkgver=0.3.2
+pkgver=0.3.3
 pkgrel=1
-_pkgver=0.3.2
+_pkgver=0.3.3
 _pkgrel=1
 pkgdesc="Notification daemon for the Xfce desktop"
 arch=('i686' 'x86_64')
@@ -17,7 +17,7 @@ provides=('notification-daemon')
 conflicts=('xfce4-notifyd')
 source=(http://archive.xfce.org/src/apps/$_pkgname/${_pkgver%.*}/$_pkgname-$_pkgver.tar.bz2
         0001-Use-a-GTK_WINDOW_POPUP-for-notification-window.patch)
-sha256sums=('c554db55d9d759c32115e9e5da029bd68b07628438ef2bac7ae4b458567c85a4'
+sha256sums=('986c4cfeb64c21c6bfb2fe65839490ad0f501fdfc8ed10cc71815da5da110f73'
             'fa6958d4cb39a7b055174c0e4e9a610bd0285a1f057f25d0a034174b37617b13')
 
 prepare() {
