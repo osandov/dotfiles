@@ -96,4 +96,3 @@ if __name__ == '__main__':
     check_git_package('verbar-git', 'https://github.com/osandov/verbar.git',
                       simple_pkgver_re)
     check_arch_package('xfce4-notifyd-osandov', 'xfce4-notifyd')
-    check_arch_package('xfce4-power-manager-osandov', 'xfce4-power-manager')
