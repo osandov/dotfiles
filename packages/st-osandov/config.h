@@ -133,9 +133,7 @@ static const char *colorname[] = {
 	[255] = 0,
 };
 
-
-/*
- * Default colors (colorname index)
+/* * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
 static unsigned int defaultfg = 0;
@@ -194,6 +192,7 @@ static Shortcut shortcuts[] = {
 	{ MODKEY|ShiftMask,     XK_C,           clipcopy,       {.i =  0} },
 	{ MODKEY|ShiftMask,     XK_V,           clippaste,      {.i =  0} },
 	{ MODKEY,               XK_Num_Lock,    numlock,        {.i =  0} },
+	{ MODKEY,               XK_Control_L,   iso14755,       {.i =  0} },
 };
 
 /*
