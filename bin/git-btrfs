@@ -1,0 +1,90 @@
+#!/bin/sh
+
+dashless=$(basename "$0" | sed -e 's/-/ /')
+USAGE="clone <repository> [<directory>]
+   or: $dashless worktree <path> [<branch>]"
+
+NONGIT_OK=Yes
+. "$(git --exec-path)/git-sh-setup"
+
+git_btrfs_clone () {
+	if [ $# -ne 1 -a $# -ne 2 ]; then
+		usage
+	fi
+
+	repo="$1"
+	if [ $# -eq 1 ]; then
+		# Lifted from contrib/examples/git-clone.sh.
+		if [ -f "${repo}" ]; then
+			dir="$(echo "${repo}" | sed -e 's|/*\.bundle$||' -e 's|.*/||g')"
+		else
+			dir="$(echo "${repo}" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')"
+		fi
+	else
+		dir="$2"
+	fi
+
+	btrfs subvolume create "${dir}" || exit $?
+	git clone "${repo}" "${dir}" || exit $?
+}
+
+git_btrfs_worktree () {
+	if [ $# -ne 1 -a $# -ne 2 ]; then
+		usage
+	fi
+
+	# Set up the worktree with git. This creates all of the necessary stuff
+	# in the real .git directory. We're pointing the worktree at HEAD for
+	# now, since that's what we're going to snapshot. We'll check out the
+	# requested branch later.
+	path="$1"
+	if [ $# -eq 1 ]; then
+		# git worktree add creates a branch for you if you don't give
+		# it one explicitly, so let's do the same.
+		branch="$(basename "${path}")"
+		git branch "${branch}" || exit $?
+	else
+		branch="$2"
+	fi
+	git worktree add --no-checkout --detach "${path}" || exit $?
+
+	# Save the worktree .git file...
+	tmpgit="$(mktemp -p "$(dirname "${path}")")"
+	if [ -z "${tmpgit}" ]; then
+		die "could not create temporary .git file"
+	fi
+	mv -T "${path}/.git" "${tmpgit}" || exit $?
+
+	# Remove the worktree directory...
+	rmdir "${path}" || exit $?
+
+	# Replace it with a snapshot...
+	btrfs subvolume snapshot "$(git rev-parse --show-toplevel)" "${path}" || exit $?
+
+	# And restore the .git file. Now we have an intact worktree as far as
+	# git is concerned.
+	rm -rf "${path}/.git" || exit $?
+	mv -T "${tmpgit}" "${path}/.git" || exit $?
+
+	# Because we used --no-checkout, the whole tree is staged as deleted.
+	# Undo that.
+	git -C "${path}" reset >/dev/null || exit $?
+
+	# Finally, check out the requested branch.
+	git -C "${path}" checkout "${branch}" >/dev/null || exit $?
+}
+
+test $# -gt 0 || usage
+command="$1"
+shift
+case "${command}" in
+	clone)
+		git_btrfs_clone "$@"
+		;;
+	worktree)
+		git_btrfs_worktree "$@"
+		;;
+	*)
+		usage
+		;;
+esac
