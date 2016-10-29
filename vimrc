@@ -63,7 +63,7 @@ set background=light
 colorscheme minimal
 
 " Autocmds and filetype-specific stuff
-augroup vimrcEx
+augroup vimrc
     au!
 
     " When editing a file, always jump to the last known cursor position.
@@ -87,7 +87,6 @@ augroup vimrcEx
 
     " Close enough for Coccinelle
     autocmd BufRead,BufNewFile *.cocci set filetype=diff
-
 augroup END
 
 " Use LaTeX instead of plain TeX for .tex files
@@ -180,14 +179,19 @@ endif
 " SuperTab scroll down
 let g:SuperTabDefaultCompletionType = "<C-N>"
 
-" Use omnicomplete and keyword completion for supertab
-autocmd FileType *
-            \ if &omnifunc != '' |
-            \   call SuperTabChain(&omnifunc, "<C-N>") |
-            \   call SuperTabSetDefaultCompletionType("<C-X><C-U>") |
-            \ endif
+" Plugin autocmds
+augroup vimrcPlugin
+    au!
 
-" Override the vim-vinegar settings for the following
-autocmd FileType * let g:netrw_sort_sequence=''
-" Ignore ".*" but not "./" or "../", "*.o", and "*.dwo"
-autocmd FileType * let g:netrw_list_hide='^\.\([^./]\|\.[^/]\),\.o$,\.dwo$'
+    " Use omnicomplete and keyword completion for supertab
+    autocmd FileType *
+                \ if &omnifunc != '' |
+                \   call SuperTabChain(&omnifunc, "<C-N>") |
+                \   call SuperTabSetDefaultCompletionType("<C-X><C-U>") |
+                \ endif
+
+    " Override the vim-vinegar settings for the following
+    autocmd FileType * let g:netrw_sort_sequence=''
+    " Ignore ".*" but not "./" or "../", "*.o", and "*.dwo"
+    autocmd FileType * let g:netrw_list_hide='^\.\([^./]\|\.[^/]\),\.o$,\.dwo$'
+augroup END
