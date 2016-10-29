@@ -144,6 +144,8 @@ noremap <Leader>ks :source ~/.vim/tmp/session<CR>
 " Toggle relative and absolute numbering
 noremap <Leader>ln :set rnu!<CR>
 
+cnoremap w!! w !sudo tee % >/dev/null
+
 """""""""" Plugins
 
 filetype off
