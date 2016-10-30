@@ -158,6 +158,7 @@ if isdirectory($HOME . "/.vim/bundle/Vundle.vim")
     Plugin 'ervandew/supertab'
     Plugin 'rking/ag.vim'
     Plugin 'scrooloose/nerdcommenter'
+    Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-rsi'
     Plugin 'tpope/vim-vinegar'
