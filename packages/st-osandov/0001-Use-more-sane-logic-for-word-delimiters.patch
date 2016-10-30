@@ -1,4 +1,4 @@
-From 33909f2eb818ae1f325923e178010b2c28112128 Mon Sep 17 00:00:00 2001
+From 50e54557042b6ee8ab858afcaa51b9656de38f1e Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@fb.com>
 Date: Fri, 8 Apr 2016 14:52:01 -0700
 Subject: [PATCH] Use more sane logic for word delimiters
@@ -13,7 +13,7 @@ URLs.
  2 files changed, 37 insertions(+), 25 deletions(-)
 
 diff --git a/config.def.h b/config.def.h
-index c2e4ffd..8d0e947 100644
+index 7f465d1..85ecd58 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -28,11 +28,41 @@ static float cwscale = 1.0;
@@ -63,7 +63,7 @@ index c2e4ffd..8d0e947 100644
  /* selection timeouts (in milliseconds) */
  static unsigned int doubleclicktimeout = 300;
 diff --git a/st.c b/st.c
-index c67623f..0afa86d 100644
+index 4d44388..61af904 100644
 --- a/st.c
 +++ b/st.c
 @@ -30,6 +30,7 @@
@@ -82,7 +82,7 @@ index c67623f..0afa86d 100644
  #define LIMIT(x, a, b)		(x) = (x) < (a) ? (a) : (x) > (b) ? (b) : (x)
  #define ATTRCMP(a, b)		((a).mode != (b).mode || (a).fg != (b).fg || \
  				(a).bg != (b).bg)
-@@ -486,7 +486,6 @@ static size_t utf8decode(char *, Rune *, size_t);
+@@ -488,7 +488,6 @@ static size_t utf8decode(char *, Rune *, size_t);
  static Rune utf8decodebyte(char, size_t *);
  static size_t utf8encode(Rune, char *);
  static char utf8encodebyte(Rune, size_t);
@@ -90,7 +90,7 @@ index c67623f..0afa86d 100644
  static size_t utf8validate(Rune *, size_t);
  
  static ssize_t xwrite(int, const char *, size_t);
-@@ -674,23 +673,6 @@ utf8encodebyte(Rune u, size_t i)
+@@ -676,23 +675,6 @@ utf8encodebyte(Rune u, size_t i)
  	return utfbyte[i] | (u & ~utfmask[i]);
  }
  
@@ -114,7 +114,7 @@ index c67623f..0afa86d 100644
  size_t
  utf8validate(Rune *u, size_t i)
  {
-@@ -806,7 +788,7 @@ selsnap(int *x, int *y, int direction)
+@@ -808,7 +790,7 @@ selsnap(int *x, int *y, int direction)
  		 * beginning of a line.
  		 */
  		prevgp = &term.line[*y][*x];
@@ -123,7 +123,7 @@ index c67623f..0afa86d 100644
  		for (;;) {
  			newx = *x + direction;
  			newy = *y;
-@@ -828,7 +810,7 @@ selsnap(int *x, int *y, int direction)
+@@ -830,7 +812,7 @@ selsnap(int *x, int *y, int direction)
  				break;
  
  			gp = &term.line[newy][newx];
@@ -133,5 +133,5 @@ index c67623f..0afa86d 100644
  					|| (delim && gp->u != prevgp->u)))
  				break;
 -- 
-2.10.0
+2.10.1
 

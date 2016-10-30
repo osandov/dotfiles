@@ -133,7 +133,9 @@ static const char *colorname[] = {
 	[255] = 0,
 };
 
-/* * Default colors (colorname index)
+
+/*
+ * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
 static unsigned int defaultfg = 0;
@@ -158,12 +160,10 @@ static unsigned int mousefg = 7;
 static unsigned int mousebg = 0;
 
 /*
- * Colors used, when the specific fg == defaultfg. So in reverse mode this
- * will reverse too. Another logic would only make the simple feature too
- * complex.
+ * Color used to display font attributes when fontconfig selected a font which
+ * doesn't match the ones requested.
  */
-static unsigned int defaultitalic = 0;
-static unsigned int defaultunderline = 0;
+static unsigned int defaultattr = 0;
 
 /*
  * Internal mouse shortcuts.
