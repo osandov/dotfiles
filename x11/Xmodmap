@@ -1,3 +1,4 @@
 clear lock
 keycode 0x42 = Escape
+keycode 0x09 = Escape
 ! keycode 0x09 = Caps_Lock
