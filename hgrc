@@ -1,0 +1,5 @@
+[extensions]
+color =
+pager =
+
+%include ~/.hgrc.local

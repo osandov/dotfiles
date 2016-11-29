@@ -18,7 +18,7 @@ Optional installation:
   -d    install dircolors config
   -t    install tmux config
   -p    install Python config
-  -g    install Git config
+  -g    install Git and Mercurial config
   -m    install Mutt config
   -s    install SSH/GnuPG config
   -w    install window manager config
@@ -148,6 +148,7 @@ fi
 
 if do_install "$DO_GIT"; then
 	install_file ~/.dotfiles/gitconfig ~/.gitconfig
+	install_file ~/.dotfiles/hgrc ~/.hgrc
 fi
 
 if do_install "$DO_MUTT"; then
