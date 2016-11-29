@@ -40,13 +40,19 @@ PACKAGES=(
 	feh
 	firefox
 	git
+	google-chrome
+	gtk3-print-backends
 	gvfs
 	gvim
 	librsvg # For redshift-gtk
+	mercurial
 	moka-icon-theme-git
+	mutt
 	numlockx
 	openssh
 	pkgfile
+	pulseaudio
+	pulseaudio-alsa
 	python
 	python-gobject # For redshift-gtk
 	python-xdg # For redshift-gtk
@@ -66,8 +72,11 @@ PACKAGES=(
 	xcursor-vanilla-dmz
 	xdm-archlinux
 	xf86-input-libinput
+	xfce4-power-manager
 	xfce4-screenshooter
+	xorg-server
 	xorg-xdm
+	xorg-xinit
 	xorg-xinput
 	xorg-xmessage
 	xorg-xmodmap
