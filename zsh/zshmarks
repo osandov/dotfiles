@@ -52,7 +52,7 @@ mark () {
 	local markdir="$DEFAULT_MARKDIR"
 	local submarkdir
 	for submarkdir in $MARKDIRS; do
-		if [[ $target =~ ^$submarkdir/ ]]; then
+		if [[ $target == "$submarkdir/"* ]]; then
 			markdir="$submarkdir"
 			break
 		fi
