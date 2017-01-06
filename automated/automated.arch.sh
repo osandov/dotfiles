@@ -32,6 +32,7 @@ fi
 
 # Install the packages.
 PACKAGES=(
+	adobe-source-han-sans-jp-fonts
 	alsa-utils
 	clang
 	compton-git
