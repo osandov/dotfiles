@@ -49,22 +49,20 @@ git_btrfs_worktree () {
 	git worktree add --no-checkout --detach "${path}" || exit $?
 
 	# Save the worktree .git file...
-	tmpgit="$(mktemp -p "$(dirname "${path}")")"
-	if [ -z "${tmpgit}" ]; then
-		die "could not create temporary .git file"
+	gitfile="$(cat "${path}/.git")"
+	if [ $? -ne 0 ]; then
+		exit $?
 	fi
-	mv -T "${path}/.git" "${tmpgit}" || exit $?
 
 	# Remove the worktree directory...
-	rmdir "${path}" || exit $?
+	rm -r "${path}" || exit $?
 
 	# Replace it with a snapshot...
 	btrfs subvolume snapshot "$(git rev-parse --show-toplevel)" "${path}" || exit $?
 
 	# And restore the .git file. Now we have an intact worktree as far as
 	# git is concerned.
-	rm -rf "${path}/.git" || exit $?
-	mv -T "${tmpgit}" "${path}/.git" || exit $?
+	echo "${gitfile}" > "${path}/.git" || exit $?
 
 	# Because we used --no-checkout, the whole tree is staged as deleted.
 	# Undo that.
