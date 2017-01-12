@@ -51,6 +51,7 @@ PACKAGES=(
 	mutt
 	numlockx
 	openssh
+	pavucontrol
 	pkgfile
 	pulseaudio
 	pulseaudio-alsa
