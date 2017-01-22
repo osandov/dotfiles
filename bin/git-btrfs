@@ -25,7 +25,31 @@ git_btrfs_clone () {
 	fi
 
 	btrfs subvolume create "${dir}" || exit $?
-	git clone "${repo}" "${dir}" || exit $?
+	git clone "${repo}" "${dir}"
+	ret=$?
+	if [ $ret -ne 0 ]; then
+		btrfs subvolume delete "${dir}"
+		exit $?
+	fi
+}
+
+worktree_cleanup () {
+	ret=$?
+
+	if [ -n "$cleanup_subvol" ]; then
+		btrfs subvolume delete "${path}"
+	fi
+
+	if [ -n "$cleanup_worktree" ]; then
+		rm -rf "${path}"
+		git worktree prune
+	fi
+
+	if [ -n "$cleanup_branch" ]; then
+		git branch -d "${branch}"
+	fi
+
+	exit $ret
 }
 
 git_btrfs_worktree () {
@@ -43,10 +67,15 @@ git_btrfs_worktree () {
 		# it one explicitly, so let's do the same.
 		branch="$(basename "${path}")"
 		git branch "${branch}" || exit $?
+		cleanup_branch=1
 	else
 		branch="$2"
 	fi
-	git worktree add --no-checkout --detach "${path}" || exit $?
+
+	trap worktree_cleanup ERR
+
+	git worktree add --no-checkout --detach "${path}"
+	cleanup_worktree=1
 
 	# Save the worktree .git file...
 	gitfile="$(cat "${path}/.git")"
@@ -55,21 +84,23 @@ git_btrfs_worktree () {
 	fi
 
 	# Remove the worktree directory...
-	rm -r "${path}" || exit $?
+	rm "${path}/.git"
+	rmdir "${path}"
 
 	# Replace it with a snapshot...
-	btrfs subvolume snapshot "$(git rev-parse --show-toplevel)" "${path}" || exit $?
+	btrfs subvolume snapshot "$(git rev-parse --show-toplevel)" "${path}"
+	cleanup_subvol=1
 
 	# And restore the .git file. Now we have an intact worktree as far as
 	# git is concerned.
-	echo "${gitfile}" > "${path}/.git" || exit $?
+	echo "${gitfile}" > "${path}/.git"
 
 	# Because we used --no-checkout, the whole tree is staged as deleted.
 	# Undo that.
-	git -C "${path}" reset >/dev/null || exit $?
+	git -C "${path}" reset >/dev/null
 
 	# Finally, check out the requested branch.
-	git -C "${path}" checkout "${branch}" >/dev/null || exit $?
+	git -C "${path}" checkout "${branch}" >/dev/null
 }
 
 test $# -gt 0 || usage
