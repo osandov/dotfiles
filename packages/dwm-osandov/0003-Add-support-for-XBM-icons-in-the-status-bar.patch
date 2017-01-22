@@ -1,52 +1,47 @@
-From 004d17f7ede8912e4514263dbe5f8a920194d8d9 Mon Sep 17 00:00:00 2001
+From 922260b8c328fe603bcb8f249a71459115aa54e3 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:52:27 -0800
-Subject: [PATCH 3/4] Add support for XBM icons in the status bar
+Subject: [PATCH 3/3] Add support for XBM icons in the status bar
 
 This is done with an OSC escape code: "\e]9;icon path\a".
 ---
- drw.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++++-
- drw.h |  2 +-
+ drw.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++++---
+ drw.h |  4 ++--
  dwm.c | 17 +++++++++--------
- 3 files changed, 59 insertions(+), 10 deletions(-)
+ 3 files changed, 59 insertions(+), 13 deletions(-)
 
 diff --git a/drw.c b/drw.c
-index f49200b2278c..ed47f0aa53fe 100644
+index 319eb6b..8c2ec52 100644
 --- a/drw.c
 +++ b/drw.c
-@@ -219,7 +219,7 @@ drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int
+@@ -235,7 +235,7 @@ drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int
  }
  
  int
--drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, const char *text, int invert)
-+drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, const char *text, int invert, int escapes)
+-drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert)
++drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert, int escapes)
  {
  	char buf[1024];
- 	int tx, ty, th;
-@@ -245,17 +245,22 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, const char *tex
- 		XSetForeground(drw->dpy, drw->gc, invert ?
- 		               drw->scheme->fg->pix : drw->scheme->bg->pix);
+ 	int ty;
+@@ -260,6 +260,8 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
+ 	} else {
+ 		XSetForeground(drw->dpy, drw->gc, drw->scheme[invert ? ColFg : ColBg].pixel);
  		XFillRectangle(drw->dpy, drw->drawable, drw->gc, x, y, w, h);
-+		XSetForeground(drw->dpy, drw->gc, invert ? drw->scheme->bg->pix : drw->scheme->fg->pix);
-+		XSetBackground(drw->dpy, drw->gc, invert ? drw->scheme->fg->pix : drw->scheme->bg->pix);
++		XSetForeground(drw->dpy, drw->gc, drw->scheme[invert ? ColBg : ColFg].pixel);
++		XSetBackground(drw->dpy, drw->gc, drw->scheme[invert ? ColFg : ColBg].pixel);
  		d = XftDrawCreate(drw->dpy, drw->drawable,
  		                  DefaultVisual(drw->dpy, drw->screen),
  		                  DefaultColormap(drw->dpy, drw->screen));
- 	}
- 
- 	curfont = drw->fonts[0];
-+
- 	while (1) {
- 		utf8strlen = 0;
+@@ -273,6 +275,8 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
  		utf8str = text;
  		nextfont = NULL;
  		while (*text) {
 +			if (escapes && *text == '\x1b')
 +				break;
  			utf8charlen = utf8decode(text, &utf8codepoint, UTF_SIZ);
- 			for (i = 0; i < drw->fontcount; i++) {
- 				charexists = charexists || XftCharExists(drw->dpy, drw->fonts[i]->xfont, utf8codepoint);
-@@ -301,6 +306,49 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, const char *tex
+ 			for (curfont = drw->fonts; curfont; curfont = curfont->next) {
+ 				charexists = charexists || XftCharExists(drw->dpy, curfont->xfont, utf8codepoint);
+@@ -318,6 +322,47 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
  
  		if (!*text) {
  			break;
@@ -75,10 +70,8 @@ index f49200b2278c..ed47f0aa53fe 100644
 +						pt[c - text] = '\0';
 +						if (XReadBitmapFile(drw->dpy, drw->drawable, pt, &bm_w, &bm_h, &bm, &bm_xh, &bm_yh) == BitmapSuccess) {
 +							if (render) {
-+								th = curfont->ascent + curfont->descent;
-+								ty = y + (h / 2) - (th / 2) + curfont->ascent;
-+								tx = x + (h / 2);
-+								XCopyPlane(drw->dpy, bm, drw->drawable, drw->gc, 0, 0, bm_w, bm_h, tx, ty - bm_h, 1);
++								ty = y + (h - usedfont->h) / 2 + usedfont->xfont->ascent;
++								XCopyPlane(drw->dpy, bm, drw->drawable, drw->gc, 0, 0, bm_w, bm_h, x, ty - bm_h, 1);
 +							}
 +							XFreePixmap(drw->dpy, bm);
 +							x += bm_w + 1;
@@ -95,35 +88,58 @@ index f49200b2278c..ed47f0aa53fe 100644
 +			}
  		} else if (nextfont) {
  			charexists = 0;
- 			curfont = nextfont;
+ 			usedfont = nextfont;
+@@ -375,11 +420,11 @@ drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h)
+ }
+ 
+ unsigned int
+-drw_fontset_getwidth(Drw *drw, const char *text)
++drw_fontset_getwidth(Drw *drw, const char *text, int escapes)
+ {
+ 	if (!drw || !drw->fonts || !text)
+ 		return 0;
+-	return drw_text(drw, 0, 0, 0, 0, 0, text, 0);
++	return drw_text(drw, 0, 0, 0, 0, 0, text, 0, escapes);
+ }
+ 
+ void
 diff --git a/drw.h b/drw.h
-index e3b8515235f6..bab169a099a3 100644
+index ff4355b..1414b9e 100644
 --- a/drw.h
 +++ b/drw.h
-@@ -68,7 +68,7 @@ void drw_setscheme(Drw *, ClrScheme *);
+@@ -34,7 +34,7 @@ void drw_free(Drw *drw);
+ /* Fnt abstraction */
+ Fnt *drw_fontset_create(Drw* drw, const char *fonts[], size_t fontcount);
+ void drw_fontset_free(Fnt* set);
+-unsigned int drw_fontset_getwidth(Drw *drw, const char *text);
++unsigned int drw_fontset_getwidth(Drw *drw, const char *text, int escapes);
+ void drw_font_getexts(Fnt *font, const char *text, unsigned int len, unsigned int *w, unsigned int *h);
+ 
+ /* Colorscheme abstraction */
+@@ -51,7 +51,7 @@ void drw_setscheme(Drw *drw, Scm scm);
  
  /* Drawing functions */
- void drw_rect(Drw *, int, int, unsigned int, unsigned int, int, int, int);
--int drw_text(Drw *, int, int, unsigned int, unsigned int, const char *, int);
-+int drw_text(Drw *, int, int, unsigned int, unsigned int, const char *, int, int);
+ void drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int invert);
+-int drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert);
++int drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert, int escapes);
  
  /* Map functions */
- void drw_map(Drw *, Window, int, int, unsigned int, unsigned int);
+ void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
 diff --git a/dwm.c b/dwm.c
-index 9380032df909..de930fb5ce90 100644
+index 3163822..f10bc5f 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -57,7 +57,8 @@
  #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
  #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
  #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
--#define TEXTW(X)                (drw_text(drw, 0, 0, 0, 0, (X), 0) + drw->fonts[0]->h)
-+#define TEXTW(X)                (drw_text(drw, 0, 0, 0, 0, (X), 0, 0) + drw->fonts[0]->h)
-+#define ETEXTW(X)               (drw_text(drw, 0, 0, 0, 0, (X), 0, 1) + drw->fonts[0]->h)
+-#define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
++#define TEXTW(X)                (drw_fontset_getwidth(drw, (X), 0) + lrpad)
++#define ETEXTW(X)               (drw_fontset_getwidth(drw, (X), 1) + lrpad)
+ #define ColBorder               2
  
  /* enums */
- enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-@@ -239,7 +240,7 @@ static void zoom(const Arg *arg);
+@@ -240,7 +241,7 @@ static void zoom(const Arg *arg);
  
  /* variables */
  static const char broken[] = "broken";
@@ -132,7 +148,7 @@ index 9380032df909..de930fb5ce90 100644
  static int screen;
  static int sw, sh;           /* X display screen geometry width, height */
  static int bh, blw = 0;      /* bar geometry */
-@@ -444,7 +445,7 @@ buttonpress(XEvent *e)
+@@ -446,7 +447,7 @@ buttonpress(XEvent *e)
  			arg.ui = 1 << i;
  		} else if (ev->x < x + blw)
  			click = ClkLtSymbol;
@@ -141,43 +157,41 @@ index 9380032df909..de930fb5ce90 100644
  			click = ClkStatusText;
  		else
  			click = ClkWinTitle;
-@@ -735,31 +736,31 @@ drawbar(Monitor *m)
+@@ -713,8 +714,8 @@ drawbar(Monitor *m)
+ 	/* draw status first so it can be overdrawn by tags later */
+ 	if (m == selmon) { /* status is only drawn on selected monitor */
+ 		drw_setscheme(drw, scheme[SchemeNorm]);
+-		sw = TEXTW(stext) - lrpad + 2; /* 2px right padding */
+-		drw_text(drw, m->ww - sw, 0, sw, bh, 0, stext, 0);
++		sw = ETEXTW(stext) - lrpad + 2; /* 2px right padding */
++		drw_text(drw, m->ww - sw, 0, sw, bh, 0, stext, 0, 1);
+ 	}
+ 
+ 	for (c = m->clients; c; c = c->next) {
+@@ -726,7 +727,7 @@ drawbar(Monitor *m)
  	for (i = 0; i < LENGTH(tags); i++) {
  		w = TEXTW(tags[i]);
- 		drw_setscheme(drw, m->tagset[m->seltags] & 1 << i ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
--		drw_text(drw, x, 0, w, bh, tags[i], urg & 1 << i);
-+		drw_text(drw, x, 0, w, bh, tags[i], urg & 1 << i, 0);
- 		drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
- 		           occ & 1 << i, urg & 1 << i);
- 		x += w;
+ 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+-		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
++		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i, 0);
+ 		if (occ & 1 << i)
+ 			drw_rect(drw, x + boxs, boxs, boxw, boxw,
+ 			         m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
+@@ -735,12 +736,12 @@ drawbar(Monitor *m)
  	}
  	w = blw = TEXTW(m->ltsymbol);
- 	drw_setscheme(drw, &scheme[SchemeNorm]);
--	drw_text(drw, x, 0, w, bh, m->ltsymbol, 0);
-+	drw_text(drw, x, 0, w, bh, m->ltsymbol, 0, 0);
- 	x += w;
- 	xx = x;
- 	if (m == selmon) { /* status is only drawn on selected monitor */
--		w = TEXTW(stext);
-+		w = ETEXTW(stext);
- 		x = m->ww - w;
- 		if (x < xx) {
- 			x = xx;
- 			w = m->ww - xx;
- 		}
--		drw_text(drw, x, 0, w, bh, stext, 0);
-+		drw_text(drw, x, 0, w, bh, stext, 0, 1);
- 	} else
- 		x = m->ww;
- 	if ((w = x - xx) > bh) {
- 		x = xx;
+ 	drw_setscheme(drw, scheme[SchemeNorm]);
+-	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
++	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0, 0);
+ 
+ 	if ((w = m->ww - sw - x) > bh) {
  		if (m->sel) {
- 			drw_setscheme(drw, m == selmon ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
--			drw_text(drw, x, 0, w, bh, m->sel->name, 0);
-+			drw_text(drw, x, 0, w, bh, m->sel->name, 0, 0);
- 			drw_rect(drw, x + 1, 1, dx, dx, m->sel->isfixed, m->sel->isfloating, 0);
+ 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
++			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0, 0);
+ 			if (m->sel->isfloating)
+ 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
  		} else {
- 			drw_setscheme(drw, &scheme[SchemeNorm]);
 -- 
-2.9.0
+2.11.0
 

@@ -1,7 +1,7 @@
-From 12ded929832c25be52e72d91821e756ace151cdd Mon Sep 17 00:00:00 2001
+From 4f4a5737ba9d33618f83b6f00066d7a63000a5a1 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:51:15 -0800
-Subject: [PATCH 2/4] Add control socket and wordy status toggle
+Subject: [PATCH 2/3] Add control socket and wordy status toggle
 
 The control socket is only used as an endpoint for sendto.
 ---
@@ -9,7 +9,7 @@ The control socket is only used as an endpoint for sendto.
  1 file changed, 49 insertions(+)
 
 diff --git a/dwm.c b/dwm.c
-index 764e7581e519..9380032df909 100644
+index 6456287..3163822 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -28,7 +28,9 @@
@@ -22,7 +22,7 @@ index 764e7581e519..9380032df909 100644
  #include <sys/wait.h>
  #include <X11/cursorfont.h>
  #include <X11/keysym.h>
-@@ -229,6 +231,7 @@ static void updatewmhints(Client *c);
+@@ -230,6 +232,7 @@ static void updatewmhints(Client *c);
  static void view(const Arg *arg);
  static Client *wintoclient(Window w);
  static Monitor *wintomon(Window w);
@@ -30,10 +30,10 @@ index 764e7581e519..9380032df909 100644
  static int xerror(Display *dpy, XErrorEvent *ee);
  static int xerrordummy(Display *dpy, XErrorEvent *ee);
  static int xerrorstart(Display *dpy, XErrorEvent *ee);
-@@ -266,6 +269,9 @@ static Display *dpy;
+@@ -268,6 +271,9 @@ static Display *dpy;
  static Drw *drw;
  static Monitor *mons, *selmon;
- static Window root;
+ static Window root, wmcheckwin;
 +static int ctl_fd = -1;
 +static struct sockaddr_un ctl_addr;
 +static char *home, *display;
@@ -52,9 +52,9 @@ index 764e7581e519..9380032df909 100644
  }
  
  void
-@@ -1554,6 +1565,29 @@ setup(void)
- {
+@@ -1538,6 +1549,29 @@ setup(void)
  	XSetWindowAttributes wa;
+ 	Atom utf8string;
  
 +	/* get home/display (it's unsafe to store the return value from getenv) */
 +	if(!(home = getenv("HOME")))
@@ -82,7 +82,7 @@ index 764e7581e519..9380032df909 100644
  	/* clean up any zombies immediately */
  	sigchld(0);
  
-@@ -2081,6 +2115,21 @@ wintomon(Window w)
+@@ -2086,6 +2120,21 @@ wintomon(Window w)
  	return selmon;
  }
  
@@ -105,5 +105,5 @@ index 764e7581e519..9380032df909 100644
   * ignored (especially on UnmapNotify's).  Other types of errors call Xlibs
   * default error handler, which may call exit.  */
 -- 
-2.9.0
+2.11.0
 
