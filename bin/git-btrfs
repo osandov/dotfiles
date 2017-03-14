@@ -93,6 +93,7 @@ git_btrfs_worktree () {
 
 	# And restore the .git file. Now we have an intact worktree as far as
 	# git is concerned.
+	rm -rf "${path}/.git"
 	echo "${gitfile}" > "${path}/.git"
 
 	# Because we used --no-checkout, the whole tree is staged as deleted.
