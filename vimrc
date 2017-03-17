@@ -95,6 +95,10 @@ let g:tex_flavor = 'latex'
 " Use C syntax for *.h files, not C++
 let g:c_syntax_for_h = 1
 
+" Highlight bad spacing
+let g:c_space_errors = 1
+let g:python_space_error_highlight=1
+
 """""""""" Mappings
 
 " Map Command-Line mode navigation to arrows keys so we can have filtering
