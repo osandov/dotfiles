@@ -3,7 +3,7 @@
 pkgname=st-osandov
 _pkgname=st
 pkgver=0.7.r17.gc63a87c
-pkgrel=1
+pkgrel=2
 pkgdesc='A simple virtual terminal emulator for X.'
 arch=('i686' 'x86_64')
 license=('MIT')
@@ -14,10 +14,12 @@ conflicts=('st')
 _commit=c63a87cd936c1eeef14c4c21572e5b782d3df4bc
 source=("${_pkgname}::git+http://git.suckless.org/st#commit=$_commit"
         config.h
-        0001-Use-more-sane-logic-for-word-delimiters.patch)
+        0001-Support-xterm-Ms-feature-to-set-clipboard.patch
+        0002-Use-more-sane-logic-for-word-delimiters.patch)
 sha256sums=('SKIP'
             'b224313fe27f6ab9120450e1d700d800c0f8c0fd52c55142db197c1470728647'
-            '8c7eae2723de560b6159f61dd8e5ee4ccb98defb1a8b0a30bc0c2ea8b485ce60')
+            '8653bf5f353522384b6fed333c85a8c0071febba312b938f5e9980c401593cbe'
+            '8d7b104cce85c7ff6c6701969d47af3b93ce8d88b4f53fb4ff3481771713d637')
 
 pkgver() {
   cd "$_pkgname"
