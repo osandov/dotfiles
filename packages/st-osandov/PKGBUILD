@@ -2,8 +2,8 @@
 
 pkgname=st-osandov
 _pkgname=st
-pkgver=0.7.r17.gc63a87c
-pkgrel=2
+pkgver=0.7.r20.ge7ed326
+pkgrel=1
 pkgdesc='A simple virtual terminal emulator for X.'
 arch=('i686' 'x86_64')
 license=('MIT')
@@ -11,15 +11,13 @@ depends=('libxft' 'libxext' 'xorg-fonts-misc')
 makedepends=('ncurses')
 url="http://st.suckless.org"
 conflicts=('st')
-_commit=c63a87cd936c1eeef14c4c21572e5b782d3df4bc
+_commit=e7ed326d2e914a57017c9f34459824614075519b
 source=("${_pkgname}::git+http://git.suckless.org/st#commit=$_commit"
         config.h
-        0001-Support-xterm-Ms-feature-to-set-clipboard.patch
-        0002-Use-more-sane-logic-for-word-delimiters.patch)
+        0001-Use-more-sane-logic-for-word-delimiters.patch)
 sha256sums=('SKIP'
-            'b224313fe27f6ab9120450e1d700d800c0f8c0fd52c55142db197c1470728647'
-            '8653bf5f353522384b6fed333c85a8c0071febba312b938f5e9980c401593cbe'
-            '8d7b104cce85c7ff6c6701969d47af3b93ce8d88b4f53fb4ff3481771713d637')
+            '94fe34e1a358f2371ee64ae1df35e2bf72dbaafada0b12ff6c7175882ff8e70d'
+            '0fb284ad68855b30a8d6e47d7d69bf708df00739284384307db920d3eac21e03')
 
 pkgver() {
   cd "$_pkgname"

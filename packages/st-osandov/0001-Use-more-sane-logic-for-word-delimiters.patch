@@ -1,7 +1,7 @@
-From 4f77204d068a14418d33b895550d25b1b52046b0 Mon Sep 17 00:00:00 2001
+From 5081ce521297e1e0648df3bcbe79a27d81f76406 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@fb.com>
 Date: Fri, 8 Apr 2016 14:52:01 -0700
-Subject: [PATCH 2/2] Use more sane logic for word delimiters
+Subject: [PATCH] Use more sane logic for word delimiters
 
 "Everything except for space" breaks down with Unicode. This is a
 particular annoyance with the border characters in tmux. Instead, go for
@@ -13,11 +13,11 @@ URLs.
  2 files changed, 37 insertions(+), 25 deletions(-)
 
 diff --git a/config.def.h b/config.def.h
-index a719e36..05bac2b 100644
+index 877afab..de2826d 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -28,11 +28,41 @@ static float cwscale = 1.0;
- static float chscale = 1.0;
+@@ -28,11 +28,41 @@ float cwscale = 1.0;
+ float chscale = 1.0;
  
  /*
 - * word delimiter string
@@ -61,36 +61,36 @@ index a719e36..05bac2b 100644
 +}
  
  /* selection timeouts (in milliseconds) */
- static unsigned int doubleclicktimeout = 300;
+ unsigned int doubleclicktimeout = 300;
 diff --git a/st.c b/st.c
-index f3b8846..cc9f281 100644
+index d7bd32a..d1adc47 100644
 --- a/st.c
 +++ b/st.c
-@@ -30,6 +30,7 @@
- #include <X11/XKBlib.h>
+@@ -23,6 +23,7 @@
+ #include <libgen.h>
  #include <fontconfig/fontconfig.h>
  #include <wchar.h>
 +#include <wctype.h>
  
- #include "arg.h"
- 
-@@ -73,7 +74,6 @@ char *argv0;
+ /* X11 */
+ #include <X11/cursorfont.h>
+@@ -57,7 +58,6 @@ char *argv0;
  #define ISCONTROLC0(c)		(BETWEEN(c, 0, 0x1f) || (c) == '\177')
  #define ISCONTROLC1(c)		(BETWEEN(c, 0x80, 0x9f))
  #define ISCONTROL(c)		(ISCONTROLC0(c) || ISCONTROLC1(c))
 -#define ISDELIM(u)		(utf8strchr(worddelimiters, u) != NULL)
- #define LIMIT(x, a, b)		(x) = (x) < (a) ? (a) : (x) > (b) ? (b) : (x)
- #define ATTRCMP(a, b)		((a).mode != (b).mode || (a).fg != (b).fg || \
- 				(a).bg != (b).bg)
-@@ -488,7 +488,6 @@ static size_t utf8decode(char *, Rune *, size_t);
+ 
+ /* constants */
+ #define ISO14755CMD		"dmenu -w %lu -p codepoint: </dev/null"
+@@ -195,7 +195,6 @@ static void selsnap(int *, int *, int);
+ 
  static Rune utf8decodebyte(char, size_t *);
- static size_t utf8encode(Rune, char *);
  static char utf8encodebyte(Rune, size_t);
 -static char *utf8strchr(char *s, Rune u);
  static size_t utf8validate(Rune *, size_t);
  
  static char *base64dec(const char *);
-@@ -678,23 +677,6 @@ utf8encodebyte(Rune u, size_t i)
+@@ -343,23 +342,6 @@ utf8encodebyte(Rune u, size_t i)
  	return utfbyte[i] | (u & ~utfmask[i]);
  }
  
@@ -114,7 +114,7 @@ index f3b8846..cc9f281 100644
  size_t
  utf8validate(Rune *u, size_t i)
  {
-@@ -852,7 +834,7 @@ selsnap(int *x, int *y, int direction)
+@@ -514,7 +496,7 @@ selsnap(int *x, int *y, int direction)
  		 * beginning of a line.
  		 */
  		prevgp = &term.line[*y][*x];
@@ -123,7 +123,7 @@ index f3b8846..cc9f281 100644
  		for (;;) {
  			newx = *x + direction;
  			newy = *y;
-@@ -874,7 +856,7 @@ selsnap(int *x, int *y, int direction)
+@@ -536,7 +518,7 @@ selsnap(int *x, int *y, int direction)
  				break;
  
  			gp = &term.line[newy][newx];
@@ -133,5 +133,5 @@ index f3b8846..cc9f281 100644
  					|| (delim && gp->u != prevgp->u)))
  				break;
 -- 
-2.12.0
+2.12.1
 
