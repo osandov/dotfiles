@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+
+import argparse
+import errno
+import os
+import sys
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='look up error codes and their descriptions')
+    parser.add_argument(
+        'errnos', metavar='ERRNO', nargs='*',
+        help='error number (e.g., 5) or name (e.g., EIO)')
+    args = parser.parse_args()
+
+    if not args.errnos:
+        for errno_int, errno_str in sorted(errno.errorcode.items()):
+            print(f'{errno_int} {errno_str} ({os.strerror(errno_int)})')
+        return
+
+    errorcode_reverse = {v: k for k, v in errno.errorcode.items()}
+    for arg in args.errnos:
+        try:
+            try:
+                errno_int = int(arg, 0)
+                if errno_int < 0:
+                    errno_int = -errno_int
+                errno_str = errno.errorcode[errno_int]
+            except ValueError:
+                errno_str = arg
+                errno_int = errorcode_reverse[errno_str]
+        except KeyError:
+            print(f'Unknown errno {arg}', file=sys.stderr)
+            continue
+
+        print(f'{errno_int} {errno_str} ({os.strerror(errno_int)})')
+
+
+if __name__ == '__main__':
+    main()
