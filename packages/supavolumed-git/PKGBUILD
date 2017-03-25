@@ -2,7 +2,7 @@
 
 pkgname=supavolumed-git
 _pkgname=supavolumed
-pkgver=r9.764c6d2
+pkgver=r10.33637d3
 pkgrel=1
 pkgdesc="PulseAudio volume daemon"
 arch=('x86_64' 'i686')
