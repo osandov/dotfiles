@@ -74,6 +74,7 @@ PACKAGES=(
 	xcursor-vanilla-dmz
 	xdm-archlinux
 	xf86-input-libinput
+	xfce4-notifyd
 	xfce4-power-manager
 	xfce4-screenshooter
 	xorg-server
