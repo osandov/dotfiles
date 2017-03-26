@@ -35,7 +35,7 @@ PACKAGES=(
 	adobe-source-han-sans-jp-fonts
 	alsa-utils
 	clang
-	compton-git
+	compton
 	dmenu
 	evince
 	feh
