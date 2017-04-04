@@ -1,0 +1,45 @@
+From 88a660e2414a2a89159df2a61c9fb5d153c731da Mon Sep 17 00:00:00 2001
+From: Omar Sandoval <osandov@osandov.com>
+Date: Tue, 4 Apr 2017 14:40:27 -0700
+Subject: [PATCH 1/2] Whitelist key event modifiers for shortcuts
+
+I'm seeing a weird issue with my xserver where all key press events will
+be set with (state & Button1Mask), which ends up breaking all st
+keyboard shortcuts. xterm works correctly because it whitelists
+modifiers relevant to key press events. Do the same in st.
+---
+ st.c  | 3 ++-
+ win.h | 3 +++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/st.c b/st.c
+index ae93ade..5184761 100644
+--- a/st.c
++++ b/st.c
+@@ -2619,7 +2619,8 @@ redraw(void)
+ int
+ match(uint mask, uint state)
+ {
+-	return mask == XK_ANY_MOD || mask == (state & ~ignoremod);
++	return (mask == XK_ANY_MOD ||
++		mask == (state & KeyModifiers & ~ignoremod));
+ }
+ 
+ void
+diff --git a/win.h b/win.h
+index 428111c..64974c2 100644
+--- a/win.h
++++ b/win.h
+@@ -5,6 +5,9 @@
+ #define XK_NO_MOD     0
+ #define XK_SWITCH_MOD (1<<13)
+ 
++#define KeyModifiers (ShiftMask | LockMask | ControlMask | Mod1Mask | \
++		      Mod2Mask | Mod3Mask | Mod4Mask | Mod5Mask)
++
+ typedef XftGlyphFontSpec GlyphFontSpec;
+ 
+ void draw(void);
+-- 
+2.12.2
+
