@@ -23,6 +23,8 @@
 	default = simple
 [sendemail]
 	cccover = true
+[stash]
+	showPatch = true
 [tag]
 	sort = version:refname
 [versionsort]
