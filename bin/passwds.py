@@ -38,6 +38,11 @@ def main():
     set_parser.add_argument('account', help='account to save password for')
     set_parser.set_defaults(func=cmd_set)
 
+    rename_parser = subparsers.add_parser('rename', help='rename an account')
+    rename_parser.add_argument('old', help='old account name')
+    rename_parser.add_argument('new', help='new account name')
+    rename_parser.set_defaults(func=cmd_rename)
+
     delete_parser = subparsers.add_parser('delete', help='delete a password')
     delete_parser.add_argument('account', help='account to delete')
     delete_parser.set_defaults(func=cmd_delete)
@@ -108,6 +113,15 @@ def cmd_set(args):
     else:
         password = input()
     db[args.account] = password
+    save_passwd_db(args.db, db, passphrase)
+
+
+def cmd_rename(args):
+    db, passphrase = load_passwd_db_and_passphrase(args.db)
+    try:
+        db[args.new] = db.pop(args.old)
+    except KeyError:
+        raise AccountNotFoundException(args.old)
     save_passwd_db(args.db, db, passphrase)
 
 
