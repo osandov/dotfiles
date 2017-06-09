@@ -199,6 +199,9 @@ augroup vimrcPlugin
 
     " Override the vim-vinegar settings for the following
     autocmd FileType * let g:netrw_sort_sequence=''
-    " Ignore ".*" but not "./" or "../", "*.o", and "*.dwo"
-    autocmd FileType * let g:netrw_list_hide='^\.\([^./]\|\.[^/]\),\.o$,\.dwo$'
+    " Ignore
+    " - ".*" but not "./" or "../"
+    " - "*.o" and "*.dwo"
+    " - "*.pyc" and "__pycache__"
+    autocmd FileType * let g:netrw_list_hide='^\.\([^./]\|\.[^/]\),\.o$,\.dwo$,\.pyc$,^__pycache__$'
 augroup END
