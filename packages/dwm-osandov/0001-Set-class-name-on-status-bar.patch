@@ -1,4 +1,4 @@
-From b95883f2b6e8a978af9aca0e8e2fffa56ddb265e Mon Sep 17 00:00:00 2001
+From b531e8cf530a800834f37ea2e468acfc70401b92 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:50:22 -0800
 Subject: [PATCH 1/3] Set class name on status bar
@@ -9,10 +9,10 @@ This is useful for, e.g., compton.
  1 file changed, 5 insertions(+)
 
 diff --git a/dwm.c b/dwm.c
-index d27cb67..6456287 100644
+index a5ce993..2b70d9b 100644
 --- a/dwm.c
 +++ b/dwm.c
-@@ -1812,6 +1812,9 @@ updatebars(void)
+@@ -1809,6 +1809,9 @@ updatebars(void)
  		.background_pixmap = ParentRelative,
  		.event_mask = ButtonPressMask|ExposureMask
  	};
@@ -22,8 +22,8 @@ index d27cb67..6456287 100644
  	for (m = mons; m; m = m->next) {
  		if (m->barwin)
  			continue;
-@@ -1820,7 +1823,9 @@ updatebars(void)
- 		                          CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
+@@ -1817,7 +1820,9 @@ updatebars(void)
+ 				CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
  		XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
  		XMapRaised(dpy, m->barwin);
 +		XSetClassHint(dpy, m->barwin, ch);
@@ -33,5 +33,5 @@ index d27cb67..6456287 100644
  
  void
 -- 
-2.11.0
+2.13.1
 

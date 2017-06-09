@@ -1,4 +1,4 @@
-From 4f4a5737ba9d33618f83b6f00066d7a63000a5a1 Mon Sep 17 00:00:00 2001
+From e3e7233f887eb9e9c4e9be699b6a04bd6de3f246 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:51:15 -0800
 Subject: [PATCH 2/3] Add control socket and wordy status toggle
@@ -9,7 +9,7 @@ The control socket is only used as an endpoint for sendto.
  1 file changed, 49 insertions(+)
 
 diff --git a/dwm.c b/dwm.c
-index 6456287..3163822 100644
+index 2b70d9b..ead5864 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -28,7 +28,9 @@
@@ -40,7 +40,7 @@ index 6456287..3163822 100644
  
  /* configuration, allows nested code to access above variables */
  #include "config.h"
-@@ -490,6 +496,11 @@ cleanup(void)
+@@ -492,6 +498,11 @@ cleanup(void)
  	XSync(dpy, False);
  	XSetInputFocus(dpy, PointerRoot, RevertToPointerRoot, CurrentTime);
  	XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
@@ -52,7 +52,7 @@ index 6456287..3163822 100644
  }
  
  void
-@@ -1538,6 +1549,29 @@ setup(void)
+@@ -1535,6 +1546,29 @@ setup(void)
  	XSetWindowAttributes wa;
  	Atom utf8string;
  
@@ -82,7 +82,7 @@ index 6456287..3163822 100644
  	/* clean up any zombies immediately */
  	sigchld(0);
  
-@@ -2086,6 +2120,21 @@ wintomon(Window w)
+@@ -2080,6 +2114,21 @@ wintomon(Window w)
  	return selmon;
  }
  
@@ -102,8 +102,8 @@ index 6456287..3163822 100644
 +}
 +
  /* There's no way to check accesses to destroyed windows, thus those cases are
-  * ignored (especially on UnmapNotify's).  Other types of errors call Xlibs
-  * default error handler, which may call exit.  */
+  * ignored (especially on UnmapNotify's). Other types of errors call Xlibs
+  * default error handler, which may call exit. */
 -- 
-2.11.0
+2.13.1
 
