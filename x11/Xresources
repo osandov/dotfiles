@@ -17,8 +17,8 @@ xscreensaver.mode: blank
 ! XTerm
 XTerm*termName: xterm-256color
 XTerm*cursorBlink: false
-XTerm*faceName: Deja Vu Sans Mono
-XTerm*faceSize: 10
+XTerm*faceName: DejaVu Sans Mono
+XTerm*faceSize: 9.5
 XTerm*saveLines: 10000
 XTerm*metaSendsEscape: true
 XTerm*bellIsUrgent: true
