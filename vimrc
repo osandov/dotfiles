@@ -174,7 +174,7 @@ filetype plugin indent on
 " Delimit comments with spaces
 let g:NERDSpaceDelims = 1
 " Workaround stupid extra space hardcoded for Python
-let g:NERDCustomDelimiters = {'python': {'left': '#'}}
+let g:NERDCustomDelimiters = {'python': {'left': '#'}, 'pyrex': {'left': '#'}}
 
 " Also autocomplete C preprocessor macros
 let g:clang_complete_macros = 1
