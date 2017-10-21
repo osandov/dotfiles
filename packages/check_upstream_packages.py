@@ -62,11 +62,11 @@ def check_git_package(package, remote, pkgver_re):
 
 
 if __name__ == '__main__':
-    check_git_package('dwm-osandov', 'http://git.suckless.org/dwm',
+    check_git_package('dwm-osandov', 'https://git.suckless.org/dwm',
                       suckless_pkgver_re)
     check_git_package('inputconfd-git', 'https://github.com/osandov/inputconfd.git',
                       simple_pkgver_re)
-    check_git_package('st-osandov', 'http://git.suckless.org/st',
+    check_git_package('st-osandov', 'https://git.suckless.org/st',
                       suckless_pkgver_re)
     check_git_package('supavolumed-git', 'https://github.com/osandov/supavolumed.git',
                       simple_pkgver_re)
