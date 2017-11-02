@@ -91,7 +91,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_grave,  spawn,          SHCMD("pkill -u \"$USER\" compton || compton -b") },
 	{ 0,                            XK_Print,  spawn,          {.v = screencap_full } },
 	{ Mod1Mask,                     XK_Print,  spawn,          {.v = screencap_window } },
-	{ Mod1Mask|ShiftMask,           XK_Print,  spawn,          {.v = screencap_region } },
+	{ ShiftMask,                    XK_Print,  spawn,          {.v = screencap_region } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
