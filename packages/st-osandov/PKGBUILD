@@ -3,16 +3,16 @@
 pkgname=st-osandov
 _pkgname=st
 pkgver=0.7.r38.g0ac685f
-pkgrel=1
+pkgrel=2
 pkgdesc='A simple virtual terminal emulator for X.'
 arch=('i686' 'x86_64')
 license=('MIT')
 depends=('libxft' 'libxext' 'xorg-fonts-misc')
 makedepends=('ncurses')
-url="http://st.suckless.org"
+url="https://st.suckless.org"
 conflicts=('st')
 _commit=0ac685fc015362e749bf82cfaa3cfe2dd9b305f0
-source=("${_pkgname}::git+http://git.suckless.org/st#commit=$_commit"
+source=("${_pkgname}::git+https://git.suckless.org/st#commit=$_commit"
         config.h
         0001-Whitelist-key-event-modifiers-for-shortcuts.patch
         0002-Use-more-sane-logic-for-word-delimiters.patch)

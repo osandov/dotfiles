@@ -3,17 +3,17 @@
 pkgname=dwm-osandov
 _pkgname=dwm
 pkgver=6.1.r19.g6aa8e37
-pkgrel=3
+pkgrel=4
 pkgdesc="A dynamic window manager for X"
 arch=('x86_64' 'i686')
-url="http://dwm.suckless.org"
+url="https://dwm.suckless.org"
 license=('MIT')
 options=(zipman)
 depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
 makedepends=('git')
 conflicts=('dwm')
 _commit=6aa8e37efe22c8a2a7713d9a437491c564c04b7e
-source=("${_pkgname}::git+http://git.suckless.org/dwm#commit=$_commit"
+source=("${_pkgname}::git+https://git.suckless.org/dwm#commit=$_commit"
 	      config.h
 	      dwm.desktop
         0001-Set-class-name-on-status-bar.patch
