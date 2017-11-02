@@ -1,7 +1,7 @@
-From c45ded40742b040f5f1b148d34d082f9c585339c Mon Sep 17 00:00:00 2001
+From fc9b6767283ca903fad17c81403c3816cfa06b1d Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:52:27 -0800
-Subject: [PATCH 3/3] Add support for XBM icons in the status bar
+Subject: [PATCH 2/2] Add support for XBM icons in the status bar
 
 This is done with an OSC escape code: "\e]9;icon path\a".
 ---
@@ -126,10 +126,10 @@ index ff4355b..1414b9e 100644
  /* Map functions */
  void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
 diff --git a/dwm.c b/dwm.c
-index 1a206bf..e5c2c12 100644
+index f2ce061..cbb6a1a 100644
 --- a/dwm.c
 +++ b/dwm.c
-@@ -57,7 +57,8 @@
+@@ -55,7 +55,8 @@
  #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
  #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
  #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
@@ -139,7 +139,7 @@ index 1a206bf..e5c2c12 100644
  #define ColBorder               2
  
  /* enums */
-@@ -240,7 +241,7 @@ static void zoom(const Arg *arg);
+@@ -237,7 +238,7 @@ static void zoom(const Arg *arg);
  
  /* variables */
  static const char broken[] = "broken";
@@ -148,7 +148,7 @@ index 1a206bf..e5c2c12 100644
  static int screen;
  static int sw, sh;           /* X display screen geometry width, height */
  static int bh, blw = 0;      /* bar geometry */
-@@ -446,7 +447,7 @@ buttonpress(XEvent *e)
+@@ -440,7 +441,7 @@ buttonpress(XEvent *e)
  			arg.ui = 1 << i;
  		} else if (ev->x < x + blw)
  			click = ClkLtSymbol;
@@ -157,7 +157,7 @@ index 1a206bf..e5c2c12 100644
  			click = ClkStatusText;
  		else
  			click = ClkWinTitle;
-@@ -716,8 +717,8 @@ drawbar(Monitor *m)
+@@ -705,8 +706,8 @@ drawbar(Monitor *m)
  	/* draw status first so it can be overdrawn by tags later */
  	if (m == selmon) { /* status is only drawn on selected monitor */
  		drw_setscheme(drw, scheme[SchemeNorm]);
@@ -168,7 +168,7 @@ index 1a206bf..e5c2c12 100644
  	}
  
  	for (c = m->clients; c; c = c->next) {
-@@ -729,7 +730,7 @@ drawbar(Monitor *m)
+@@ -718,7 +719,7 @@ drawbar(Monitor *m)
  	for (i = 0; i < LENGTH(tags); i++) {
  		w = TEXTW(tags[i]);
  		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
@@ -177,7 +177,7 @@ index 1a206bf..e5c2c12 100644
  		if (occ & 1 << i)
  			drw_rect(drw, x + boxs, boxs, boxw, boxw,
  				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
-@@ -738,12 +739,12 @@ drawbar(Monitor *m)
+@@ -727,12 +728,12 @@ drawbar(Monitor *m)
  	}
  	w = blw = TEXTW(m->ltsymbol);
  	drw_setscheme(drw, scheme[SchemeNorm]);
