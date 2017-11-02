@@ -1,4 +1,4 @@
-From e3e7233f887eb9e9c4e9be699b6a04bd6de3f246 Mon Sep 17 00:00:00 2001
+From 33f14aff8d01bbe9b91468e6031ff53b1b0fb376 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:51:15 -0800
 Subject: [PATCH 2/3] Add control socket and wordy status toggle
@@ -9,7 +9,7 @@ The control socket is only used as an endpoint for sendto.
  1 file changed, 49 insertions(+)
 
 diff --git a/dwm.c b/dwm.c
-index 2b70d9b..ead5864 100644
+index f2ce061..1a206bf 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -28,7 +28,9 @@
@@ -82,7 +82,7 @@ index 2b70d9b..ead5864 100644
  	/* clean up any zombies immediately */
  	sigchld(0);
  
-@@ -2080,6 +2114,21 @@ wintomon(Window w)
+@@ -2079,6 +2113,21 @@ wintomon(Window w)
  	return selmon;
  }
  
@@ -105,5 +105,5 @@ index 2b70d9b..ead5864 100644
   * ignored (especially on UnmapNotify's). Other types of errors call Xlibs
   * default error handler, which may call exit. */
 -- 
-2.13.1
+2.15.0
 

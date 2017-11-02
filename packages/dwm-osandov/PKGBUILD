@@ -2,7 +2,7 @@
 
 pkgname=dwm-osandov
 _pkgname=dwm
-pkgver=6.1.r18.gceac8c9
+pkgver=6.1.r19.g6aa8e37
 pkgrel=1
 pkgdesc="A dynamic window manager for X"
 arch=('x86_64' 'i686')
@@ -12,7 +12,7 @@ options=(zipman)
 depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
 makedepends=('git')
 conflicts=('dwm')
-_commit=ceac8c91ff3bf45ae53135658d6f560cb2335133
+_commit=6aa8e37efe22c8a2a7713d9a437491c564c04b7e
 source=("${_pkgname}::git+http://git.suckless.org/dwm#commit=$_commit"
 	      config.h
 	      dwm.desktop
@@ -22,9 +22,9 @@ source=("${_pkgname}::git+http://git.suckless.org/dwm#commit=$_commit"
 sha256sums=('SKIP'
             'a4ba8ddbd00a55b99f1f9cfc93f44b691442380d5686bfa6920cbd8982ba4c1f'
             'bc36426772e1471d6dd8c8aed91f288e16949e3463a9933fee6390ee0ccd3f81'
-            'c186e89ac8b8484e4ec5c619ea16820d6c43a6e2abd9856eda6ca35e821768d6'
-            '6412da979fc298eb28dc5ab51f9680622f189a18ce04046f48759d31c671f3fb'
-            '9bdacf69b7b894ea278a9d2dbee27cff9fb8f2ff9e1506d10a14f106112b58f5')
+            '51ee8ff466ecf52eb9c1f7d7c9284e34365ab23655eefb5c6f0678a034ec4ab6'
+            '4967271a69dab13b6282881eb7c2738e0290ea575e566b6c03b763d62397b5e6'
+            'd23b209e0238c80593e53827ad594e8640636f58116718ea96b05678245e9148')
 
 pkgver() {
   cd "$_pkgname"
