@@ -1,7 +1,7 @@
-From 00d7c2f358216927354752c82e79e73d0ab6928d Mon Sep 17 00:00:00 2001
+From 052cb8213db4a85811e6fa458e0955cda3349cd5 Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:52:27 -0800
-Subject: [PATCH 2/2] Add support for XBM icons in the status bar
+Subject: [PATCH] Add support for XBM icons in the status bar
 
 This is done with an OSC escape code: "\e]9;icon path\a".
 ---
@@ -11,7 +11,7 @@ This is done with an OSC escape code: "\e]9;icon path\a".
  3 files changed, 59 insertions(+), 13 deletions(-)
 
 diff --git a/drw.c b/drw.c
-index 319eb6b..8c2ec52 100644
+index c638323..ddb9a10 100644
 --- a/drw.c
 +++ b/drw.c
 @@ -235,7 +235,7 @@ drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int
@@ -104,7 +104,7 @@ index 319eb6b..8c2ec52 100644
  
  void
 diff --git a/drw.h b/drw.h
-index ff4355b..1414b9e 100644
+index 4c67419..568eea0 100644
 --- a/drw.h
 +++ b/drw.h
 @@ -34,7 +34,7 @@ void drw_free(Drw *drw);
@@ -116,7 +116,7 @@ index ff4355b..1414b9e 100644
  void drw_font_getexts(Fnt *font, const char *text, unsigned int len, unsigned int *w, unsigned int *h);
  
  /* Colorscheme abstraction */
-@@ -51,7 +51,7 @@ void drw_setscheme(Drw *drw, Scm scm);
+@@ -51,7 +51,7 @@ void drw_setscheme(Drw *drw, Clr *scm);
  
  /* Drawing functions */
  void drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int invert);
@@ -126,7 +126,7 @@ index ff4355b..1414b9e 100644
  /* Map functions */
  void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
 diff --git a/dwm.c b/dwm.c
-index b0d99c0..6f9a438 100644
+index ff893df..981d39c 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -55,7 +55,8 @@
