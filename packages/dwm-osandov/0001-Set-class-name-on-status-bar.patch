@@ -1,37 +1,34 @@
-From 01156d95874d801b500948f25cbbd3a0ea328955 Mon Sep 17 00:00:00 2001
+From 45fe596129f859f8734e3433f48fe0afb0d3d91f Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:50:22 -0800
 Subject: [PATCH 1/2] Set class name on status bar
 
-This is useful for, e.g., compton.
+This is useful for configuring compositors to ignore the status bar
+window.
 ---
- dwm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ dwm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/dwm.c b/dwm.c
-index 4782343..f2ce061 100644
+index 4782343..b0d99c0 100644
 --- a/dwm.c
 +++ b/dwm.c
-@@ -1809,6 +1809,9 @@ updatebars(void)
+@@ -1809,6 +1809,7 @@ updatebars(void)
  		.background_pixmap = ParentRelative,
  		.event_mask = ButtonPressMask|ExposureMask
  	};
-+	XClassHint *ch = XAllocClassHint();
-+	ch->res_name = "dwmstatus";
-+	ch->res_class = "dwm";
++	XClassHint ch = {"dwm", "dwm"};
  	for (m = mons; m; m = m->next) {
  		if (m->barwin)
  			continue;
-@@ -1817,7 +1820,9 @@ updatebars(void)
+@@ -1817,6 +1818,7 @@ updatebars(void)
  				CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
  		XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
  		XMapRaised(dpy, m->barwin);
-+		XSetClassHint(dpy, m->barwin, ch);
++		XSetClassHint(dpy, m->barwin, &ch);
  	}
-+	XFree(ch);
  }
  
- void
 -- 
 2.15.0
 

@@ -3,7 +3,7 @@
 pkgname=dwm-osandov
 _pkgname=dwm
 pkgver=6.1.r19.g6aa8e37
-pkgrel=4
+pkgrel=5
 pkgdesc="A dynamic window manager for X"
 arch=('x86_64' 'i686')
 url="https://dwm.suckless.org"
@@ -21,8 +21,8 @@ source=("${_pkgname}::git+https://git.suckless.org/dwm#commit=$_commit"
 sha256sums=('SKIP'
             '0d146ea2488c62b384c2f250a2c85f9fc89306d08c2cfaa3a05f5d49ae4fb54c'
             'bc36426772e1471d6dd8c8aed91f288e16949e3463a9933fee6390ee0ccd3f81'
-            '903927c6beb3fb08df584e8f91f7f5ff00624e7ad6a0c97127dea5942cb407f6'
-            '346877975a940592db3aabdd1e8a31b7bda89b19c7c21e4ddc873667507c54f3')
+            'e8ad42c5e44c0248a4660e3f7282c344b3f16b65dbcdc0c6a4dfeb5e84346718'
+            'c9a9494ffbc225fbcb0189bb3c185c35f146cc619d0d85f9c744900d1519f0ed')
 
 pkgver() {
   cd "$_pkgname"

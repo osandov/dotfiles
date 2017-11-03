@@ -1,4 +1,4 @@
-From fc9b6767283ca903fad17c81403c3816cfa06b1d Mon Sep 17 00:00:00 2001
+From 00d7c2f358216927354752c82e79e73d0ab6928d Mon Sep 17 00:00:00 2001
 From: Omar Sandoval <osandov@osandov.com>
 Date: Sun, 10 Jan 2016 01:52:27 -0800
 Subject: [PATCH 2/2] Add support for XBM icons in the status bar
@@ -126,7 +126,7 @@ index ff4355b..1414b9e 100644
  /* Map functions */
  void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
 diff --git a/dwm.c b/dwm.c
-index f2ce061..cbb6a1a 100644
+index b0d99c0..6f9a438 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -55,7 +55,8 @@
