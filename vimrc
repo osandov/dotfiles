@@ -165,8 +165,7 @@ if isdirectory($HOME . "/.vim/bundle/Vundle.vim")
     Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-rsi'
-    " Until tpope merges #88
-    Plugin 'osandov/vim-vinegar'
+    Plugin 'tpope/vim-vinegar'
 
     call vundle#end()
 endif
