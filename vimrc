@@ -163,6 +163,7 @@ if isdirectory($HOME . "/.vim/bundle/Vundle.vim")
     Plugin 'rking/ag.vim'
     Plugin 'scrooloose/nerdcommenter'
     Plugin 'tpope/vim-fugitive'
+    Plugin 'Vimjas/vim-python-pep8-indent'
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-rsi'
     Plugin 'tpope/vim-vinegar'
