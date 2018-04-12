@@ -148,7 +148,7 @@ noremap <Leader>ks :source ~/.vim/tmp/session<CR>
 " Toggle relative and absolute numbering
 noremap <Leader>ln :set rnu!<CR>
 
-cnoremap w!! w !sudo tee % >/dev/null
+cnoremap w!! SudoWrite
 
 """""""""" Plugins
 
@@ -159,14 +159,15 @@ if isdirectory($HOME . "/.vim/bundle/Vundle.vim")
 
     Plugin 'VundleVim/Vundle.vim'
 
+    Plugin 'chrisbra/SudoEdit.vim'
     Plugin 'ervandew/supertab'
     Plugin 'rking/ag.vim'
     Plugin 'scrooloose/nerdcommenter'
     Plugin 'tpope/vim-fugitive'
-    Plugin 'Vimjas/vim-python-pep8-indent'
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-rsi'
     Plugin 'tpope/vim-vinegar'
+    Plugin 'Vimjas/vim-python-pep8-indent'
 
     call vundle#end()
 endif
