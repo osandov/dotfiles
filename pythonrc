@@ -1,14 +1,14 @@
 # vim: set ft=python:
 
-try:
+
+def pythonrc():
     import atexit
-    from os.path import expanduser
     import os.path
     import readline
     import rlcompleter
     import sys
 
-    hist_file = expanduser('~/.python%d_history' % sys.version_info.major)
+    hist_file = os.path.expanduser('~/.python%d_history' % sys.version_info.major)
     try:
         readline.read_history_file(hist_file)
     except IOError:
@@ -29,7 +29,9 @@ try:
 
     readline.set_completer(my_rl_completer)
 
-    del atexit, expanduser, os, readline, rlcompleter, sys
-    del hist_file, my_rl_completer, __file__
+
+try:
+    pythonrc()
 except Exception:
     pass
+del pythonrc
