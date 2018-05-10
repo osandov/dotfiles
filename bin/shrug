@@ -1,0 +1,4 @@
+#!/bin/sh
+
+printf '%s' '¯\_(ツ)_/¯' | xclip -selection clipboard
+xte 'keydown Control_L' 'keydown Shift_L' 'key V' 'keyup Shift_L' 'keyup Control_L'
