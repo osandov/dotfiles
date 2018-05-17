@@ -165,12 +165,12 @@ if do_install "$DO_DIRCOLORS"; then
 fi
 
 if do_install "$DO_WM"; then
+	install_file ~/.dotfiles/desktop/compton.conf ~/.config/compton.conf
+	install_file ~/.dotfiles/desktop/gtkrc-2.0 ~/.gtkrc-2.0
 	mkdir -p ~/.config/gtk-3.0
-	install_file ~/.dotfiles/gtkrc-2.0 ~/.gtkrc-2.0
-	install_file ~/.dotfiles/gtkrc-3.0 ~/.config/gtk-3.0/settings.ini
-	install_file ~/.dotfiles/x11/Xresources ~/.Xresources
-	install_file ~/.dotfiles/x11/Xmodmap ~/.Xmodmap
-	install_file ~/.dotfiles/wm/xsession ~/.xsession
-	install_file ~/.dotfiles/wm/xinitrc ~/.xinitrc
-	install_file ~/.dotfiles/wm/compton.conf ~/.config/compton.conf
+	install_file ~/.dotfiles/desktop/gtkrc-3.0 ~/.config/gtk-3.0/settings.ini
+	install_file ~/.dotfiles/desktop/xinitrc ~/.xinitrc
+	install_file ~/.dotfiles/desktop/Xmodmap ~/.Xmodmap
+	install_file ~/.dotfiles/desktop/Xresources ~/.Xresources
+	install_file ~/.dotfiles/desktop/xsession ~/.xsession
 fi
