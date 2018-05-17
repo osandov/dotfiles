@@ -34,7 +34,7 @@ fi
 xfce4-power-manager --no-daemon &
 xscreensaver -no-splash &
 supavolumed &
-verbar --wordy &
+verbar --icons ~/.dotfiles/desktop/icons --wordy &
 compton &
 
 # And finally, start the window manager.
