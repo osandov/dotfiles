@@ -8,19 +8,18 @@ if [ "$(pwd)" != ~/.dotfiles ]; then
 fi
 
 usage () {
-	USAGE_STRING="Usage: $0 [-avzdtpgmw] [-y | -n]
+	USAGE_STRING="Usage: $0 [-avstpgmd] [-y | -n]
 $0 -h
 
 Optional installation:
   -a    install all config
   -v    install Vim config
-  -z    install zsh config
-  -d    install dircolors config
+  -s    install shell (zsh and dircolors) config
   -t    install tmux config
   -p    install Python config
   -g    install Git and Mercurial config
   -m    install Mutt config
-  -w    install window manager config
+  -d    install desktop config
 
 Prompts:
   -y    assume yes when prompted about overwriting a file
@@ -45,7 +44,7 @@ if [ $# -eq 0 ]; then
 	usage "err"
 fi
 
-while getopts "avzdtpgmwynh" OPT; do
+while getopts "avstpgmdynh" OPT; do
 	case "$OPT" in
 		a)
 			DO_ALL=1
@@ -53,11 +52,8 @@ while getopts "avzdtpgmwynh" OPT; do
 		v)
 			DO_VIM=1
 			;;
-		z)
-			DO_ZSH=1
-			;;
-		d)
-			DO_DIRCOLORS=1
+		s)
+			DO_SHELL=1
 			;;
 		t)
 			DO_TMUX=1
@@ -71,8 +67,8 @@ while getopts "avzdtpgmwynh" OPT; do
 		m)
 			DO_MUTT=1
 			;;
-		w)
-			DO_WM=1
+		d)
+			DO_DESKTOP=1
 			;;
 		y)
 			ASSUME_ANSWER=y
@@ -127,10 +123,11 @@ if do_install "$DO_VIM"; then
 	install_file ~/.dotfiles/gvimrc ~/.gvimrc
 fi
 
-if do_install "$DO_ZSH"; then
+if do_install "$DO_SHELL"; then
 	install_file ~/.dotfiles/zsh ~/.zsh
 	install_file ~/.dotfiles/zshenv ~/.zshenv
 	install_file ~/.dotfiles/zshrc ~/.zshrc
+	install_file ~/.dotfiles/dircolors ~/.dircolors
 fi
 
 if do_install "$DO_TMUX"; then
@@ -151,11 +148,7 @@ if do_install "$DO_PYTHON"; then
 	install_file ~/.dotfiles/pythonrc ~/.pythonrc
 fi
 
-if do_install "$DO_DIRCOLORS"; then
-	install_file ~/.dotfiles/dircolors ~/.dircolors
-fi
-
-if do_install "$DO_WM"; then
+if do_install "$DO_DESKTOP"; then
 	install_file ~/.dotfiles/desktop/compton.conf ~/.config/compton.conf
 	install_file ~/.dotfiles/desktop/gtkrc-2.0 ~/.gtkrc-2.0
 	mkdir -p ~/.config/gtk-3.0
