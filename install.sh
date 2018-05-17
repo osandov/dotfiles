@@ -8,7 +8,7 @@ if [ "$(pwd)" != ~/.dotfiles ]; then
 fi
 
 usage () {
-	USAGE_STRING="Usage: $0 [-avzdtpgmsw] [-y | -n]
+	USAGE_STRING="Usage: $0 [-avzdtpgmw] [-y | -n]
 $0 -h
 
 Optional installation:
@@ -20,7 +20,6 @@ Optional installation:
   -p    install Python config
   -g    install Git and Mercurial config
   -m    install Mutt config
-  -s    install SSH/GnuPG config
   -w    install window manager config
 
 Prompts:
@@ -46,7 +45,7 @@ if [ $# -eq 0 ]; then
 	usage "err"
 fi
 
-while getopts "avzdtpgmswynh" OPT; do
+while getopts "avzdtpgmwynh" OPT; do
 	case "$OPT" in
 		a)
 			DO_ALL=1
@@ -71,9 +70,6 @@ while getopts "avzdtpgmswynh" OPT; do
 			;;
 		m)
 			DO_MUTT=1
-			;;
-		s)
-			DO_SSH=1
 			;;
 		w)
 			DO_WM=1
@@ -135,11 +131,6 @@ if do_install "$DO_ZSH"; then
 	install_file ~/.dotfiles/zsh ~/.zsh
 	install_file ~/.dotfiles/zshenv ~/.zshenv
 	install_file ~/.dotfiles/zshrc ~/.zshrc
-fi
-
-if do_install "$DO_SSH"; then
-	mkdir -p ~/.gnupg
-	install_file ~/.dotfiles/gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 fi
 
 if do_install "$DO_TMUX"; then
