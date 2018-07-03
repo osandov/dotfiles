@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+import os.path
+import subprocess
+import sys
+
+
+def prompt_yes_no(prompt, default=True):
+    prompt += ' [Y/n] ' if default else ' [y/N] '
+    sys.stderr.write(prompt)
+    sys.stderr.flush()
+    answer = input().strip().lower()
+    if answer.startswith('y'):
+        return True
+    elif answer.startswith('n'):
+        return False
+    else:
+        return default
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Run a command, then reset the mtime of files in the current directory')
+    parser.add_argument('command', metavar='COMMAND', help='command to run')
+    parser.add_argument('arguments', metavar='ARG', nargs='*',
+                        help='arguments to pass to command')
+    args = parser.parse_args()
+
+    dirs = ['.']
+    file_mtimes = {}
+    while dirs:
+        dir = dirs.pop()
+        with os.scandir(dir) as it:
+            for entry in it:
+                if entry.is_dir(follow_symlinks=False):
+                    dirs.append(entry.path)
+                elif entry.is_file(follow_symlinks=False):
+                    file_mtimes[entry.path] = entry.stat().st_mtime_ns
+
+    returncode = subprocess.call([args.command] + args.arguments)
+
+    for path, mtime_ns in file_mtimes.items():
+        try:
+            st = os.stat(path)
+        except FileNotFoundError:
+            continue
+        if st.st_mtime_ns != mtime_ns:
+            if prompt_yes_no(f'nomtime: reset {path!r} timestamp?'):
+                os.utime(path, ns=(st.st_atime_ns, mtime_ns),
+                         follow_symlinks=False)
+
+    sys.exit(returncode)
+
+
+if __name__ == '__main__':
+    main()
