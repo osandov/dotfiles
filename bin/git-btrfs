@@ -77,31 +77,33 @@ git_btrfs_worktree () {
 	git worktree add --no-checkout --detach "${path}"
 	cleanup_worktree=1
 
-	# Save the worktree .git file...
+	# Save the worktree .git file.
 	gitfile="$(cat "${path}/.git")"
-	if [ $? -ne 0 ]; then
-		exit $?
-	fi
 
-	# Remove the worktree directory...
+	# Remove the worktree directory.
 	rm "${path}/.git"
 	rmdir "${path}"
 
-	# Replace it with a snapshot...
-	btrfs subvolume snapshot "$(git rev-parse --show-toplevel)" "${path}"
+	# Replace it with a snapshot.
+	toplevel="$(git rev-parse --show-toplevel)"
+	btrfs subvolume snapshot "${toplevel}" "${path}"
 	cleanup_subvol=1
 
-	# And restore the .git file. Now we have an intact worktree as far as
-	# git is concerned.
+	# Restore the .git file. After this, we have an intact worktree as far
+	# as git is concerned.
 	rm -rf "${path}/.git"
 	echo "${gitfile}" > "${path}/.git"
 
-	# Because we used --no-checkout, the whole tree is staged as deleted.
-	# Undo that.
-	git -C "${path}" reset >/dev/null
+	# We used --no-checkout, so there is no index yet. Initialize it from
+	# the one from the worktree we snapshotted, then git reset just in case
+	# it has anything staged.
+	old_index="$(git rev-parse --git-dir)/index"
+	new_index="$(git -C "${path}" rev-parse --absolute-git-dir)/index"
+	cp --reflink=always "${old_index}" "${new_index}"
+	git -C "${path}" reset -q
 
 	# Finally, check out the requested branch.
-	git -C "${path}" checkout "${branch}" >/dev/null
+	git -C "${path}" checkout "${branch}"
 }
 
 test $# -gt 0 || usage
