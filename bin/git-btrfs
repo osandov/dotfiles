@@ -57,22 +57,25 @@ git_btrfs_worktree () {
 		usage
 	fi
 
+	trap worktree_cleanup ERR
+
 	# Set up the worktree with git. This creates all of the necessary stuff
 	# in the real .git directory. We're pointing the worktree at HEAD for
 	# now, since that's what we're going to snapshot. We'll check out the
 	# requested branch later.
 	path="$1"
 	if [ $# -eq 1 ]; then
-		# git worktree add creates a branch for you if you don't give
-		# it one explicitly, so let's do the same.
+		# git worktree add uses the basename of the path as the branch
+		# name by default, and creates it based on HEAD if it doesn't
+		# exist. Let's do the same.
 		branch="$(basename "${path}")"
-		git branch "${branch}" || exit $?
-		cleanup_branch=1
+		if ! git show-ref --verify --quiet "refs/heads/${branch}"; then
+			git branch "${branch}"
+			cleanup_branch=1
+		fi
 	else
 		branch="$2"
 	fi
-
-	trap worktree_cleanup ERR
 
 	git worktree add --no-checkout --detach "${path}"
 	cleanup_worktree=1
