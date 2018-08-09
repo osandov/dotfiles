@@ -87,6 +87,9 @@ augroup vimrc
 
     " Close enough for Coccinelle
     autocmd BufRead,BufNewFile *.cocci set filetype=diff
+
+    " Python type hint stub files
+    autocmd BufRead,BufNewFile *.pyi set filetype=python
 augroup END
 
 " Use LaTeX instead of plain TeX for .tex files
