@@ -15,27 +15,17 @@ fi
 
 sudo pacman -Sy
 
-# Install yaourt manually from the AUR first.
+# Install aurman manually from the AUR first.
 sudo pacman --noconfirm -S --needed base-devel
 
-if ! pacman -Q package-query >/dev/null 2>&1; then
+if ! pacman -Q aurman > /dev/null 2>&1; then
 	cd /tmp
-	curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
-	tar -xvf package-query.tar.gz
-	cd package-query
+	curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/aurman.tar.gz
+	tar -xvf aurman.tar.gz
+	cd aurman
 	makepkg -s
-	sudo pacman --noconfirm -U package-query-*.pkg.tar.xz
-	rm -rf /tmp/package-query /tmp/package-query.tar.gz
-fi
-
-if ! pacman -Q yaourt >/dev/null 2>&1; then
-	cd /tmp
-	curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
-	tar -xvf yaourt.tar.gz
-	cd yaourt
-	makepkg -s
-	sudo pacman --noconfirm -U yaourt-*.pkg.tar.xz
-	rm -rf /tmp/yaourt /tmp/yaourt.tar.gz
+	sudo pacman --noconfirm -U aurman-*.pkg.tar.xz
+	rm -rf /tmp/aurman /tmp/aurman.tar.gz
 fi
 
 # Install the packages.
@@ -100,7 +90,7 @@ PACKAGES=(
 	zsh
 )
 
-yaourt --noconfirm -S --needed "${PACKAGES[@]}"
+aurman --noconfirm -S --needed "${PACKAGES[@]}"
 
 # Post-install stuff.
 sudo systemctl enable xdm-archlinux.service
