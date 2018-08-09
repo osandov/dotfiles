@@ -23,8 +23,7 @@ if ! pacman -Q aurman > /dev/null 2>&1; then
 	curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/aurman.tar.gz
 	tar -xvf aurman.tar.gz
 	cd aurman
-	makepkg -s
-	sudo pacman --noconfirm -U aurman-*.pkg.tar.xz
+	makepkg -si --noconfirm --skippgpcheck
 	rm -rf /tmp/aurman /tmp/aurman.tar.gz
 fi
 
