@@ -2,8 +2,8 @@
 
 pkgname=st-osandov
 _pkgname=st
-pkgver=0.7.r38.g0ac685f
-pkgrel=2
+pkgver=0.8.1.r13.g4f4bccd
+pkgrel=1
 pkgdesc='A simple virtual terminal emulator for X.'
 arch=('i686' 'x86_64')
 license=('MIT')
@@ -11,15 +11,15 @@ depends=('libxft' 'libxext' 'xorg-fonts-misc')
 makedepends=('ncurses')
 url="https://st.suckless.org"
 conflicts=('st')
-_commit=0ac685fc015362e749bf82cfaa3cfe2dd9b305f0
+_commit=4f4bccd1627c845330235721f593d2e93418723d
 source=("${_pkgname}::git+https://git.suckless.org/st#commit=$_commit"
         config.h
         0001-Whitelist-key-event-modifiers-for-shortcuts.patch
         0002-Use-more-sane-logic-for-word-delimiters.patch)
 sha256sums=('SKIP'
-            '782b4a2fafab08fcac44148dce48634e93799bf100bb06886d24b0d872ee880d'
-            'de926eb00425f327897b495705c6dacfe7e195dd8fc7f39617c409e61a6dfa1b'
-            '487512b9c394ea6bc854aff08650fb0716b085cc9864c28592543a0288e8744d')
+            '8a0cb594d0ac7e6b71dbec3fb463e7311c6e1949dc0f952702229e99b9872b99'
+            '38543647f7ca9be6a1e63eb81b3f241f2b2f1436ef704413756613906dca0b53'
+            'b4a0170895e1a6cb86d380c4aedc8c1d9cf69d2df384d15a7979738b843773a6')
 
 pkgver() {
   cd "$_pkgname"

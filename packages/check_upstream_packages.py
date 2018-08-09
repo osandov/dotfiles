@@ -7,7 +7,7 @@ import sys
 
 
 simple_pkgver_re = re.compile('pkgver=r[0-9]+\\.([a-f0-9]+)\n')
-suckless_pkgver_re = re.compile('pkgver=[0-9]+\\.[0-9]+\\.r[0-9]+\\.g([a-f0-9]+)\n')
+suckless_pkgver_re = re.compile('pkgver=[0-9]+\\.[0-9]+(?:\\.[0-9]+)?\\.r[0-9]+\\.g([a-f0-9]+)\n')
 
 
 def green(s):

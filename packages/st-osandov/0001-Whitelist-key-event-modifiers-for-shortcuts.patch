@@ -1,4 +1,5 @@
-From 8e170c424cfdd016eb55f2f9c25f7e0ac8b2f085 Mon Sep 17 00:00:00 2001
+From 78aa50caa9e9a24f0ffc017bbba3857805cd5c36 Mon Sep 17 00:00:00 2001
+Message-Id: <78aa50caa9e9a24f0ffc017bbba3857805cd5c36.1533858330.git.osandov@osandov.com>
 From: Omar Sandoval <osandov@osandov.com>
 Date: Tue, 4 Apr 2017 14:40:27 -0700
 Subject: [PATCH 1/2] Whitelist key event modifiers for shortcuts
@@ -8,15 +9,28 @@ be set with (state & Button1Mask), which ends up breaking all st
 keyboard shortcuts. xterm works correctly because it whitelists
 modifiers relevant to key press events. Do the same in st.
 ---
- st.c  | 3 ++-
  win.h | 3 +++
+ x.c   | 3 ++-
  2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/st.c b/st.c
-index 7c7ddff..037a2c4 100644
---- a/st.c
-+++ b/st.c
-@@ -2626,7 +2626,8 @@ redraw(void)
+diff --git a/win.h b/win.h
+index 31f327d..503263b 100644
+--- a/win.h
++++ b/win.h
+@@ -1,5 +1,8 @@
+ /* See LICENSE for license details. */
+ 
++#define KeyModifiers (ShiftMask | LockMask | ControlMask | Mod1Mask | \
++		      Mod2Mask | Mod3Mask | Mod4Mask | Mod5Mask)
++
+ enum win_mode {
+ 	MODE_VISIBLE     = 1 << 0,
+ 	MODE_FOCUSED     = 1 << 1,
+diff --git a/x.c b/x.c
+index 00cb6b1..9d13b51 100644
+--- a/x.c
++++ b/x.c
+@@ -1644,7 +1644,8 @@ focus(XEvent *ev)
  int
  match(uint mask, uint state)
  {
@@ -25,21 +39,7 @@ index 7c7ddff..037a2c4 100644
 +		mask == (state & KeyModifiers & ~ignoremod));
  }
  
- void
-diff --git a/win.h b/win.h
-index 428111c..64974c2 100644
---- a/win.h
-+++ b/win.h
-@@ -5,6 +5,9 @@
- #define XK_NO_MOD     0
- #define XK_SWITCH_MOD (1<<13)
- 
-+#define KeyModifiers (ShiftMask | LockMask | ControlMask | Mod1Mask | \
-+		      Mod2Mask | Mod3Mask | Mod4Mask | Mod5Mask)
-+
- typedef XftGlyphFontSpec GlyphFontSpec;
- 
- void draw(void);
+ char*
 -- 
-2.15.0
+2.18.0
 

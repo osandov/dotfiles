@@ -1,4 +1,7 @@
-From 4c00d3701b1441834bc15b286b754c4e0cc34504 Mon Sep 17 00:00:00 2001
+From a56c8e144c3805a770f4ae2a1850f38d3d7de6a9 Mon Sep 17 00:00:00 2001
+Message-Id: <a56c8e144c3805a770f4ae2a1850f38d3d7de6a9.1533858330.git.osandov@osandov.com>
+In-Reply-To: <78aa50caa9e9a24f0ffc017bbba3857805cd5c36.1533858330.git.osandov@osandov.com>
+References: <78aa50caa9e9a24f0ffc017bbba3857805cd5c36.1533858330.git.osandov@osandov.com>
 From: Omar Sandoval <osandov@fb.com>
 Date: Fri, 8 Apr 2016 14:52:01 -0700
 Subject: [PATCH 2/2] Use more sane logic for word delimiters
@@ -8,24 +11,60 @@ particular annoyance with the border characters in tmux. Instead, go for
 explicitly whitelisting alphanumeric characters and characters valid in
 URLs.
 ---
- config.def.h | 38 ++++++++++++++++++++++++++++++++++----
- st.c         | 24 +++---------------------
- 2 files changed, 37 insertions(+), 25 deletions(-)
+ config.def.h |  7 -------
+ st.c         | 58 +++++++++++++++++++++++++++++++++-------------------
+ 2 files changed, 37 insertions(+), 28 deletions(-)
 
 diff --git a/config.def.h b/config.def.h
-index 877afab..de2826d 100644
+index 82b1b09..692af25 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -28,11 +28,41 @@ float cwscale = 1.0;
- float chscale = 1.0;
+@@ -27,13 +27,6 @@ char *vtiden = "\033[?6c";
+ static float cwscale = 1.0;
+ static float chscale = 1.0;
  
- /*
+-/*
 - * word delimiter string
 - *
 - * More advanced example: " `'\"()[]{}"
-+ * word delimiters
-  */
--static char worddelimiters[] = " ";
+- */
+-char *worddelimiters = " ";
+-
+ /* selection timeouts (in milliseconds) */
+ static unsigned int doubleclicktimeout = 300;
+ static unsigned int tripleclicktimeout = 600;
+diff --git a/st.c b/st.c
+index 76bb3ea..43db282 100644
+--- a/st.c
++++ b/st.c
+@@ -16,6 +16,7 @@
+ #include <termios.h>
+ #include <unistd.h>
+ #include <wchar.h>
++#include <wctype.h>
+ 
+ #include "st.h"
+ #include "win.h"
+@@ -42,7 +43,6 @@
+ #define ISCONTROLC0(c)		(BETWEEN(c, 0, 0x1f) || (c) == '\177')
+ #define ISCONTROLC1(c)		(BETWEEN(c, 0x80, 0x9f))
+ #define ISCONTROL(c)		(ISCONTROLC0(c) || ISCONTROLC1(c))
+-#define ISDELIM(u)		(utf8strchr(worddelimiters, u) != NULL)
+ 
+ /* constants */
+ #define ISO14755CMD		"dmenu -w \"$WINDOWID\" -p codepoint: </dev/null"
+@@ -214,7 +214,6 @@ static void selsnap(int *, int *, int);
+ static size_t utf8decode(const char *, Rune *, size_t);
+ static Rune utf8decodebyte(char, size_t *);
+ static char utf8encodebyte(Rune, size_t);
+-static char *utf8strchr(char *, Rune);
+ static size_t utf8validate(Rune *, size_t);
+ 
+ static char *base64dec(const char *);
+@@ -236,6 +235,40 @@ static uchar utfmask[UTF_SIZ + 1] = {0xC0, 0x80, 0xE0, 0xF0, 0xF8};
+ static Rune utfmin[UTF_SIZ + 1] = {       0,    0,  0x80,  0x800,  0x10000};
+ static Rune utfmax[UTF_SIZ + 1] = {0x10FFFF, 0x7F, 0x7FF, 0xFFFF, 0x10FFFF};
+ 
 +static inline int isdelim(wchar_t c)
 +{
 +	if (iswalnum(c))
@@ -59,38 +98,11 @@ index 877afab..de2826d 100644
 +		return !iswalnum(c);
 +	}
 +}
- 
- /* selection timeouts (in milliseconds) */
- unsigned int doubleclicktimeout = 300;
-diff --git a/st.c b/st.c
-index 037a2c4..608b933 100644
---- a/st.c
-+++ b/st.c
-@@ -23,6 +23,7 @@
- #include <libgen.h>
- #include <fontconfig/fontconfig.h>
- #include <wchar.h>
-+#include <wctype.h>
- 
- /* X11 */
- #include <X11/cursorfont.h>
-@@ -57,7 +58,6 @@ char *argv0;
- #define ISCONTROLC0(c)		(BETWEEN(c, 0, 0x1f) || (c) == '\177')
- #define ISCONTROLC1(c)		(BETWEEN(c, 0x80, 0x9f))
- #define ISCONTROL(c)		(ISCONTROLC0(c) || ISCONTROLC1(c))
--#define ISDELIM(u)		(utf8strchr(worddelimiters, u) != NULL)
- 
- /* constants */
- #define ISO14755CMD		"dmenu -w %lu -p codepoint: </dev/null"
-@@ -195,7 +195,6 @@ static void selsnap(int *, int *, int);
- 
- static Rune utf8decodebyte(char, size_t *);
- static char utf8encodebyte(Rune, size_t);
--static char *utf8strchr(char *s, Rune u);
- static size_t utf8validate(Rune *, size_t);
- 
- static char *base64dec(const char *);
-@@ -343,23 +342,6 @@ utf8encodebyte(Rune u, size_t i)
++
+ ssize_t
+ xwrite(int fd, const char *s, size_t len)
+ {
+@@ -341,23 +374,6 @@ utf8encodebyte(Rune u, size_t i)
  	return utfbyte[i] | (u & ~utfmask[i]);
  }
  
@@ -114,7 +126,7 @@ index 037a2c4..608b933 100644
  size_t
  utf8validate(Rune *u, size_t i)
  {
-@@ -521,7 +503,7 @@ selsnap(int *x, int *y, int direction)
+@@ -544,7 +560,7 @@ selsnap(int *x, int *y, int direction)
  		 * beginning of a line.
  		 */
  		prevgp = &term.line[*y][*x];
@@ -123,7 +135,7 @@ index 037a2c4..608b933 100644
  		for (;;) {
  			newx = *x + direction;
  			newy = *y;
-@@ -543,7 +525,7 @@ selsnap(int *x, int *y, int direction)
+@@ -566,7 +582,7 @@ selsnap(int *x, int *y, int direction)
  				break;
  
  			gp = &term.line[newy][newx];
@@ -133,5 +145,5 @@ index 037a2c4..608b933 100644
  					|| (delim && gp->u != prevgp->u)))
  				break;
 -- 
-2.15.0
+2.18.0
 
