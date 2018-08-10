@@ -110,17 +110,18 @@ do_install () {
 }
 
 if do_install "$DO_VIM"; then
-	mkdir -p ~/.vim/bundle
-	if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
-		git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-	fi
-	vim +VundleUpdate +qall
-
+	mkdir -p ~/.vim
 	install_file ~/.dotfiles/vim/plugin ~/.vim/plugin
 	install_file ~/.dotfiles/vim/after ~/.vim/after
 	install_file ~/.dotfiles/vim/colors ~/.vim/colors
 	install_file ~/.dotfiles/vimrc ~/.vimrc
 	install_file ~/.dotfiles/gvimrc ~/.gvimrc
+
+	mkdir -p ~/.vim/bundle
+	if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
+		git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+	fi
+	vim +VundleUpdate +qall
 fi
 
 if do_install "$DO_SHELL"; then
