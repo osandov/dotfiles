@@ -126,6 +126,7 @@ nnoremap <silent><C-\><C-]> <C-w><C-]><C-w>T
 " Leader mappings
 nnoremap \ ,
 let mapleader = ","
+let maplocalleader = ","
 
 " Convenient save
 noremap <Leader>m :up<CR>

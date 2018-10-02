@@ -9,6 +9,6 @@ setlocal textwidth=80
 
 nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
 inoremap <F3> <Esc>diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2ki
-vnoremap <Leader>0 <Esc>`<O#if 0<Esc>`>o#endif<Esc>
-nnoremap <Leader>{ A<Space>{<Esc>jo}<Esc>k^
-nnoremap <Leader>} $diB"_daB"_Dp
+vnoremap <LocalLeader>0 <Esc>`<O#if 0<Esc>`>o#endif<Esc>
+nnoremap <LocalLeader>{ A<Space>{<Esc>jo}<Esc>k^
+nnoremap <LocalLeader>} $diB"_daB"_Dp
