@@ -12,3 +12,14 @@ inoremap <F3> <Esc>diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>p
 vnoremap <LocalLeader>0 <Esc>`<O#if 0<Esc>`>o#endif<Esc>
 nnoremap <LocalLeader>{ A<Space>{<Esc>jo}<Esc>k^
 nnoremap <LocalLeader>} $diB"_daB"_Dp
+
+function! s:addLineContinuations() range
+    let lines = getline(a:firstline, a:lastline)
+    call map(lines, {key, val -> substitute(val, '[[:space:]\\]\+$', '', 'g')})
+    let tabstops = (max(map(copy(lines), 'strdisplaywidth(v:val)')) + &tabstop) / &tabstop
+    let lastkey = a:lastline - a:firstline
+    call map(lines, {key, val -> (key < lastkey) ? (val . repeat("\t", tabstops - strdisplaywidth(val) / &tabstop) . '\') : val})
+    call setline(a:firstline, lines)
+endfunction
+
+vnoremap <LocalLeader>\ :call <SID>addLineContinuations()<CR>
