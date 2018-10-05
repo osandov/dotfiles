@@ -13,13 +13,25 @@ vnoremap <LocalLeader>0 <Esc>`<O#if 0<Esc>`>o#endif<Esc>
 nnoremap <LocalLeader>{ A<Space>{<Esc>jo}<Esc>k^
 nnoremap <LocalLeader>} $diB"_daB"_Dp
 
-function! s:addLineContinuations() range
-    let lines = getline(a:firstline, a:lastline)
+function! s:addLineContinuations(first, last)
+    let lines = getline(a:first, a:last)
     call map(lines, {key, val -> substitute(val, '[[:space:]\\]\+$', '', 'g')})
     let tabstops = (max(map(copy(lines), 'strdisplaywidth(v:val)')) + &tabstop) / &tabstop
-    let lastkey = a:lastline - a:firstline
-    call map(lines, {key, val -> (key < lastkey) ? (val . repeat("\t", tabstops - strdisplaywidth(val) / &tabstop) . '\') : val})
-    call setline(a:firstline, lines)
+    let numcontinue = a:last - a:first
+    let nextline = getline(a:last + 1)
+    if nextline[-1:] == '\'
+        let tabstops = max([tabstops, (strdisplaywidth(nextline) - 1) / &tabstop])
+        let numcontinue += 1
+    elseif a:first == a:last && getline(a:first)[-1:] == '\'
+        let numcontinue += 1
+    endif
+    call map(lines, {key, val -> (key < numcontinue) ? (val . repeat("\t", tabstops - strdisplaywidth(val) / &tabstop) . '\') : val})
+    call setline(a:first, lines)
 endfunction
 
-vnoremap <LocalLeader>\ :call <SID>addLineContinuations()<CR>
+function! s:addLineContinuationsRange() range
+    call s:addLineContinuations(a:firstline, a:lastline)
+endfunction
+
+nnoremap <LocalLeader>\ :call <SID>addLineContinuations(getcurpos()[1], getcurpos()[1])<CR>
+vnoremap <LocalLeader>\ :call <SID>addLineContinuationsRange()<CR>
