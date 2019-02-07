@@ -211,3 +211,7 @@ augroup vimrcPlugin
     " - "*.pyc" and "__pycache__"
     autocmd FileType * let g:netrw_list_hide='^\.\([^./]\|\.[^/]\),\.o$,\.dwo$,\.pyc$,^__pycache__$'
 augroup END
+
+if filereadable(expand('~/.vimrc.local'))
+    source ~/.vimrc.local
+endif
