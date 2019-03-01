@@ -2,13 +2,13 @@
 
 pkgname=verbar-git
 _pkgname=verbar
-pkgver=r18.2ff100e
+pkgver=r20.41e14bc
 pkgrel=1
 pkgdesc="Status bar for dwm"
 arch=('x86_64' 'i686')
 url="https://github.com/osandov/verbar"
 license=('GPL3')
-depends=('libmnl' 'libnl' 'libpulse')
+depends=('libmnl' 'libpulse')
 makedepends=('git')
 source=("$_pkgname::git+https://github.com/osandov/verbar.git")
 md5sums=('SKIP')
