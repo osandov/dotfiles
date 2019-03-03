@@ -2,7 +2,7 @@
 
 pkgname=dwm-osandov
 _pkgname=dwm
-pkgver=6.1.r22.g3756f7f
+pkgver=6.2.r0.gcb3f58a
 pkgrel=1
 pkgdesc="A dynamic window manager for X"
 arch=('x86_64' 'i686')
@@ -12,15 +12,15 @@ options=(zipman)
 depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
 makedepends=('git')
 conflicts=('dwm')
-_commit=3756f7f6b8dccf7a31789ffaf073a76fd1a87eb9
+_commit=cb3f58ad06993f7ef3a7d8f61468012e2b786cab
 source=("${_pkgname}::git+https://git.suckless.org/dwm#commit=$_commit"
 	      config.h
 	      dwm.desktop
         0001-Add-support-for-XBM-icons-in-the-status-bar.patch)
 sha256sums=('SKIP'
-            '0d146ea2488c62b384c2f250a2c85f9fc89306d08c2cfaa3a05f5d49ae4fb54c'
+            'd36917a5a6a494e062c1958dee2e1e3b249f90bb7daf3887220f9de2a15a1aec'
             'bc36426772e1471d6dd8c8aed91f288e16949e3463a9933fee6390ee0ccd3f81'
-            '80b83c001c612740b365aeae512ef5a01a08981b1695eb3c88886a14acedf80a')
+            '397fb87bc2d452dd706e57d04ec98d22faa9b7ee6d4b417a1df85f8e2fb22529')
 
 pkgver() {
   cd "$_pkgname"
