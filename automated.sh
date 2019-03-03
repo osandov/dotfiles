@@ -46,6 +46,7 @@ PACKAGES=(
 	mercurial
 	moka-icon-theme-git
 	mutt
+	noto-fonts-emoji
 	numlockx
 	openssh
 	pavucontrol
