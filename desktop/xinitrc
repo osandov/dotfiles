@@ -23,6 +23,9 @@ for touchpad in $(xinput --list | sed -rn 's/.*touchpad.*id=([0-9]+).*/\1/Ip'); 
 	xinput --set-prop "${touchpad}" "libinput Tapping Enabled" 1
 done
 
+# Terminal settings...
+dconf load /org/gnome/terminal/ < ~/.dotfiles/term/gnome-terminal.dconf
+
 # Start some daemons...
 inputconfd --keyboard="xmodmap ~/.Xmodmap; xset r rate 150 50 -b" &
 if [ -r ~/.gnupg/gpg-agent.conf ]; then

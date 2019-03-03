@@ -56,7 +56,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_red, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", "-e", "tmux", "new", ";", "set", "-q", "destroy-unattached", NULL };
+static const char *termcmd[]  = { "gnome-terminal", "--", "tmux", "new", ";", "set", "-q", "destroy-unattached", NULL };
 static const char *lockcmd[]  = { "xscreensaver-command", "-lock", NULL };
 static const char *screencap_full[]   = { "xfce4-screenshooter", "-f", NULL };
 static const char *screencap_window[] = { "xfce4-screenshooter", "-w", NULL };

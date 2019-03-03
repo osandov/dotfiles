@@ -38,6 +38,7 @@ PACKAGES=(
 	feh
 	firefox
 	git
+	gnome-terminal
 	google-chrome
 	gtk3-print-backends
 	gvfs
