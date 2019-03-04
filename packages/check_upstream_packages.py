@@ -66,8 +66,6 @@ if __name__ == '__main__':
                       suckless_pkgver_re)
     check_git_package('inputconfd-git', 'https://github.com/osandov/inputconfd.git',
                       simple_pkgver_re)
-    check_git_package('st-osandov', 'https://git.suckless.org/st',
-                      suckless_pkgver_re)
     check_git_package('supavolumed-git', 'https://github.com/osandov/supavolumed.git',
                       simple_pkgver_re)
     check_git_package('verbar-git', 'https://github.com/osandov/verbar.git',
