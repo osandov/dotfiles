@@ -40,7 +40,12 @@ fi
 xfce4-power-manager --no-daemon &
 xscreensaver -no-splash &
 supavolumed --step 2 &
-verbar --icons ~/.dotfiles/desktop/icons --wordy &
+dpi="$(xrdb -query -all | awk '$1 == "Xft.dpi:" { print $2 }')"
+if [ ! -e "$HOME/.dotfiles/desktop/icons/$dpi" ]; then
+	dpi=96
+fi
+verbar --icons "$HOME/.dotfiles/desktop/icons/$dpi" --wordy &
+unset dpi
 compton &
 
 # And finally, start the window manager.

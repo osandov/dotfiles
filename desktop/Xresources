@@ -3,6 +3,7 @@
 Xcursor.theme: Vanilla-DMZ
 
 ! Xft
+Xft.dpi: 96
 Xft.antialias: true
 Xft.rgba: rgb
 Xft.autohint: false
