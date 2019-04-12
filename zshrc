@@ -105,7 +105,7 @@ alias tk='tmux kill-session'
 alias ts='tmux switch -t'
 
 open () {
-    exo-open "$@" &!
+    xdg-open "$@" &!
 }
 
 index () {
