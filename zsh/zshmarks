@@ -7,7 +7,7 @@ DEFAULT_MARKDIR=~
 # machines.
 MARKDIRS=("$DEFAULT_MARKDIR")
 
-function () {
+function() {
 	# Sync marks in Dropbox.
 	local dropbox_dir
 	for dropbox_dir in ~/Dropbox*(/N); do
@@ -21,22 +21,46 @@ function () {
 	done
 }
 
-# Add a new mark. The mark will be added to the first mark directory under
-# which it exits or, failing that, the default mark directory.
-mark () {
+mark() {
+	local usage="\
+usage: $0 [-f] [TARGET] MARK
+
+Add a new mark named MARK which points to the directory TARGET (the current
+directory by default).
+
+The mark is created in the first mark directory under which it exits or,
+failing that, the default mark directory.
+
+options:
+  -f    if a mark with the same name exists, remove it
+  -h    show this help message and exit"
+	local force
+	while getopts fh name; do
+		case "$name" in
+		f)
+			force=1
+			;;
+		h)
+			echo "$usage"
+			return 0
+			;;
+		?)
+			echo "$usage" >&2
+			return 2
+			;;
+		esac
+	done
+	shift $((OPTIND - 1))
 	if [[ $# -lt 1 || $# -gt 2 ]]; then
-		echo "Usage: $0 [TARGET] MARK" >&2
-		return 1
+		echo "$usage" >&2
+		return 2
 	fi
 
 	local target
 	if [[ $# -eq 2 ]]; then
-		if [[ ! -d "$1" ]]; then
-			echo "$0: not a directory: $1"
+		if ! pushd "$1" > /dev/null; then
 			return 1
 		fi
-
-		pushd "$1" > /dev/null
 		target="$(pwd)"
 		popd > /dev/null
 		shift
@@ -44,9 +68,14 @@ mark () {
 		target="$(pwd)"
 	fi
 
-	if findmark "$1" > /dev/null 2>&1; then
-		echo "$0: mark already exists: $1" >&2
-		return 1
+	local existing
+	if existing="$(findmark "$1" 2> /dev/null)"; then
+		if [[ -z "$force" ]]; then
+			echo "$0: mark already exists: $1" >&2
+			return 1
+		elif ! rm -f "$existing"; then
+			return 1
+		fi
 	fi
 
 	local markdir="$DEFAULT_MARKDIR"
@@ -61,11 +90,27 @@ mark () {
 	echo "$target" > "$markdir/.marks/$1"
 }
 
-# List all marks from all mark directories.
-marks () {
+marks() {
+	local usage="\
+usage: $0
+
+List all marks from all mark directories."
+	while getopts h name; do
+		case "$name" in
+		h)
+			echo "$usage"
+			return 0
+			;;
+		?)
+			echo "$usage" >&2
+			return 2
+			;;
+		esac
+	done
+	shift $((OPTIND - 1))
 	if [[ $# -gt 0 ]]; then
-		echo "Usage: $0" >&2
-		return 1
+		echo "$usage" >&2
+		return 2
 	fi
 
 	local markfile
@@ -74,11 +119,27 @@ marks () {
 	done | sort
 }
 
-# Print the location of the mark file itself.
-findmark () {
+findmark() {
+	local usage="\
+usage: $0 MARK
+
+Print the location of the mark file for MARK."
+	while getopts h name; do
+		case "$name" in
+		h)
+			echo "$usage"
+			return 0
+			;;
+		?)
+			echo "$usage" >&2
+			return 2
+			;;
+		esac
+	done
+	shift $((OPTIND - 1))
 	if [[ $# -ne 1 ]]; then
-		echo "Usage: $0 MARK" >&2
-		return 1
+		echo "$usage" >&2
+		return 2
 	fi
 
 	local markdir
@@ -93,20 +154,33 @@ findmark () {
 	return 1
 }
 
-# Read the target of a mark.
-readmark () {
+readmark() {
+	local usage="\
+usage: $0 MARK...
+
+Print the target of one or more marks."
+	while getopts h name; do
+		case "$name" in
+		h)
+			echo "$usage"
+			return 0
+			;;
+		?)
+			echo "$usage" >&2
+			return 2
+			;;
+		esac
+	done
+	shift $((OPTIND - 1))
 	if [[ $# -lt 1 ]]; then
-		echo "Usage: $0 MARK..." >&2
-		return 1
+		echo "$usage" >&2
+		return 2
 	fi
 
 	local mark
 	local error=0
 	while [[ $# -gt 0 ]]; do
-		mark="$(findmark "$1")"
-		if [[ $? -eq 0 ]]; then
-			cat "$mark"
-		else
+		if ! mark="$(findmark "$1")" || ! cat "$mark"; then
 			error=1
 		fi
 		shift
@@ -114,36 +188,60 @@ readmark () {
 	return error
 }
 
-# Change directories to a mark.
-jump () {
+jump() {
+	local usage="\
+usage: $0 MARK
+
+Change directories to the target of MARK."
+	while getopts h name; do
+		case "$name" in
+		h)
+			echo "$usage"
+			return 0
+			;;
+		?)
+			echo "$usage" >&2
+			return 2
+			;;
+		esac
+	done
+	shift $((OPTIND - 1))
 	if [[ $# -ne 1 ]]; then
-		echo "Usage: $0 MARK" >&2
-		return 1
+		echo "$usage" >&2
+		return 2
 	fi
 
 	local target
-	target="$(readmark "$1")"
-	if [[ $? -eq 0 ]]; then
-		cd "$target"
-	else
-		return 1
-	fi
+	target="$(readmark "$1")" && cd "$target"
 }
 
-# Remove a mark.
-unmark () {
+unmark() {
+	local usage="\
+usage: $0 MARK...
+
+Remove one or more marks."
+	while getopts h name; do
+		case "$name" in
+		h)
+			echo "$usage"
+			return 0
+			;;
+		?)
+			echo "$usage" >&2
+			return 2
+			;;
+		esac
+	done
+	shift $((OPTIND - 1))
 	if [[ $# -lt 1 ]]; then
-		echo "Usage: $0 MARK..." >&2
-		return 1
+		echo "$usage" >&2
+		return 2
 	fi
 
 	local mark
 	local error=0
-	while [ $# -gt 0 ]; do
-		mark="$(findmark "$1")"
-		if [[ $? -eq 0 ]]; then
-			rm -i "$mark"
-		else
+	while [[ $# -gt 0 ]]; do
+		if ! mark="$(findmark "$1")" || ! rm -i "$mark"; then
 			error=1
 		fi
 		shift
