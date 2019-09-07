@@ -1,6 +1,6 @@
 " Linux kernel coding style (linux/Documentation/process/coding-style.rst).
 setlocal cindent
-setlocal cinoptions=:0,t0,(0
+setlocal cinoptions=:0,l1,t0,(0
 setlocal noexpandtab
 setlocal shiftwidth=8
 setlocal softtabstop=0
