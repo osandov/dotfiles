@@ -21,8 +21,10 @@ add_to_manpath () {
 	fi
 }
 
-# Only on Arch Linux
+# Arch Linux
 add_to_path /usr/share/git/diff-highlight
+# Fedora
+add_to_path /usr/share/git-core/contrib
 
 add_to_path ~/.dotfiles/bin
 add_to_path ~/.local/bin
