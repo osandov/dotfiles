@@ -21,7 +21,7 @@ xsetroot -cursor_name left_ptr	# Don't want that ugly X cursor
 
 # Touchpad settings...
 for touchpad in $(xinput --list | sed -rn 's/.*touchpad.*id=([0-9]+).*/\1/Ip'); do
-	xinput --set-prop "${touchpad}" "libinput Disable While Typing Enabled" 0
+	xinput --set-prop "${touchpad}" "libinput Disable While Typing Enabled" 1
 	xinput --set-prop "${touchpad}" "libinput Natural Scrolling Enabled" 1
 	xinput --set-prop "${touchpad}" "libinput Tapping Enabled" 1
 done
