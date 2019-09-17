@@ -20,6 +20,8 @@
 	diff = "if command -v diff-highlight >/dev/null 2>&1; then diff-highlight | \"${PAGER:-less}\"; else \"${PAGER:-less}\"; fi"
 [push]
 	default = simple
+[rebase]
+	autoSquash = true
 [sendemail]
 	cccover = true
 [stash]
