@@ -97,12 +97,19 @@ alias meminfo='watch -n 1 cat /proc/meminfo'
 alias cxclip='xclip -selection clipboard'
 alias ag="ag --color-line-number=32 --color-path=34 --color-match=103"
 alias da='du --apparent-size'
-alias pingg='ping 8.8.8.8'
 alias info='info --vi-keys'
 
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
 alias ts='tmux switch -t'
+
+pingg () {
+	if [[ $1 -eq -6 ]]; then
+		ping 2001:4860:4860::8888
+	else
+		ping 8.8.8.8
+	fi
+}
 
 open () {
     xdg-open "$@" &!
