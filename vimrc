@@ -167,8 +167,7 @@ if isdirectory($HOME . "/.vim/bundle/Vundle.vim")
     Plugin 'ervandew/supertab'
     Plugin 'mileszs/ack.vim'
     Plugin 'scrooloose/nerdcommenter'
-    " Until https://github.com/tpope/vim-fugitive/pull/1381 is merged.
-    Plugin 'osandov/vim-fugitive'
+    Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-rsi'
     Plugin 'tpope/vim-vinegar'
