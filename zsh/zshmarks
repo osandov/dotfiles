@@ -7,6 +7,10 @@ DEFAULT_MARKDIR=~
 # machines.
 MARKDIRS=("$DEFAULT_MARKDIR")
 
+# List of directories that should be "automatically" marked. Subdirectories of
+# these directories (not recursive) are marked with their base name.
+AUTOMARKDIRS=()
+
 # Sync marks in Dropbox.
 while IFS= read -r -d '' markdir; do
 	MARKDIRS=("$markdir" "${MARKDIRS[@]}")
@@ -67,9 +71,9 @@ options:
 	local existing
 	if existing="$(findmark "$1" 2> /dev/null)"; then
 		if [[ -z $force ]]; then
-			echo "$0: mark already exists: $1" >&2
+			echo "$0: mark already exists: $existing" >&2
 			return 1
-		elif ! rm -f "$existing"; then
+		elif [[ ! -d $existing ]] && ! rm -f "$existing"; then
 			return 1
 		fi
 	fi
@@ -93,13 +97,20 @@ usage: $0
 List all marks from all mark directories.
 
 options:
+  -a    include automatic marks
   -n    list only the mark names
   -h    show this help message and exit"
+	local auto
 	local actions=(-printf '%P -> ' -exec cat {} \;)
-	while getopts nh name; do
+	local auto_actions=(-printf '%P -> %p\n')
+	while getopts anh name; do
 		case "$name" in
+		a)
+			auto=1
+			;;
 		n)
 			actions=(-printf '%P\n')
+			auto_actions=(-printf '%P\n')
 			;;
 		h)
 			echo "$usage"
@@ -117,8 +128,14 @@ options:
 		return 2
 	fi
 
+	{
 	find "${MARKDIRS[@]/%//.marks}" -mindepth 1 -maxdepth 1 -type f \
-		"${actions[@]}" | sort
+		"${actions[@]}"
+	if [[ -n $auto && ${#AUTOMARKDIRS[@]} -gt 0 ]]; then
+		find "${AUTOMARKDIRS[@]}" -mindepth 1 -maxdepth 1 -type d \
+			"${auto_actions[@]}"
+	fi
+	} | sort
 }
 
 findmark() {
@@ -144,10 +161,16 @@ Print the location of the mark file for MARK."
 		return 2
 	fi
 
-	local markdir
+	local markdir automarkdir
 	for markdir in "${MARKDIRS[@]}"; do
 		if [[ -f $markdir/.marks/$1 ]]; then
 			echo "$markdir/.marks/$1"
+			return 0
+		fi
+	done
+	for automarkdir in "${AUTOMARKDIRS[@]}"; do
+		if [[ -d $automarkdir/$1 ]]; then
+			echo "$automarkdir/$1"
 			return 0
 		fi
 	done
@@ -182,7 +205,11 @@ Print the target of one or more marks."
 	local mark
 	local error=0
 	while [[ $# -gt 0 ]]; do
-		if ! mark="$(findmark "$1")" || ! cat "$mark"; then
+		if ! mark="$(findmark "$1")"; then
+			error=1
+		elif [[ -d $mark ]]; then
+			echo "$mark"
+		elif ! cat "$mark"; then
 			error=1
 		fi
 		shift
@@ -243,7 +270,11 @@ Remove one or more marks."
 	local mark
 	local error=0
 	while [[ $# -gt 0 ]]; do
-		if ! mark="$(findmark "$1")" || ! rm -i "$mark"; then
+		if ! mark="$(findmark "$1")"; then
+			err
+		elif [[ -d $mark ]]; then
+			echo "$0: cannot remove automatic mark: $mark" >&2
+		elif ! rm -i "$mark"; then
 			error=1
 		fi
 		shift

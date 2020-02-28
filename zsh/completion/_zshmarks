@@ -1,7 +1,7 @@
 #compdef findmark jump readmark unmark
 
 _zshmarks_comp() {
-    MARKS=$(marks -n)
+    MARKS=$(marks -an)
     case "$service" in
         findmark)
             ;&
