@@ -90,9 +90,17 @@ marks() {
 	local usage="\
 usage: $0
 
-List all marks from all mark directories."
-	while getopts h name; do
+List all marks from all mark directories.
+
+options:
+  -n    list only the mark names
+  -h    show this help message and exit"
+	local actions=(-printf '%P -> ' -exec cat {} \;)
+	while getopts nh name; do
 		case "$name" in
+		n)
+			actions=(-printf '%P\n')
+			;;
 		h)
 			echo "$usage"
 			return 0
@@ -110,7 +118,7 @@ List all marks from all mark directories."
 	fi
 
 	find "${MARKDIRS[@]/%//.marks}" -mindepth 1 -maxdepth 1 -type f \
-		-printf '%P -> ' -exec cat {} \; | sort
+		"${actions[@]}" | sort
 }
 
 findmark() {
