@@ -7,19 +7,17 @@ DEFAULT_MARKDIR=~
 # machines.
 MARKDIRS=("$DEFAULT_MARKDIR")
 
-function() {
-	# Sync marks in Dropbox.
-	local dropbox_dir
-	for dropbox_dir in ~/Dropbox*(/N); do
-		MARKDIRS=("$dropbox_dir" $MARKDIRS)
-	done
+# Sync marks in Dropbox.
+while IFS= read -r -d '' markdir; do
+	MARKDIRS=("$markdir" "${MARKDIRS[@]}")
+done < <(find ~ -mindepth 1 -maxdepth 1 -type d -name 'Dropbox*' -print0)
 
-	# Create all of the mark directories.
-	local markdir
-	for markdir in $MARKDIRS; do
-		mkdir -p "$markdir/.marks"
-	done
-}
+# Create all of the mark directories.
+for markdir in "${MARKDIRS[@]}"; do
+	mkdir -p "$markdir/.marks"
+done
+
+unset markdir
 
 mark() {
 	local usage="\
@@ -58,11 +56,9 @@ options:
 
 	local target
 	if [[ $# -eq 2 ]]; then
-		if ! pushd "$1" > /dev/null; then
-			return 1
-		fi
+		pushd "$1" > /dev/null || return 1
 		target="$(pwd)"
-		popd > /dev/null
+		popd > /dev/null || return 1
 		shift
 	else
 		target="$(pwd)"
@@ -70,7 +66,7 @@ options:
 
 	local existing
 	if existing="$(findmark "$1" 2> /dev/null)"; then
-		if [[ -z "$force" ]]; then
+		if [[ -z $force ]]; then
 			echo "$0: mark already exists: $1" >&2
 			return 1
 		elif ! rm -f "$existing"; then
@@ -80,7 +76,7 @@ options:
 
 	local markdir="$DEFAULT_MARKDIR"
 	local submarkdir
-	for submarkdir in $MARKDIRS; do
+	for submarkdir in "${MARKDIRS[@]}"; do
 		if [[ $target == "$submarkdir/"* ]]; then
 			markdir="$submarkdir"
 			break
@@ -113,10 +109,8 @@ List all marks from all mark directories."
 		return 2
 	fi
 
-	local markfile
-	find ${^MARKDIRS}/.marks -type f | while read -r markfile; do
-		printf "%s -> %s\n" "$markfile:t" "$(cat "$markfile")"
-	done | sort
+	find "${MARKDIRS[@]/%//.marks}" -mindepth 1 -maxdepth 1 -type f \
+		-printf '%P -> ' -exec cat {} \; | sort
 }
 
 findmark() {
@@ -143,7 +137,7 @@ Print the location of the mark file for MARK."
 	fi
 
 	local markdir
-	for markdir in $MARKDIRS; do
+	for markdir in "${MARKDIRS[@]}"; do
 		if [[ -f $markdir/.marks/$1 ]]; then
 			echo "$markdir/.marks/$1"
 			return 0
@@ -185,7 +179,7 @@ Print the target of one or more marks."
 		fi
 		shift
 	done
-	return error
+	return $error
 }
 
 jump() {
@@ -246,5 +240,5 @@ Remove one or more marks."
 		fi
 		shift
 	done
-	return error
+	return $error
 }
