@@ -1,11 +1,10 @@
-# Directory to create marks in by default.
-DEFAULT_MARKDIR=~
-
-# List of directories to store marks in. Any files created under the parent
-# directory will be created in that directory. This is mostly useful when a
-# directory is shared or synced and you want your marks to exist across
-# machines.
-MARKDIRS=("$DEFAULT_MARKDIR")
+# List of directories to store marks in. Any targets under the parent directory
+# will be marked in that directory. This is mostly useful when a directory is
+# shared or synced and you want your marks to exist across machines.
+#
+# The first directory containing the target is used; the last directory is used
+# as the default if none of the directories match.
+MARKDIRS=(~)
 
 # List of directories that should be "automatically" marked. Subdirectories of
 # these directories (not recursive) are marked with their base name.
@@ -29,9 +28,6 @@ usage: $0 [-f] [TARGET] MARK
 
 Add a new mark named MARK which points to the directory TARGET (the current
 directory by default).
-
-The mark is created in the first mark directory under which it exits or,
-failing that, the default mark directory.
 
 options:
   -f    if a mark with the same name exists, remove it
@@ -78,11 +74,9 @@ options:
 		fi
 	fi
 
-	local markdir="$DEFAULT_MARKDIR"
-	local submarkdir
-	for submarkdir in "${MARKDIRS[@]}"; do
-		if [[ $target == "$submarkdir/"* ]]; then
-			markdir="$submarkdir"
+	local markdir
+	for markdir in "${MARKDIRS[@]}"; do
+		if [[ $target == "$markdir/"* ]]; then
 			break
 		fi
 	done
