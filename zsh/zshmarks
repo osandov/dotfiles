@@ -13,7 +13,7 @@ AUTOMARKDIRS=()
 # Sync marks in Dropbox.
 while IFS= read -r -d '' markdir; do
 	MARKDIRS=("$markdir" "${MARKDIRS[@]}")
-done < <(find ~ -mindepth 1 -maxdepth 1 -type d -name 'Dropbox*' -print0)
+done < <(find -L ~ -mindepth 1 -maxdepth 1 -type d -name 'Dropbox*' -print0)
 
 # Create all of the mark directories.
 for markdir in "${MARKDIRS[@]}"; do
@@ -126,7 +126,7 @@ options:
 	find "${MARKDIRS[@]/%//.marks}" -mindepth 1 -maxdepth 1 -type f \
 		"${actions[@]}"
 	if [[ -n $auto && ${#AUTOMARKDIRS[@]} -gt 0 ]]; then
-		find "${AUTOMARKDIRS[@]}" -mindepth 1 -maxdepth 1 -type d \
+		find -L "${AUTOMARKDIRS[@]}" -mindepth 1 -maxdepth 1 -type d \
 			"${auto_actions[@]}"
 	fi
 	} | sort
