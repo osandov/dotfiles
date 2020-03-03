@@ -155,6 +155,7 @@ if do_install "$DO_DESKTOP"; then
 	install_file ~/.dotfiles/desktop/compton.conf ~/.config/compton.conf
 	install_file ~/.dotfiles/desktop/gtkrc-2.0 ~/.gtkrc-2.0
 	mkdir -p ~/.config/gtk-3.0
+	install_file ~/.dotfiles/desktop/gtk.css ~/.config/gtk-3.0/gtk.css
 	install_file ~/.dotfiles/desktop/gtkrc-3.0 ~/.config/gtk-3.0/settings.ini
 	install_file ~/.dotfiles/desktop/xinitrc ~/.xinitrc
 	install_file ~/.dotfiles/desktop/Xmodmap ~/.Xmodmap
