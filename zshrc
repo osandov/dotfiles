@@ -98,6 +98,15 @@ alias ag="ag --color-line-number=32 --color-path=34 --color-match=103"
 alias da='du --apparent-size'
 alias info='info --vi-keys'
 
+t() {
+	if [[ $# -eq 0 ]]; then
+		tmux
+	elif [[ $# -eq 1 ]]; then
+		tmux new-session -As "$1"
+	else
+		echo "usage: $0 [SESSION_NAME]" >&2
+	fi
+}
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
 alias ts='tmux switch -t'
