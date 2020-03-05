@@ -1,4 +1,0 @@
-#define spkr_mute_width 8
-#define spkr_mute_height 8
-static unsigned char spkr_mute_bits[] = {
-   0x0c, 0x13, 0x13, 0x17, 0x17, 0x13, 0x13, 0x0c };

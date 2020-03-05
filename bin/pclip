@@ -4,4 +4,4 @@ if [ $# -ne 1 ]; then
 	echo "usage: $0 ACCOUNT" >&2
 fi
 
-passwds.py get "$1" | xclip
+secret-tool lookup nickname "$1" | wl-copy -o

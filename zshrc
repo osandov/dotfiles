@@ -94,7 +94,6 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias meminfo='watch -n 1 cat /proc/meminfo'
-alias cxclip='xclip -selection clipboard'
 alias ag="ag --color-line-number=32 --color-path=34 --color-match=103"
 alias da='du --apparent-size'
 alias info='info --vi-keys'

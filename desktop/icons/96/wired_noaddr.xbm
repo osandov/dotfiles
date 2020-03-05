@@ -1,4 +1,0 @@
-#define wired_noaddr_width 8
-#define wired_noaddr_height 8
-static unsigned char wired_noaddr_bits[] = {
-   0x3c, 0x24, 0xe7, 0x81, 0x81, 0x81, 0x81, 0xdb };

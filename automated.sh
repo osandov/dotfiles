@@ -32,23 +32,16 @@ PACKAGES=(
 	adobe-source-han-sans-jp-fonts
 	alsa-utils
 	clang
-	compton
-	dmenu
-	evince
-	feh
 	firefox
 	git
-	gnome-terminal
+	gnome
 	google-chrome
 	gtk3-print-backends
 	gvfs
 	gvim
-	librsvg # For redshift-gtk
 	mercurial
-	moka-icon-theme-git
 	mutt
 	noto-fonts-emoji
-	numlockx
 	openssh
 	pavucontrol
 	pkgfile
@@ -58,46 +51,17 @@ PACKAGES=(
 	python-gobject # For redshift-gtk
 	python-xdg # For redshift-gtk
 	redshift
-	ristretto
 	the_silver_searcher
-	thunar
-	thunar-volman
 	tmux
-	trayer-srg-git
 	ttf-dejavu
-	tumbler
-	vertex-icons-git
-	vertex-themes-git
-	xautomation
-	xclip
-	xcursor-vanilla-dmz
-	xdm-archlinux
-	xf86-input-libinput
-	xfce4-notifyd
-	xfce4-power-manager
-	xfce4-screenshooter
-	xorg-server
-	xorg-xdm
-	xorg-xinit
-	xorg-xinput
-	xorg-xmessage
-	xorg-xmodmap
-	xorg-xrandr
-	xorg-xrdb
-	xorg-xset
-	xorg-xsetroot
-	xscreensaver
-	xterm
+	wl-clipboard
 	zsh
 )
 
 aurman --noconfirm -S --needed "${PACKAGES[@]}"
 
 # Post-install stuff.
-sudo systemctl enable xdm-archlinux.service
 sudo pkgfile --update
-
-~/.dotfiles/packages/update_packages.sh
 
 chsh -s "$(which zsh)"
 

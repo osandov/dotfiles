@@ -152,15 +152,10 @@ fi
 if do_install "$DO_DESKTOP"; then
 	mkdir -p ~/.config
 	curl -Lo ~/.config/wallpaper.png 'https://www.dropbox.com/s/62st3y31p3iz4os/blacklodge.png?raw=1'
-	install_file ~/.dotfiles/desktop/compton.conf ~/.config/compton.conf
 	install_file ~/.dotfiles/desktop/gtkrc-2.0 ~/.gtkrc-2.0
 	mkdir -p ~/.config/gtk-3.0
 	install_file ~/.dotfiles/desktop/gtk.css ~/.config/gtk-3.0/gtk.css
 	install_file ~/.dotfiles/desktop/gtkrc-3.0 ~/.config/gtk-3.0/settings.ini
-	install_file ~/.dotfiles/desktop/xinitrc ~/.xinitrc
-	install_file ~/.dotfiles/desktop/Xmodmap ~/.Xmodmap
-	install_file ~/.dotfiles/desktop/Xresources ~/.Xresources
-	install_file ~/.dotfiles/desktop/xsession ~/.xsession
 	dconf load /org/gnome/terminal/ < ~/.dotfiles/desktop/gnome-terminal.dconf
 
 	# Default applications.
