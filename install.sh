@@ -161,7 +161,7 @@ if do_install "$DO_DESKTOP"; then
 	install_file ~/.dotfiles/desktop/Xmodmap ~/.Xmodmap
 	install_file ~/.dotfiles/desktop/Xresources ~/.Xresources
 	install_file ~/.dotfiles/desktop/xsession ~/.xsession
-	dconf load /org/gnome/terminal/ < ~/.dotfiles/term/gnome-terminal.dconf
+	dconf load /org/gnome/terminal/ < ~/.dotfiles/desktop/gnome-terminal.dconf
 
 	# Default applications.
 	xdg-mime default org.gnome.Evince.desktop application/pdf

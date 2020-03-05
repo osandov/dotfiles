@@ -27,7 +27,7 @@ for touchpad in $(xinput --list | sed -rn 's/.*touchpad.*id=([0-9]+).*/\1/Ip'); 
 done
 
 # Terminal settings...
-dconf load /org/gnome/terminal/ < ~/.dotfiles/term/gnome-terminal.dconf
+dconf load /org/gnome/terminal/ < ~/.dotfiles/desktop/gnome-terminal.dconf
 
 # Start some daemons...
 inputconfd --keyboard="xmodmap ~/.Xmodmap; xset r rate 150 50 -b" &
