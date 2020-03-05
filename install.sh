@@ -162,4 +162,22 @@ if do_install "$DO_DESKTOP"; then
 	install_file ~/.dotfiles/desktop/Xresources ~/.Xresources
 	install_file ~/.dotfiles/desktop/xsession ~/.xsession
 	dconf load /org/gnome/terminal/ < ~/.dotfiles/term/gnome-terminal.dconf
+
+	# Default applications.
+	xdg-mime default org.gnome.Evince.desktop application/pdf
+	xdg-mime default eog.desktop image/jpg image/png
+
+	# Appearance.
+	gsettings set org.gnome.desktop.interface clock-format 12h
+	gsettings set org.gnome.desktop.interface clock-show-weekday true
+	gsettings set org.gnome.desktop.interface show-battery-percentage true
+
+	# Keyboard settings.
+	gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
+	gsettings set org.gnome.desktop.peripherals.keyboard delay 150
+	gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 20
+
+	# Mouse settings.
+	gsettings set org.gnome.desktop.peripherals.touchpad speed 0.15
+	gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 fi
