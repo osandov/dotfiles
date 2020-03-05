@@ -12,3 +12,7 @@ terminal-window notebook > header.top > tabs > tab label {
   padding: 0 0 0 0;
   margin: 0 0 0 0;
 }
+terminal-window.maximized .titlebar.default-decoration {
+  margin: -200px;
+  opacity: 0;
+}

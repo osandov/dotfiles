@@ -1,19 +1,20 @@
+[legacy]
+default-show-menubar=false
+headerbar=@mb false
+schema-version=uint32 3
+
 [legacy/profiles:]
-list=['8207d393-356c-4520-880a-fbba1935508f']
 default='8207d393-356c-4520-880a-fbba1935508f'
+list=['8207d393-356c-4520-880a-fbba1935508f']
 
 [legacy/profiles:/:8207d393-356c-4520-880a-fbba1935508f]
-foreground-color='rgb(0,0,0)'
-visible-name='osandov'
-palette=['rgb(0,0,0)', 'rgb(170,0,0)', 'rgb(0,170,0)', 'rgb(170,85,0)', 'rgb(0,0,170)', 'rgb(170,0,170)', 'rgb(0,170,170)', 'rgb(170,170,170)', 'rgb(85,85,85)', 'rgb(255,85,85)', 'rgb(85,255,85)', 'rgb(255,255,85)', 'rgb(85,85,255)', 'rgb(255,85,255)', 'rgb(85,255,255)', 'rgb(255,255,255)']
+background-color='rgb(255,255,255)'
 cell-width-scale=1.0
+cursor-blink-mode='off'
+font='DejaVu Sans Mono 10'
+foreground-color='rgb(0,0,0)'
+palette=['rgb(0,0,0)', 'rgb(170,0,0)', 'rgb(0,170,0)', 'rgb(170,85,0)', 'rgb(0,0,170)', 'rgb(170,0,170)', 'rgb(0,170,170)', 'rgb(170,170,170)', 'rgb(85,85,85)', 'rgb(255,85,85)', 'rgb(85,255,85)', 'rgb(255,255,85)', 'rgb(85,85,255)', 'rgb(255,85,255)', 'rgb(85,255,255)', 'rgb(255,255,255)']
+scrollbar-policy='never'
 use-system-font=false
 use-theme-colors=false
-font='DejaVu Sans Mono 10'
-cursor-blink-mode='off'
-background-color='rgb(255,255,255)'
-scrollbar-policy='never'
-
-[legacy]
-schema-version=uint32 3
-default-show-menubar=false
+visible-name='osandov'
