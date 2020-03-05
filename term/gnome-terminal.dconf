@@ -8,6 +8,7 @@ default='8207d393-356c-4520-880a-fbba1935508f'
 list=['8207d393-356c-4520-880a-fbba1935508f']
 
 [legacy/profiles:/:8207d393-356c-4520-880a-fbba1935508f]
+audible-bell=false
 background-color='rgb(255,255,255)'
 cell-width-scale=1.0
 cursor-blink-mode='off'
