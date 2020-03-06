@@ -57,6 +57,7 @@ stty -ixon
 
 autoload -Uz zshmarks
 zshmarks
+alias j='jump'
 
 if [ -r /usr/share/doc/pkgfile/command-not-found.zsh ]; then
     # Arch Linux
