@@ -48,9 +48,6 @@ PACKAGES=(
 	pulseaudio
 	pulseaudio-alsa
 	python
-	python-gobject # For redshift-gtk
-	python-xdg # For redshift-gtk
-	redshift
 	the_silver_searcher
 	tmux
 	ttf-dejavu
