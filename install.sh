@@ -175,4 +175,7 @@ if do_install "$DO_DESKTOP"; then
 	# Mouse settings.
 	gsettings set org.gnome.desktop.peripherals.touchpad speed 0.15
 	gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+
+	# Power settings.
+	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
 fi
