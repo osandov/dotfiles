@@ -24,6 +24,7 @@
 	autoSquash = true
 [sendemail]
 	cccover = true
+	suppresscc = all
 [stash]
 	showPatch = true
 [tag]
