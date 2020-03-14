@@ -108,6 +108,15 @@ t() {
 		echo "usage: $0 [SESSION_NAME]" >&2
 	fi
 }
+ta() {
+	if [[ $# -eq 0 ]]; then
+		tmux attach-session
+	elif [[ $# -eq 1 ]]; then
+		tmux attach-session -t "$1"
+	else
+		echo "usage: $0 [SESSION_NAME]" >&2
+	fi
+}
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
 alias ts='tmux switch -t'
