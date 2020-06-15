@@ -10,8 +10,6 @@
 	newHighlight = green 194
 [format]
 	thread = shallow
-[include]
-	path = ~/.gitconfig.local
 [interactive]
 	diffFilter = "if command -v diff-highlight >/dev/null 2>&1; then diff-highlight; else cat; fi"
 [pager]
@@ -33,3 +31,6 @@
 	sort = version:refname
 [versionsort]
 	prereleaseSuffix = -rc
+
+[include]
+	path = ~/.gitconfig.local
