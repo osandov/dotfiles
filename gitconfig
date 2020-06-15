@@ -18,6 +18,8 @@
 	log = "if command -v diff-highlight >/dev/null 2>&1; then diff-highlight | \"${PAGER:-less}\"; else \"${PAGER:-less}\"; fi"
 	show = "if command -v diff-highlight >/dev/null 2>&1; then diff-highlight | \"${PAGER:-less}\"; else \"${PAGER:-less}\"; fi"
 	diff = "if command -v diff-highlight >/dev/null 2>&1; then diff-highlight | \"${PAGER:-less}\"; else \"${PAGER:-less}\"; fi"
+[pull]
+	ff = only
 [push]
 	default = simple
 [rebase]
