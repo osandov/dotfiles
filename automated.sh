@@ -52,6 +52,7 @@ PACKAGES=(
 	tmux
 	ttf-dejavu
 	wl-clipboard
+	xdg-utils
 	zsh
 )
 
