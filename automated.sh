@@ -39,6 +39,8 @@ PACKAGES=(
 	gtk3-print-backends
 	gvfs
 	gvim
+	man-db
+	man-pages
 	mercurial
 	mutt
 	noto-fonts-emoji
