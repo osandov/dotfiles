@@ -1,7 +1,0 @@
-gtk-theme-name = "Vertex-Light"
-gtk-icon-theme-name = "Vertex-Icons"
-
-style "vimfix" {
-  bg[NORMAL] = "#ffffff"
-}
-widget "vim-main-window.*GtkForm" style "vimfix"
