@@ -31,6 +31,7 @@ fi
 PACKAGES=(
 	adobe-source-han-sans-jp-fonts
 	clang
+	cscope
 	firefox
 	git
 	gnome
