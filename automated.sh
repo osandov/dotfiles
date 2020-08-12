@@ -30,14 +30,11 @@ fi
 # Install the packages.
 PACKAGES=(
 	adobe-source-han-sans-jp-fonts
-	alsa-utils
 	clang
 	firefox
 	git
 	gnome
 	google-chrome
-	gtk3-print-backends
-	gvfs
 	gvim
 	man-db
 	man-pages
@@ -45,10 +42,7 @@ PACKAGES=(
 	mutt
 	noto-fonts-emoji
 	openssh
-	pavucontrol
 	pkgfile
-	pulseaudio
-	pulseaudio-alsa
 	python
 	the_silver_searcher
 	tmux
