@@ -174,4 +174,5 @@ if do_install "$DO_DESKTOP"; then
 
 	# Power settings.
 	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
+	gsettings set org.gnome.desktop.session idle-delay 900
 fi
