@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+# Based on https://gist.github.com/graven/921334/3b3034b4696fad6413402012bba566af257f0c99,
+# which itself is based on https://www.vim.org/scripts/script.php?script_id=1349.
+
+standard_colors = [
+    "Black",
+    "Red",
+    "Green",
+    "Yellow",
+    "Blue",
+    "Magenta",
+    "Cyan",
+    "White",
+]
+for (i, color) in enumerate(standard_colors):
+    print(
+        f"\033[1;{30 + i}m{i: >3}:\033[0m",
+        f"\033[{30 + i}m{color:7}\033[0m ",
+        f"\033[1;{90 + i}m{8 + i: >3}:\033[0m",
+        f"\033[{90 + i}mBright {color:7}\033[0m",
+    )
+
+colored = [0] + list(range(95, 256, 40))
+colored_palette = [
+    f"#{r:02x}{g:02x}{b:02x}" for r in colored for g in colored for b in colored
+]
+
+grayscale_palette = [f"#{a:02x}{a:02x}{a:02x}" for a in range(8, 248, 10)]
+
+for (i, color) in enumerate(colored_palette + grayscale_palette, 16):
+    print(
+        f"\033[1;38;5;{i}m{i: >3}:\033[0m",
+        f"\033[38;5;{i}m{color}\033[0m",
+        end="\n" if i % 6 == 3 else "  ",
+    )
