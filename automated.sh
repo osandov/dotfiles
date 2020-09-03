@@ -37,6 +37,7 @@ PACKAGES=(
 	gnome
 	google-chrome
 	gvim
+	inetutils
 	man-db
 	man-pages
 	mercurial
