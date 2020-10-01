@@ -8,6 +8,8 @@
 	newNormal = green
 	oldHighlight = red 224
 	newHighlight = green 194
+[diff]
+	algorithm = histogram
 [format]
 	thread = shallow
 [interactive]
