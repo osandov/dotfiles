@@ -157,6 +157,8 @@ if do_install "$DO_DESKTOP"; then
 	# Default applications.
 	xdg-mime default org.gnome.Evince.desktop application/pdf
 	xdg-mime default eog.desktop image/jpg image/png
+	xdg-mime default google-chrome.desktop text/html application/xhtml+xml
+	xdg-settings set default-web-browser google-chrome.desktop
 
 	# Appearance.
 	gsettings set org.gnome.desktop.interface clock-format 12h
