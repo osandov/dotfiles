@@ -49,6 +49,7 @@ PACKAGES=(
 	the_silver_searcher
 	tmux
 	ttf-dejavu
+	ttf-liberation
 	wl-clipboard
 	xdg-utils
 	zsh
