@@ -10,6 +10,7 @@
 	newHighlight = green 194
 [diff]
 	algorithm = histogram
+	tool = vimdiff
 [format]
 	thread = shallow
 [interactive]
