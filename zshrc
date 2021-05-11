@@ -107,6 +107,10 @@ alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
 alias ts='tmux switch -t'
 
+ssht() {
+	ssh -t "$1" '$SHELL' -lc 'tmux\ new-session\ -As\ '"${1%%.*}"
+}
+
 pingg () {
 	if [[ $1 -eq -6 ]]; then
 		ping 2001:4860:4860::8888
