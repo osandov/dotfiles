@@ -36,8 +36,6 @@ export EDITOR=vim
 export VISUAL=vim
 export PYTHONSTARTUP=~/.pythonrc
 export PAGER=less
-# Clear the screen properly and allow ANSI color escape sequences in less
-export LESS=cR
 
 # Used by .zshrc for the prompt. This is an SGR sequence, so the default "0"
 # means normal text, but, e.g., "31;1" means bold red. See console_codes(4).

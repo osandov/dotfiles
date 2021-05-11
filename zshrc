@@ -127,8 +127,9 @@ index () {
     whatis -s "$1" -r . | less
 }
 
-pag () {
-    ag --color --group --case-sensitive "$@" | "$PAGER"
+pag() {
+	ag --color --group --case-sensitive "$@" |
+		sh -c 'if [ "${LESS+set}" != set ]; then export LESS=FRX; fi; exec "${PAGER-less}"'
 }
 
 if [ -r ~/.zshrc.local ]; then
