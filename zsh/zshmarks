@@ -127,7 +127,7 @@ options:
 		"${actions[@]}"
 	if [[ -n $auto && ${#AUTOMARKDIRS[@]} -gt 0 ]]; then
 		find -L "${AUTOMARKDIRS[@]}" -mindepth 1 -maxdepth 1 -type d \
-			"${auto_actions[@]}"
+			"${auto_actions[@]}" 2> /dev/null
 	fi
 	} | sort
 }
