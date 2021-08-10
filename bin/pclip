@@ -4,4 +4,4 @@ if [ $# -ne 1 ]; then
 	echo "usage: $0 ACCOUNT" >&2
 fi
 
-secret-tool lookup nickname "$1" | wl-copy -o
+minisecrets get "$1" | wl-copy -o

@@ -177,4 +177,11 @@ if do_install "$DO_DESKTOP"; then
 	# Power settings.
 	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
 	gsettings set org.gnome.desktop.session idle-delay 900
+
+	# Extensions.
+	mkdir -p ~/.local/share/gnome-shell/extensions
+	install_file ~/.dotfiles/desktop/minisecrets-clipboard-extension ~/.local/share/gnome-shell/extensions/minisecrets-clipboard@osandov.com
+	if ! gnome-extensions info minisecrets-clipboard@osandov.com 2> /dev/null | grep -q '^\s*State:\s*ENABLED'; then
+		echo "MiniSecrets Clipboard must be enabled manually in GNOME Extensions"
+	fi
 fi
