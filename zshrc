@@ -92,6 +92,7 @@ t() {
 		tmux new-session -As "$1"
 	else
 		echo "usage: $0 [SESSION_NAME]" >&2
+		return 1
 	fi
 }
 ta() {
@@ -101,6 +102,7 @@ ta() {
 		tmux attach-session -t "$1"
 	else
 		echo "usage: $0 [SESSION_NAME]" >&2
+		return 1
 	fi
 }
 alias tl='tmux list-sessions'
