@@ -265,7 +265,7 @@ Remove one or more marks."
 	local error=0
 	while [[ $# -gt 0 ]]; do
 		if ! mark="$(findmark "$1")"; then
-			err
+			error=1
 		elif [[ -d $mark ]]; then
 			echo "$0: cannot remove automatic mark: $mark" >&2
 		elif ! rm -i "$mark"; then
