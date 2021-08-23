@@ -105,6 +105,14 @@ ta() {
 		return 1
 	fi
 }
+tj() {
+	if [[ $# -ne 1 ]]; then
+		echo "usage: $0 MARK" >&2
+		return 1
+	fi
+	local dir
+	dir="$(findmark "$1")" && tmux new-session -As "$1" -c "$dir"
+}
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
 alias ts='tmux switch -t'
