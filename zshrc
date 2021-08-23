@@ -132,6 +132,10 @@ pag() {
 		sh -c 'if [ "${LESS+set}" != set ]; then export LESS=FRX; fi; exec "${PAGER-less}"'
 }
 
+vimag() {
+	vim "+Ag$(printf " %q" "$@")"
+}
+
 if [ -r ~/.zshrc.local ]; then
 	source ~/.zshrc.local
 fi
