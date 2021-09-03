@@ -111,7 +111,7 @@ tj() {
 		return 1
 	fi
 	local dir
-	dir="$(findmark "$1")" && tmux new-session -As "$1" -c "$dir"
+	dir="$(readmark "$1")" && tmux new-session -As "$1" -c "$dir"
 }
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session'
