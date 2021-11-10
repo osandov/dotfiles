@@ -3,6 +3,7 @@
   "description": "Copy secrets from MiniSecrets to clipboard.",
   "uuid": "minisecrets-clipboard@osandov.com",
   "shell-version": [
+    "41",
     "40"
   ],
   "settings-schema": "org.gnome.shell.extensions.minisecrets-clipboard"
