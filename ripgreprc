@@ -1,0 +1,8 @@
+--colors=path:none
+--colors=path:fg:blue
+--colors=line:none
+--colors=line:fg:green
+--colors=column:none
+--colors=column:fg:green
+--colors=match:none
+--colors=match:bg:11

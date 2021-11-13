@@ -46,7 +46,7 @@ PACKAGES=(
 	openssh
 	pkgfile
 	python
-	the_silver_searcher
+	ripgrep
 	tmux
 	ttf-dejavu
 	ttf-liberation

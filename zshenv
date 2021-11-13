@@ -37,6 +37,8 @@ export VISUAL=vim
 export PYTHONSTARTUP=~/.pythonrc
 export PAGER=less
 
+export RIPGREP_CONFIG_PATH="$HOME/.dotfiles/ripgreprc"
+
 # Used by .zshrc for the prompt. This is an SGR sequence, so the default "0"
 # means normal text, but, e.g., "31;1" means bold red. See console_codes(4).
 HOSTNAME_COLOR=0
