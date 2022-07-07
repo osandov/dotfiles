@@ -38,7 +38,7 @@
 [tag]
 	sort = version:refname
 [versionsort]
-	prereleaseSuffix = -rc
+	suffix = -rc
 
 [include]
 	path = ~/.gitconfig.local
