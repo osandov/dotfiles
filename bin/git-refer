@@ -1,0 +1,46 @@
+#!/bin/sh
+
+USAGE="[-t] <commit>"
+OPTIONS_KEEPDASHDASH=
+OPTIONS_STUCKLONG=
+OPTIONS_SPEC="\
+git refer $USAGE
+--
+t,tag        include the first tag that contains the commit"
+
+. "$(git --exec-path)/git-sh-setup"
+
+tag=
+while [ $# != 0 ]; do
+	case "$1" in
+	-t|--tag)
+		tag=1
+		;;
+	--)
+		shift
+		break
+		;;
+	-*)
+		usage
+		;;
+	*)
+		break
+		;;
+	esac
+	shift
+done
+
+test $# -eq 1 || usage
+
+commit="$1"
+
+show() {
+	git --no-pager show -s --abbrev=12 --pretty='tformat:%h ("%s")' "$commit"
+}
+
+if [ -z "$tag" ]; then
+	show
+else
+	show | tr -d '\n'
+	printf ' (in %s)\n' "$(git -c versionsort.suffix=-rc tag --sort version:refname 'v[0-9]*' --contains "$commit" | head -1)"
+fi
