@@ -78,3 +78,5 @@ endfunction
 
 nnoremap <LocalLeader>\ :call <SID>addLineContinuations(getcurpos()[1], getcurpos()[1])<CR>
 vnoremap <LocalLeader>\ :call <SID>addLineContinuationsRange()<CR>
+nnoremap <LocalLeader><Bar> :s/\s*\\$//<CR>
+vnoremap <LocalLeader><Bar> :s/\s*\\$//<CR>
