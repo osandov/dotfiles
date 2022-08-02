@@ -8,6 +8,7 @@ git refer $USAGE
 --
 t,tag        include the first tag that contains the commit"
 
+SUBDIRECTORY_OK=Yes
 . "$(git --exec-path)/git-sh-setup"
 
 tag=
