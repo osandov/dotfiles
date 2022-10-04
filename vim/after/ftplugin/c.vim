@@ -50,11 +50,11 @@ endfunction
 
 silent call s:GuessStyle()
 
-nnoremap <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
-inoremap <F3> <Esc>diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2ki
-vnoremap <LocalLeader>0 <Esc>`<O#if 0<Esc>`>o#endif<Esc>
-nnoremap <LocalLeader>{ A<Space>{<Esc>jo}<Esc>k^
-nnoremap <LocalLeader>} $diB"_daB"_Dp
+nnoremap <buffer> <F3> diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2k
+inoremap <buffer> <F3> <Esc>diwi#ifndef <Esc>po#define <Esc>p3a<CR><Esc>o#endif /* <Esc>pa */<Esc>2ki
+vnoremap <buffer> <LocalLeader>0 <Esc>`<O#if 0<Esc>`>o#endif<Esc>
+nnoremap <buffer> <LocalLeader>{ A<Space>{<Esc>jo}<Esc>k^
+nnoremap <buffer> <LocalLeader>} $diB"_daB"_Dp
 
 function! s:addLineContinuations(first, last)
     let lines = getline(a:first, a:last)
@@ -76,7 +76,7 @@ function! s:addLineContinuationsRange() range
     call s:addLineContinuations(a:firstline, a:lastline)
 endfunction
 
-nnoremap <LocalLeader>\ :call <SID>addLineContinuations(getcurpos()[1], getcurpos()[1])<CR>
-vnoremap <LocalLeader>\ :call <SID>addLineContinuationsRange()<CR>
-nnoremap <LocalLeader><Bar> :s/\s*\\$//<CR>
-vnoremap <LocalLeader><Bar> :s/\s*\\$//<CR>
+nnoremap <buffer> <LocalLeader>\ :call <SID>addLineContinuations(getcurpos()[1], getcurpos()[1])<CR>
+vnoremap <buffer> <LocalLeader>\ :call <SID>addLineContinuationsRange()<CR>
+nnoremap <buffer> <LocalLeader><Bar> :s/\s*\\$//<CR>
+vnoremap <buffer> <LocalLeader><Bar> :s/\s*\\$//<CR>
