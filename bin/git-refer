@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 USAGE="[-t] <commit>"
 OPTIONS_KEEPDASHDASH=
@@ -16,6 +16,10 @@ while [ $# != 0 ]; do
 	case "$1" in
 	-t|--tag)
 		tag=1
+		;;
+	--tag-pattern)
+		shift
+		tag_pattern="$1"
 		;;
 	--)
 		shift
@@ -36,12 +40,26 @@ test $# -eq 1 || usage
 commit="$1"
 
 show() {
-	git --no-pager show -s --abbrev=12 --pretty='tformat:%h ("%s")' "$commit"
+	git --no-pager show -s --abbrev=12 --pretty="$1:%h (\"%s\")" "$commit^{commit}" --
 }
 
 if [ -z "$tag" ]; then
-	show
+	show tformat
 else
-	show | tr -d '\n'
-	printf ' (in %s)\n' "$(git -c versionsort.suffix=-rc tag --sort version:refname 'v[0-9]*' --contains "$commit" | head -1)"
+	tag_patterns=()
+	while IFS= read -r -d '' pattern; do
+		if [ -n "$pattern" ]; then
+			tag_patterns+=("$pattern")
+		else
+			tag_patterns=()
+		fi
+	done < <(git config --get-all --null refer.tagPattern)
+
+	show format || exit
+	tag=$(git tag --sort version:refname --contains "$commit" "${tag_patterns[@]}" | head -1)
+	if [ -n "$tag" ]; then
+		printf ' (in %s)\n' "$tag"
+	else
+		printf ' (not in tag)\n'
+	fi
 fi

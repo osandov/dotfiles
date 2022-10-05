@@ -29,6 +29,8 @@
 	default = simple
 [rebase]
 	autoSquash = true
+[refer]
+	tagPattern = v[0-9]*
 [sendemail]
 	cccover = true
 	suppresscc = all
