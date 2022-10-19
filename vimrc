@@ -22,7 +22,8 @@ if !isdirectory(&directory)
 endif
 
 " Behavior
-set completeopt-=preview " no annoying completion preview window
+set completeopt+=longest " only insert the longest common text when completing
+set completeopt+=popup   " show info in a popup instead of a preview window
 set incsearch            " do incremental searching
 set nojoinspaces         " one space after periods when joining
 set splitbelow           " personal preference
@@ -185,12 +186,13 @@ let g:NERDCustomDelimiters = {'python': {'left': '#'}, 'pyrex': {'left': '#'}}
 " Also autocomplete C preprocessor macros
 let g:clang_complete_macros = 1
 
+" Make completeopt longest more useful
+let g:SuperTabLongestEnhanced = 1
+let g:SuperTabLongestHighlight = 1
+
 if executable("goimports")
     let g:gofmt_command="goimports"
 endif
-
-" SuperTab scroll down
-let g:SuperTabDefaultCompletionType = "<C-N>"
 
 " Make ack.vim use rg.
 let g:ackprg = 'rg --vimgrep'
@@ -213,8 +215,7 @@ augroup vimrcPlugin
     " Use omnicomplete and keyword completion for supertab
     autocmd FileType *
                 \ if &omnifunc != '' |
-                \   call SuperTabChain(&omnifunc, "<C-N>") |
-                \   call SuperTabSetDefaultCompletionType("<C-X><C-U>") |
+                \   call SuperTabChain(&omnifunc, "<C-P>") |
                 \ endif
 
     " Override the vim-vinegar settings for the following
