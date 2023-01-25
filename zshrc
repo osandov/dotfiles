@@ -83,6 +83,9 @@ alias l='ls -CF'
 alias meminfo='watch -n 1 cat /proc/meminfo'
 alias da='du --apparent-size'
 alias info='info --vi-keys'
+if [[ $VISUAL = "vimx" || $VISUAL = "gvim -v" ]]; then
+	alias vim="$VISUAL"
+fi
 
 t() {
 	if [[ $# -eq 0 ]]; then

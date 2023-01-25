@@ -32,8 +32,12 @@ add_to_manpath ~/.local/share/man
 
 export PATH MANPATH
 
-export EDITOR=vim
-export VISUAL=vim
+if type vimx > /dev/null; then
+	export EDITOR=vimx
+elif type gvim > /dev/null; then
+	export EDITOR="gvim -v"
+fi
+export VISUAL="$EDITOR"
 export PAGER=less
 
 export RIPGREP_CONFIG_PATH="$HOME/.dotfiles/ripgreprc"
