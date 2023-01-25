@@ -16,7 +16,6 @@ Optional installation:
   -v    install Vim config
   -s    install shell (zsh and dircolors) config
   -t    install tmux config
-  -p    install Python config
   -g    install Git and Mercurial config
   -m    install Mutt config
   -d    install desktop config
@@ -57,9 +56,6 @@ while getopts "avstpgmdynh" OPT; do
 			;;
 		t)
 			DO_TMUX=1
-			;;
-		p)
-			DO_PYTHON=1
 			;;
 		g)
 			DO_GIT=1
@@ -143,10 +139,6 @@ fi
 if do_install "$DO_MUTT"; then
 	mkdir -p ~/.mutt
 	install_file ~/.dotfiles/muttrc ~/.mutt/muttrc
-fi
-
-if do_install "$DO_PYTHON"; then
-	install_file ~/.dotfiles/pythonrc ~/.pythonrc
 fi
 
 if do_install "$DO_DESKTOP"; then

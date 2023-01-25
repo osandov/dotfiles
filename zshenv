@@ -34,7 +34,6 @@ export PATH MANPATH
 
 export EDITOR=vim
 export VISUAL=vim
-export PYTHONSTARTUP=~/.pythonrc
 export PAGER=less
 
 export RIPGREP_CONFIG_PATH="$HOME/.dotfiles/ripgreprc"
