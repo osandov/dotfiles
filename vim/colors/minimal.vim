@@ -46,7 +46,7 @@ hi PmenuSel NONE ctermbg=LightGray guibg=#aaaaaa
 hi PmenuSbar NONE ctermbg=LightGray guibg=#aaaaaa
 hi PmenuThumb NONE ctermbg=Black guibg=#000000
 hi Question NONE cterm=bold ctermfg=29 gui=bold guifg=#00875f
-hi Search NONE ctermbg=Yellow guibg=#ffff54
+hi Search NONE ctermbg=Yellow guibg=#ffff55
 " hi SpecialKey
 " hi SpellBad
 " hi SpellCap
