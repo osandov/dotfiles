@@ -176,4 +176,11 @@ if do_install "$DO_DESKTOP"; then
 	if ! gnome-extensions info minisecrets-clipboard@osandov.com 2> /dev/null | grep -q '^\s*State:\s*ENABLED'; then
 		echo "MiniSecrets Clipboard must be enabled manually in GNOME Extensions"
 	fi
+
+	# WezTerm
+	mkdir -p ~/.config/wezterm
+	install_file ~/.dotfiles/term/wezterm.lua ~/.config/wezterm/wezterm.lua
+	if [ ! -e ~/.config/wezterm/localrc.lua ]; then
+		cp ~/.dotfiles/term/localrc.lua ~/.config/wezterm/localrc.lua
+	fi
 fi
