@@ -26,6 +26,7 @@ set completeopt+=longest " only insert the longest common text when completing
 set completeopt+=popup   " show info in a popup instead of a preview window
 set incsearch            " do incremental searching
 set nojoinspaces         " one space after periods when joining
+set scrolloff=0          " let me scroll all the way to the top and bottom
 set splitbelow           " personal preference
 set splitright
 set wildmenu             " zsh-ish command-line tab completion
