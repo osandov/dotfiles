@@ -148,6 +148,25 @@ vimrg() {
 	vim "+Rg$(printf " %q" "$@")"
 }
 
+with_github_token() {
+	local token
+	token=$(gawk '
+match($0, /^(\S+):/, group) {
+	hostname = group[1]
+	next
+}
+
+hostname == "github.com" && match($0, /^\s+oauth_token:\s*(\S+)/, group) {
+	print group[1]
+	exit
+}' ~/.config/gh/hosts.yml)
+	if [[ -z "$token" ]]; then
+		echo "oauth_token for github.com not found" >&2
+		return 1
+	fi
+	env GITHUB_TOKEN="$token" "$@"
+}
+
 if [ -r ~/.zshrc.local ]; then
 	source ~/.zshrc.local
 fi
