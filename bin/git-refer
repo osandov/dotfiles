@@ -17,10 +17,6 @@ while [ $# != 0 ]; do
 	-t|--tag)
 		tag=1
 		;;
-	--tag-pattern)
-		shift
-		tag_pattern="$1"
-		;;
 	--)
 		shift
 		break
