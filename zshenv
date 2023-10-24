@@ -36,6 +36,8 @@ if type vimx > /dev/null; then
 	export EDITOR=vimx
 elif type gvim > /dev/null; then
 	export EDITOR="gvim -v"
+else
+	export EDITOR=vim
 fi
 export VISUAL="$EDITOR"
 export PAGER=less
