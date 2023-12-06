@@ -18,22 +18,26 @@
 
 'use strict';
 
-const { Clutter, GObject, Meta, Secret, Shell, St } = imports.gi;
+import Clutter from 'gi://Clutter';
+import GObject from 'gi://GObject';
+import Meta from 'gi://Meta';
+import Secret from 'gi://Secret';
+import Shell from 'gi://Shell';
+import St from 'gi://St';
 
-const Dialog = imports.ui.dialog;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Main = imports.ui.main;
-const ModalDialog = imports.ui.modalDialog;
-const ShellEntry = imports.ui.shellEntry;
+import * as Dialog from 'resource:///org/gnome/shell/ui/dialog.js';
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as ModalDialog from 'resource:///org/gnome/shell/ui/modalDialog.js';
+import * as ShellEntry from 'resource:///org/gnome/shell/ui/shellEntry.js';
 
-const Me = ExtensionUtils.getCurrentExtension();
+import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 const SECRET_SCHEMA = Secret.Schema.new('com.osandov.minisecrets',
     Secret.SchemaFlags.NONE,
     { name: Secret.SchemaAttributeType.STRING },
 );
 
-var MiniSecretsCopyDialog = GObject.registerClass(
+const MiniSecretsCopyDialog = GObject.registerClass(
 class MiniSecretsCopyDialog extends ModalDialog.ModalDialog {
     _init() {
         super._init({
@@ -43,7 +47,7 @@ class MiniSecretsCopyDialog extends ModalDialog.ModalDialog {
 
         let title = _('Copy Secret to Clipboard');
         let content = new Dialog.MessageDialogContent({ title });
-        this.contentLayout.add_actor(content);
+        this.contentLayout.add_child(content);
 
         let entry = new St.Entry({
             style_class: 'run-dialog-entry',
@@ -78,7 +82,7 @@ class MiniSecretsCopyDialog extends ModalDialog.ModalDialog {
     }
 
     vfunc_key_release_event(event) {
-        if (event.keyval === Clutter.KEY_Escape) {
+        if (event.get_key_symbol() === Clutter.KEY_Escape) {
             this.close();
             return Clutter.EVENT_STOP;
         }
@@ -103,13 +107,10 @@ class MiniSecretsCopyDialog extends ModalDialog.ModalDialog {
     }
 });
 
-class Extension {
-    constructor() {
-        this._settings = ExtensionUtils.getSettings(Me.metadata['settings-schema']);
-        this._dialog = null;
-    }
-
+export default class MyExtension extends Extension {
     enable() {
+        this._settings = this.getSettings();
+        this._dialog = null;
         Main.wm.addKeybinding(
             'minisecrets-copy-dialog',
             this._settings,
@@ -124,6 +125,7 @@ class Extension {
             this._dialog.destroy();
             this._dialog = null;
         }
+        this._settings = null;
     }
 
     _copySecretDialog() {
@@ -131,8 +133,4 @@ class Extension {
             this._dialog = new MiniSecretsCopyDialog();
         this._dialog.open();
     }
-}
-
-function init() {
-    return new Extension();
 }
