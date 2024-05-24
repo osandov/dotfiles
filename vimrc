@@ -53,6 +53,11 @@ if !has("gui_running")
     " 5 -> blinking vertical bar
     " 6 -> solid vertical bar
 
+    " Undercurl escape sequences:
+    " https://wezfurlong.org/wezterm/faq.html#how-do-i-enable-undercurl-curly-underlines
+    let &t_Cs .= "\e[4:3m"
+    let &t_Ce .= "\e[4:0m"
+
     let s:xtermMatch = matchlist($XTERM_VERSION, 'XTerm(\(\d\+\))')
     if len(s:xtermMatch) > 0
         " Ugh, Meta-Alt-Escape crap

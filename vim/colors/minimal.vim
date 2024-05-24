@@ -48,8 +48,8 @@ hi PmenuThumb NONE ctermbg=Black guibg=#000000
 hi Question NONE cterm=bold ctermfg=29 gui=bold guifg=#00875f
 hi Search NONE ctermbg=Yellow guibg=#ffff55
 " hi SpecialKey
-" hi SpellBad
-" hi SpellCap
+hi SpellBad guisp=red gui=undercurl guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE term=underline cterm=undercurl ctermul=red
+hi SpellCap guisp=yellow gui=undercurl guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE term=underline cterm=undercurl ctermul=yellow
 " hi SpellLocal
 " hi SpellRare
 hi StatusLine NONE cterm=bold,reverse gui=bold,reverse
