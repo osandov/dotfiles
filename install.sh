@@ -158,7 +158,7 @@ if do_install "$DO_DESKTOP"; then
 	gsettings set org.gnome.desktop.interface show-battery-percentage true
 
 	# Keyboard settings.
-	gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
+	gsettings set org.gnome.desktop.input-sources xkb-options "['caps:swapescape']"
 	gsettings set org.gnome.desktop.peripherals.keyboard delay 150
 	gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 20
 
