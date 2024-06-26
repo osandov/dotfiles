@@ -173,6 +173,7 @@ if isdirectory($HOME . "/.vim/bundle/Vundle.vim")
     Plugin 'chrisbra/SudoEdit.vim'
     Plugin 'ervandew/supertab'
     Plugin 'mileszs/ack.vim'
+    Plugin 'ojroques/vim-oscyank'
     Plugin 'scrooloose/nerdcommenter'
     Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-repeat'
@@ -191,6 +192,9 @@ let g:NERDCustomDelimiters = {'python': {'left': '#'}, 'pyrex': {'left': '#'}}
 
 " Also autocomplete C preprocessor macros
 let g:clang_complete_macros = 1
+
+" Disable message on OSCYank
+let g:oscyank_silent = 1
 
 " Make completeopt longest more useful
 let g:SuperTabLongestEnhanced = 1
@@ -231,6 +235,10 @@ augroup vimrcPlugin
     " - "*.o" and "*.dwo"
     " - "*.pyc" and "__pycache__"
     autocmd FileType * let g:netrw_list_hide='^\.\([^./]\|\.[^/]\),\.o$,\.dwo$,\.pyc$,^__pycache__$'
+
+    " Copy to the clipboard using OSC52 when yanking to the " register
+    " explicitly (regname is an empty for the unnamed register).
+    autocmd TextYankPost * if v:event.regname == '"' | call OSCYank(v:event.regcontents->join("\n") . "\n") | endif
 augroup END
 
 if filereadable(expand('~/.vimrc.local'))
