@@ -27,6 +27,7 @@
 	ff = only
 [push]
 	default = simple
+	autoSetupRemote = true
 [rebase]
 	autoSquash = true
 [refer]
