@@ -23,35 +23,14 @@ if has("cscope")
 
     " Shortcuts for cscope commands (see :cscope help)
     cnoreabbrev csa cs add
-    cnoreabbrev csf cs find
-    cnoreabbrev csk cs kill
     cnoreabbrev csr cs reset
-    cnoreabbrev css cs show
-    cnoreabbrev csh cs help
-
-    " tcs* is equivalent to the above shortcuts, but in a new tab
-    cnoreabbrev tcsa tab scs add
+    cnoreabbrev csf cs find
+    " Find in a new tab
     cnoreabbrev tcsf tab scs find
-    cnoreabbrev tcsk tab scs kill
-    cnoreabbrev tcsr tab scs reset
-    cnoreabbrev tcss tab scs show
-    cnoreabbrev tcsh tab scs help
-
-    " Likewise for scs*, but in a new split
-    cnoreabbrev scsa scs add
+    " Find in a new split
     cnoreabbrev scsf scs find
-    cnoreabbrev scsk scs kill
-    cnoreabbrev scsr scs reset
-    cnoreabbrev scss scs show
-    cnoreabbrev scsh scs help
-
-    " Ditto for vcs* in a new vertical split
-    cnoreabbrev vcsa vert scs add
+    " Find in a new vertical split
     cnoreabbrev vcsf vert scs find
-    cnoreabbrev vcsk vert scs kill
-    cnoreabbrev vcsr vert scs reset
-    cnoreabbrev vcss vert scs show
-    cnoreabbrev vcsh vert scs help
 
     " Ctrl-\ followed by a query type shortcuts for querying cscope on the
     " word under the cursor (see :cscope help)
