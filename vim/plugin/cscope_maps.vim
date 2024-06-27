@@ -1,27 +1,25 @@
 " Cscope settings for vim
 
 if has("cscope")
-    """"""""""""" Standard cscope/vim boilerplate
+    """"""""""""" From :help cscope-suggestions
+
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    " else add database pointed to by environment
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set csverb
+
+    """"""""""""" My settings
 
     " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
     set cscopetag
 
-    " check cscope for definition of a symbol before checking ctags: set to 1
-    " if you want the reverse search order.
-    set csto=0
-
-    " add any cscope database in current directory
-    if filereadable("cscope.out")
-        cs add cscope.out
-    " else add the database pointed to by environment variable
-    elseif $CSCOPE_DB != ""
-        cs add $CSCOPE_DB
-    endif
-
-    " show msg when any other cscope db added
-    set cscopeverbose
-
-    """"""""""""" My cscope/vim key mappings
+    " check cscope for definition of a symbol before checking ctags
+    set cscopetagorder=0
 
     " Shortcuts for cscope commands (see :cscope help)
     cnoreabbrev csa cs add
