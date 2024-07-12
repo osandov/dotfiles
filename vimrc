@@ -174,9 +174,11 @@ if isdirectory($HOME . "/.vim/bundle/Vundle.vim")
     Plugin 'ervandew/supertab'
     Plugin 'mileszs/ack.vim'
     Plugin 'ojroques/vim-oscyank'
+    Plugin 'osandov/fugitive-cgit'
     Plugin 'scrooloose/nerdcommenter'
     Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-repeat'
+    Plugin 'tpope/vim-rhubarb'
     Plugin 'tpope/vim-rsi'
     Plugin 'tpope/vim-vinegar'
     Plugin 'Vimjas/vim-python-pep8-indent'
@@ -192,6 +194,8 @@ let g:NERDCustomDelimiters = {'python': {'left': '#'}, 'pyrex': {'left': '#'}}
 
 " Also autocomplete C preprocessor macros
 let g:clang_complete_macros = 1
+
+let g:fugitive_cgit_domains = ['https://git.kernel.org']
 
 " Disable message on OSCYank
 let g:oscyank_silent = 1
