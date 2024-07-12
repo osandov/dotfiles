@@ -148,6 +148,11 @@ vimrg() {
 	vim "+Rg$(printf " %q" "$@")"
 }
 
+pxxd() {
+	xxd -R always "$@" |
+		sh -c 'if [ "${LESS+set}" != set ]; then export LESS=FRX; fi; exec "${PAGER-less}"'
+}
+
 with_github_token() {
 	local token
 	token=$(gawk '
