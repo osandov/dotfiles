@@ -1,0 +1,50 @@
+[window]
+decorations = "None"
+
+[colors.primary]
+foreground = "#000000"
+background = "#ffffff"
+
+[colors.normal]
+black = "#000000"
+red = "#aa0000"
+green = "#00aa00"
+yellow = "#aa5500"
+blue = "#0000aa"
+magenta = "#aa00aa"
+cyan = "#00aaaa"
+white = "#aaaaaa"
+
+[colors.bright]
+black = "#555555"
+red = "#ff5555"
+green = "#55ff55"
+yellow = "#ffff55"
+blue = "#5555ff"
+magenta = "#ff55ff"
+cyan = "#55ffff"
+white = "#ffffff"
+
+[keyboard]
+bindings = [
+    { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
+
+    # tmux bindings. \u0002 is Control-B.
+    { key = "T", mods = "Control|Shift", chars = "\u0002c" },  # New tab
+    { key = "PageDown", mods = "Control", chars = "\u0002n" }, # Next tab
+    { key = "PageUp", mods = "Control", chars = "\u0002p" },   # Previous tab
+
+    { key = "\"", mods = "Control|Shift|Alt", chars = "\u0002\"" }, # Vertical split
+    { key = "%", mods = "Control|Shift|Alt", chars = "\u0002%" },   # Horizontal split
+    { key = "Z", mods = "Control|Shift", chars = "\u0002z" },       # Pane zoom
+
+    # Move between panes
+    { key = "H", mods = "Control|Shift", chars = "\u0002\u001b[D" },
+    { key = "J", mods = "Control|Shift", chars = "\u0002\u001b[B" },
+    { key = "K", mods = "Control|Shift", chars = "\u0002\u001b[A" },
+    { key = "L", mods = "Control|Shift", chars = "\u0002\u001b[C" },
+
+    { key = "F", mods = "Control|Shift", chars = "\u0002[H/" },
+    { key = "F", mods = "Control|Shift", chars = "\u0002[\u0002/" },
+    { key = "X", mods = "Control|Shift", chars = "\u0002[" },
+]
