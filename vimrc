@@ -189,6 +189,7 @@ filetype plugin indent on
 
 " Delimit comments with spaces
 let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
 " Workaround stupid extra space hardcoded for Python
 let g:NERDCustomDelimiters = {'python': {'left': '#'}, 'pyrex': {'left': '#'}}
 
