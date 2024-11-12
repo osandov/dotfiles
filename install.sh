@@ -147,8 +147,6 @@ if do_install "$DO_DESKTOP"; then
 	dconf load /org/gnome/terminal/ < ~/.dotfiles/desktop/gnome-terminal.dconf
 
 	# Default applications.
-	xdg-mime default org.gnome.Evince.desktop application/pdf
-	xdg-mime default eog.desktop image/jpg image/png
 	xdg-mime default google-chrome.desktop text/html application/xhtml+xml
 	xdg-settings set default-web-browser google-chrome.desktop
 
