@@ -33,6 +33,10 @@ bindings = [
     { key = "T", mods = "Control|Shift", chars = "\u0002c" },  # New tab
     { key = "PageDown", mods = "Control", chars = "\u0002n" }, # Next tab
     { key = "PageUp", mods = "Control", chars = "\u0002p" },   # Previous tab
+    # Move current tab right. Needs "bind-key S-PageDown swap-window -dt +1".
+    { key = "PageDown", mods = "Control|Shift", chars = "\u0002\u001b[6;2~" },
+    # Move current tab left. Needs "bind-key S-PageUp swap-window -dt -1".
+    { key = "PageUp", mods = "Control|Shift", chars = "\u0002\u001b[5;2~" },
 
     { key = "\"", mods = "Control|Shift|Alt", chars = "\u0002\"" }, # Vertical split
     { key = "%", mods = "Control|Shift|Alt", chars = "\u0002%" },   # Horizontal split
@@ -44,7 +48,7 @@ bindings = [
     { key = "K", mods = "Control|Shift", chars = "\u0002\u001b[A" },
     { key = "L", mods = "Control|Shift", chars = "\u0002\u001b[C" },
 
-    { key = "F", mods = "Control|Shift", chars = "\u0002[H/" },
-    { key = "F", mods = "Control|Shift", chars = "\u0002[\u0002/" },
-    { key = "X", mods = "Control|Shift", chars = "\u0002[" },
+    { key = "X", mods = "Control|Shift", chars = "\u0002[" },  # Enter copy mode
+    # Find. Needs "bind-key / copy-mode \; send-keys -X top-line \; send-keys /".
+    { key = "F", mods = "Control|Shift", chars = "\u0002/" },
 ]
