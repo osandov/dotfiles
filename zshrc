@@ -42,11 +42,14 @@ elif [ -r /etc/bash_completion.d/git-prompt ]; then
 fi
 
 function () {
-    local git_prompt='%F{green}$(whence -f __git_ps1 &>/dev/null && __git_ps1 " %s")%f'
+    local git_prompt=""
+    if whence -f __git_ps1 &> /dev/null; then
+	    git_prompt='%F{green}$(__git_ps1 " %s")%f'
+    fi
 
     setopt prompt_subst
 
-    PROMPT="┌[%n@%F{$HOSTNAME_COLOR}%m%f %F{cyan}%~%f${git_prompt}]%(?.. %F{red}:(%f)
+    PROMPT="┌[%n@%F{$HOSTNAME_COLOR}%m%f %F{cyan}%~%f$git_prompt]%(?.. %F{red}:(%f)
 └%(#.#.$) "
 }
 
