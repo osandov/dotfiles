@@ -44,9 +44,11 @@ export PAGER=less
 
 export RIPGREP_CONFIG_PATH="$HOME/.dotfiles/ripgreprc"
 
-# Used by .zshrc for the prompt. This is an SGR sequence, so the default "0"
-# means normal text, but, e.g., "31;1" means bold red. See console_codes(4).
-HOSTNAME_COLOR=0
+# Used by .zshrc for the prompt. This is a name (black, red, green, yellow,
+# blue, magenta, cyan, white, or default), decimal integer 0-255, or "#"
+# followed by an HTML color code. See "fg=colour" under CHARACTER HIGHLIGHTING
+# in zshzle(1).
+HOSTNAME_COLOR=default
 
 if [ -r ~/.zshenv.local ]; then
     source ~/.zshenv.local

@@ -42,13 +42,11 @@ elif [ -r /etc/bash_completion.d/git-prompt ]; then
 fi
 
 function () {
-    local prehost=$'\e'"[${HOSTNAME_COLOR}m"
-    local posthost=$'\e[0m'
     local git_prompt='%F{green}$(whence -f __git_ps1 &>/dev/null && __git_ps1 " %s")%f'
 
     setopt prompt_subst
 
-    PROMPT="┌[%n@%{${prehost}%}%m%{${posthost}%} %F{cyan}%~%f${git_prompt}]%(?.. %F{red}:(%f)
+    PROMPT="┌[%n@%F{$HOSTNAME_COLOR}%m%f %F{cyan}%~%f${git_prompt}]%(?.. %F{red}:(%f)
 └%(#.#.$) "
 }
 
