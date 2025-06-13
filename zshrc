@@ -41,6 +41,10 @@ elif [ -r /etc/bash_completion.d/git-prompt ]; then
     source /etc/bash_completion.d/git-prompt
 fi
 
+function __semantic_prompt_preexec() {
+	printf '\033]133;C;\007'
+}
+
 function () {
     local git_prompt=""
     if whence -f __git_ps1 &> /dev/null; then
@@ -49,8 +53,12 @@ function () {
 
     setopt prompt_subst
 
-    PROMPT="┌[%n@%F{$HOSTNAME_COLOR}%m%f %F{cyan}%~%f$git_prompt]%(?.. %F{red}:(%f)
-└%(#.#.$) "
+    local start_prompt=$'\e]133;A\a'
+    local start_input=$'\e]133;B\a'
+
+    PROMPT="%{$start_prompt%}┌[%n@%F{$HOSTNAME_COLOR}%m%f %F{cyan}%~%f$git_prompt]%(?.. %F{red}:(%f)
+└%(#.#.$) %{$start_input%}"
+    preexec_functions+=(__semantic_prompt_preexec)
 }
 
 # Disable Ctrl-S/Ctrl-Q flow control nonsense
