@@ -242,8 +242,12 @@ augroup vimrcPlugin
     autocmd FileType * let g:netrw_list_hide='^\.\([^./]\|\.[^/]\),\.o$,\.dwo$,\.pyc$,^__pycache__$'
 
     " Copy to the clipboard using OSC52 when yanking to the " register
-    " explicitly (regname is an empty for the unnamed register).
-    autocmd TextYankPost * if v:event.regname == '"' | call OSCYank(v:event.regcontents->join("\n") . "\n") | endif
+    " explicitly (regname is an empty string for the unnamed register).
+    " Only add a trailing newline for linewise copies.
+    autocmd TextYankPost *
+                \ if v:event.regname == '"' |
+                \   call OSCYank(v:event.regcontents->join("\n") . (v:event.regtype == "V" ? "\n" : "")) |
+                \ endif
 augroup END
 
 if filereadable(expand('~/.vimrc.local'))
