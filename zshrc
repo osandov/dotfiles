@@ -162,6 +162,11 @@ pxxd() {
 		sh -c 'if [ "${LESS+set}" != set ]; then export LESS=FRX; fi; exec "${PAGER-less}"'
 }
 
+pllvm-dwarfdump() {
+	llvm-dwarfdump --color "$@" |
+		sh -c 'if [ "${LESS+set}" != set ]; then export LESS=FRX; fi; exec "${PAGER-less}"'
+}
+
 with_github_token() {
 	local token
 	token=$(gawk '
