@@ -178,4 +178,8 @@ if do_install "$DO_DESKTOP"; then
 	# Alacritty
 	mkdir -p ~/.config/alacritty
 	install_file ~/.dotfiles/term/alacritty.toml ~/.config/alacritty/alacritty.toml
+
+	# Podman
+	mkdir -p ~/.config/containers
+	install_file ~/.dotfiles/containers.conf ~/.config/containers/containers.conf
 fi
